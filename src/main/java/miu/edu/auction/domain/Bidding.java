@@ -15,7 +15,7 @@ import java.util.List;
 public class Bidding {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID;
+    private int bidding_id;
 
     @NotNull
     private int isWin;

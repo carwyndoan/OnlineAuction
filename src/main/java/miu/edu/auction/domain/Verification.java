@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class Verification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID;
+    private int verification_id;
 
     private int code;
 
