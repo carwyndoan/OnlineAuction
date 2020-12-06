@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 public class Bidding_Details {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID;
+    private int bidding_detail_id;
 
     @NotNull
     private int activity;
