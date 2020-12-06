@@ -28,19 +28,22 @@ public class User {
     private String password;
 
     @NotNull
+    @Column(columnDefinition = "integer default 1")
     private int enable;
 
     private String name;
 
+    @Column(columnDefinition = "integer default 0")
     private int registration_verified;
 
+    @Column(columnDefinition = "integer default 0")
     private int profile_verified;
 
     private String driver_license;
 
     private int user_type;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
 

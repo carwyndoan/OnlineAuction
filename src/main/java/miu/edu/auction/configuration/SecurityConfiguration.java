@@ -64,7 +64,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .accessDeniedPage("/access-denied");
         http.authorizeRequests()
                 .antMatchers("/registration","/login", "/h2-console/**").permitAll()
-                .antMatchers("/admin/**").hasAuthority("ADMIN")
+//                .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
