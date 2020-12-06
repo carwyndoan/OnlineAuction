@@ -4,6 +4,7 @@ import miu.edu.auction.domain.User;
 import miu.edu.auction.domain.Verification;
 import miu.edu.auction.repository.UserRepository;
 import miu.edu.auction.repository.VerificationRepository;
+import miu.edu.auction.service.EmailService;
 import miu.edu.auction.service.UserService;
 import miu.edu.auction.service.VerificationService;
 import miu.edu.auction.utils.GenerationUnique;
@@ -27,6 +28,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private VerificationRepository verificationRepository;
 
+    @Autowired
+    EmailService emailService;
+
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -48,6 +52,8 @@ public class UserServiceImpl implements UserService {
         verification.setStatus(0);
         verificationRepository.save(verification);
         //Send Email
+        String content = "Your activation code is " + verification.getCode();
+        emailService.sendSimpleMessage("ndt.rachkien@gmail.com", "Activation Code", content);
         return savedUser;
     }
 
