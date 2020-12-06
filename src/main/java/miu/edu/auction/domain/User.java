@@ -1,43 +1,60 @@
 package miu.edu.auction.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import java.util.Set;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Data
-@AllArgsConstructor
+@Setter
+@Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class User {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int userId;
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private int id;
 
-	@Email(message = "*Please provide a valid Email")
-	@NotEmpty(message = "*Please provide an email")
-	private String email;
+    @NotBlank
+    @Email
+    private String email;
 
-	@Length(min = 5, message = "*Your password must have at least 5 characters")
-	@NotEmpty(message = "*Please provide your password")
-	private String password;
+    @NotBlank
+    private String password;
 
-	@NotEmpty(message = "*Please provide your name")
-	private String firstname;
+    @NotNull
+    private int enable;
 
-	@NotEmpty(message = "*Please provide your last name")
-	private String lastname;
+    @NotBlank
+    private String name;
 
-	private int active;
+    @NotNull
+    private int registration_verified;
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles;
+    @NotNull
+    private int profile_verified;
 
+    @NotBlank
+    private String driver_license;
+
+    @NotNull
+    private int user_type;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> roles;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Product> products;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Bidding> biddings;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Verification> verifications;
 }
