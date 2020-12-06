@@ -1,9 +1,10 @@
 package miu.edu.auction.domain;
 
+import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 @Data
 @Setter
@@ -11,25 +12,18 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Bidding_Activities {
+public class Shipping {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int bidding_activities_id;
+    private int shipping_id;
 
     @NotNull
-    private int activity;
+    private int status; //0: Shipped, 1: Shipping, 2: Delivered
 
-    @NotNull
-    private double amount;
-
+    @NotBlank
     private String description;
 
     @ManyToOne
     @JoinColumn(name = "bidding_id")
     private Bidding bidding;
-
-    @ManyToOne
-    @JoinColumn(name = "user_bidding_id")
-    private User bidding_user;
-
 }

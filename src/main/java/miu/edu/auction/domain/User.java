@@ -51,8 +51,14 @@ public class User {
     private List<Product> products;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Bidding> biddings;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Verification> verifications;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "winner")
+    private List<Bidding> winBiddings;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bidding_user")
+    private List<Bidding_Activities> bidding_activities;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user_payment")
+    private List<Payment> payments;
 }

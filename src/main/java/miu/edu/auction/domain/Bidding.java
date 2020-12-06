@@ -1,9 +1,12 @@
 package miu.edu.auction.domain;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -18,18 +21,38 @@ public class Bidding {
     private int bidding_id;
 
     @NotNull
-    private int isWin;
+    private double start_price;
+
+    @NotNull
+    private double deposit;
+
+    @NotNull
+    private double finalprice;
+
+    @NotNull
+    private int status;
+
+    @NotBlank
+    @DateTimeFormat(pattern = "MM-dd-YYYY")
+    private LocalDate duedate;
+
+    @NotBlank
+    @DateTimeFormat(pattern = "MM-dd-YYYY")
+    private LocalDate payment_duedate;
 
     private String description;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "winner_id")
+    private User winner;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "bidding")
-    private List<Bidding_Activities> bidding_details;
+    private List<Bidding_Activities> bidding_activities;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bidding")
+    private List<Shipping> shippings;
 }

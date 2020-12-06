@@ -28,24 +28,6 @@ public class Product {
     @NotNull
     private int status;
 
-    @NotNull
-    private double bid_startprice;
-
-    @NotNull
-    private double bid_deposit;
-
-    @NotNull
-    private double bid_finalprice;
-
-    @NotNull
-    private int bid_status;
-
-    @NotBlank
-    private LocalDate bid_duedate;
-
-    @NotBlank
-    private LocalDate bid_payment_duedate;
-
     private String image_path;
 
     private String description;
@@ -54,9 +36,9 @@ public class Product {
     private List<Category> categories;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "seller_id", nullable = false)
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
-    private List<Bidding> biddings;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "product")
+    private Bidding bidding;
 }
