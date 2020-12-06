@@ -19,7 +19,7 @@ public class UserController {
 
     @PostMapping(value = {"/saveuser"})
     public String saveUser(User user) {
-
-        return "UserList";
+        userService.saveUser(user);
+        return "success";
     }
 }
