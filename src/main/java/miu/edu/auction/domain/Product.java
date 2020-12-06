@@ -26,7 +26,7 @@ public class Product {
     private int active;
 
     @NotNull
-    private int status;
+    private int status; //0: Save without release, 1: Save and Release
 
     private String image_path;
 
