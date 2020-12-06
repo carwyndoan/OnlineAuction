@@ -41,6 +41,7 @@ public class User {
 
     private String driver_license;
 
+    @Column(columnDefinition = "integer default 0")
     private int user_type;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
