@@ -64,14 +64,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .accessDeniedPage("/access-denied");
         http.authorizeRequests()
                 .antMatchers("/registration","/login", "/h2-console/**").permitAll()
-                .antMatchers("/admin/**").hasAuthority("ADMIN")
+//                .antMatchers("/admin/**").hasAuthority("ADMIN")
 //                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .failureUrl("/login-error")
                 .defaultSuccessUrl("/index")
                 .and()
-                .exceptionHandling().accessDeniedPage("/access-denied");;
+                .exceptionHandling().accessDeniedPage("/access-denied");
 
         //Those two settings below is to enable access h2 database via browser
         http.csrf().disable();
