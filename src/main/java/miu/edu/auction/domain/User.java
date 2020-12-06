@@ -30,19 +30,14 @@ public class User {
     @NotNull
     private int enable;
 
-    @NotBlank
     private String name;
 
-    @NotNull
     private int registration_verified;
 
-    @NotNull
     private int profile_verified;
 
-    @NotBlank
     private String driver_license;
 
-    @NotNull
     private int user_type;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
