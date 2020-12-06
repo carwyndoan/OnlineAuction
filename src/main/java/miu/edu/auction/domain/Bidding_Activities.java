@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Bidding_Details {
+public class Bidding_Activities {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int bidding_detail_id;

@@ -31,5 +31,5 @@ public class Bidding {
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "bidding")
-    private List<Bidding_Details> bidding_details;
+    private List<Bidding_Activities> bidding_details;
 }
