@@ -32,8 +32,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     EmailService emailService;
 
-    @Autowired
-    EmailSender emailSender;
+//    @Autowired
+//    EmailSender emailSender;
 
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
