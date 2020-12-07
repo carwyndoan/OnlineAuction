@@ -7,5 +7,5 @@ import java.util.List;
 public interface BiddingService {
 
     List<Bidding> findBiddingByCategory(Integer category_id, String exclude_email);
-    List<Bidding> findAllByWinner(Integer user_id);
+    List<Bidding> findByWinner(Integer user_id);
 }

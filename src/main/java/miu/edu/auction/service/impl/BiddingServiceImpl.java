@@ -21,8 +21,8 @@ public class BiddingServiceImpl implements BiddingService {
     }
 
     @Override
-    public List<Bidding> findAllByWinner(Integer user_id){
-        biddingRepository.findAllByWinner(user_id);
+    public List<Bidding> findByWinner(Integer user_id){
+        biddingRepository.findByWinner(user_id);
         return null;
     }
 }
