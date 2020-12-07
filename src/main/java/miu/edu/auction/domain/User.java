@@ -39,6 +39,7 @@ public class User {
     @Column(columnDefinition = "integer default 0")
     private int profile_verified;
 
+    @NotBlank
     private String driver_license;
 
     @Column(columnDefinition = "integer default 0")
