@@ -64,12 +64,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .accessDeniedPage("/access-denied");
         http.authorizeRequests()
                 .antMatchers("/registration","/login", "/h2-console/**").permitAll()
-                .antMatchers("/admin/**").hasAuthority("ADMIN")
-//                .anyRequest().authenticated()
+                .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/bid/**").hasAuthority("ROLE_USER")
+                .antMatchers("/seller/**").hasAuthority("ROLE_USER")
+                .antMatchers("/customer/**").hasAuthority("ROLE_USER")
+                //.anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .failureUrl("/login-error")
-                .defaultSuccessUrl("/index")
+                .defaultSuccessUrl("/bid")
                 .and()
                 .exceptionHandling().accessDeniedPage("/access-denied");;
 
