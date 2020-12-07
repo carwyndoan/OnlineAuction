@@ -1,10 +1,7 @@
 package miu.edu.auction.controller;
 
 import miu.edu.auction.domain.Bidding;
-import miu.edu.auction.domain.User;
 import miu.edu.auction.service.BiddingService;
-import miu.edu.auction.service.UserService;
-import miu.edu.auction.service.impl.AuctionUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,15 +19,12 @@ public class BiddingController {
     @Autowired
     BiddingService biddingService;
 
-    @Autowired
-    UserService userService;
-
     @GetMapping(value = "")
     public String loadBidding(@AuthenticationPrincipal UserDetails userDetails, Model model) {
 
         System.out.println(userDetails);
         String userEmail = userDetails.getUsername();
-        List<Bidding> bids = biddingService.findBiddingByCategory(1, userEmail);
+        List<Bidding> bids = biddingService.findBiddingByCategory(0, userEmail);
         model.addAttribute("bids", bids);
 
         return "bidding/index";

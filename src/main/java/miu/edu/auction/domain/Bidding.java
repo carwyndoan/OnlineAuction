@@ -26,7 +26,7 @@ public class Bidding {
     @NotNull
     private double deposit;
 
-    @NotNull
+    //@NotNull
     private double finalprice;
 
     @NotNull
