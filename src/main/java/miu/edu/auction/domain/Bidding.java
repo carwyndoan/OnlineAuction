@@ -30,7 +30,7 @@ public class Bidding {
     private double finalprice;
 
     @NotNull
-    private int status;
+    private int status; //0: inactive, 1: active //2: Bid Closed with Winner
 
     @NotBlank
     @DateTimeFormat(pattern = "MM-dd-YYYY")
