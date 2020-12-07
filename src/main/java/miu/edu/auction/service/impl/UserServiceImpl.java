@@ -54,8 +54,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-
-
     public User saveUserWithVerificationKey(User user) {
         //Save User
         User savedUser = saveUser(user);
@@ -80,15 +78,5 @@ public class UserServiceImpl implements UserService {
 
         return userRepository.findAll(pageable);
     }
-
-    @Override
-    public User updateUser(User user) {
-        return null;
-    }
-
-//    public void measureChanges(String message) {
-//        this.setChanged();
-//        this.notifyObservers(message);
-//    }
 
 }

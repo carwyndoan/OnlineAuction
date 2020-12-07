@@ -15,5 +15,4 @@ public interface UserService {
     User saveUser(User user);
     public User saveUserWithVerificationKey(User user);
     public Page<User> findUserListPaging(Pageable pageable);
-    User updateUser(User user);
 }
