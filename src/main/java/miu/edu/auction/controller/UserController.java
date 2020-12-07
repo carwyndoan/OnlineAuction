@@ -9,7 +9,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 @Controller
@@ -25,7 +28,12 @@ public class UserController {
     }
 
     @PostMapping(value = {"/saveuser"})
-    public String saveUser(User user) {
+    public String saveUser(@Valid User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return "/registration/UserForm";
+
+//        String[] errors = bindingResult.getSuppressedFields();
+
         User savedUser = userService.saveUserWithVerificationKey(user);
         return "/registration/success";
     }
@@ -37,7 +45,9 @@ public class UserController {
     }
 
     @PostMapping(value = {"/updateuser"})
-    public String updateUser(User user) {
+    public String updateUser(@Valid User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return "/registration/EditUser";
         userService.saveUser(user);
         return "/registration/success";
     }
@@ -49,7 +59,6 @@ public class UserController {
         model.addAttribute("list", pUser.getContent());
         return "registration/list";
     }
-
 
 
 }
