@@ -30,10 +30,16 @@ public class UserController {
         return "/registration/success";
     }
 
-    @RequestMapping("/edituser/{id}")
+    @GetMapping("/edituser/{id}")
     public String edit(@PathVariable int id, Model model) {
         userService.findById(id).ifPresent(u -> model.addAttribute("user", u));
-        return "registration/edit";
+        return "registration/EditUser";
+    }
+
+    @PostMapping(value = {"/updateuser"})
+    public String updateUser(User user) {
+        userService.saveUser(user);
+        return "/registration/success";
     }
 
     @RequestMapping("/listuser")

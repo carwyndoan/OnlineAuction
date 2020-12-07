@@ -18,6 +18,7 @@
 					</li>
 				</ul>
 				<p>
+					<input id="id" th:field="*{user_id}" type="hidden">
 					<label for="email"><span data-th-text="#{user.new.email}">Email:</span></label>
 					<input type="text" id="email" th:field="*{email}" tabindex="1"/>
 					<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:errorclass="fieldError">Incorrect Data</p>

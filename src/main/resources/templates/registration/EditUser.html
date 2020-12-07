@@ -9,7 +9,7 @@
 <body>
 
 	<div id="global">
-		<form action="#" th:action="@{/admin/saveuser}" th:object="${user}"
+		<form action="#" th:action="@{/admin/updateuser}" th:object="${user}"
 			method="post">
 			<fieldset>
 				<legend><span th:text="#{user.edit}">Edit User</span></legend>
@@ -18,13 +18,14 @@
 					</li>
 				</ul>
 				<p>
+					<input id="id" th:field="*{user_id}" type="hidden">
 					<label for="email"><span data-th-text="#{user.new.email}">Email:</span></label>
 					<input type="text" id="email" th:field="*{email}" tabindex="1"/>
 					<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:errorclass="fieldError">Incorrect Data</p>
 				</p>
 				<p>
 					<label for="password"><span data-th-text="#{user.new.password}">Password:</span></label>
-					<input type="password" id="password" th:field = "*{password}" tabindex="2"/>
+					<input type="password" id="password" th:field = "*{password}" tabindex="2" readonly/>
 					<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" th:errorclass="fieldError">Incorrect Data</p>
 				</p>
 				<p>
@@ -47,7 +48,7 @@
 				</p>
 				<p id="buttons">
 					<input id="reset" type="reset" th:value="#{user.new.button.reset}" value="Reset" tabindex="4"> <input
-						id="submit" type="submit" tabindex="5" th:value="#{user.new.button.add}" value="Add Employee">
+						id="submit" type="submit" tabindex="5" th:value="#{user.new.button.save}" value="Add Employee">
 				</p>
 			</fieldset>
 		</form>
