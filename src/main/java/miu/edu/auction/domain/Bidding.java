@@ -55,4 +55,7 @@ public class Bidding {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "bidding")
     private List<Shipping> shippings;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bidding")
+    private List<Payment> payments;
 }

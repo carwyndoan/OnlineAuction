@@ -32,8 +32,7 @@ public class Product {
 
     private String description;
 
-    @ManyToMany(cascade = CascadeType.DETACH)
-    private List<Category> categories;
+//    private List<Category> categories;
 
     @ManyToOne
     @JoinColumn(name = "seller_id", nullable = false)
