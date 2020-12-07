@@ -41,9 +41,10 @@
 				<p>
 					<label for="type"><span data-th-text="#{user.new.usertype}"> User Type:</span></label>
 					<select id = "type" th:field="*{user_type}"  tabindex="5">
-						<option th:value="0" th:text="#{user.new.usertype.admin}"></option>
-						<option th:value="1" th:text="#{user.new.usertype.customer}"></option>
-						<option th:value="2" th:text="#{user.new.usertype.seller}"></option>
+						<option th:value="0" th:text="#{user.new.usertype.user}"></option>
+						<option th:value="1" th:text="#{user.new.usertype.admin}"></option>
+						<option th:value="2" th:text="#{user.new.usertype.customer}"></option>
+						<option th:value="3" th:text="#{user.new.usertype.seller}"></option>
 					</select>
 				</p>
 				<p id="buttons">

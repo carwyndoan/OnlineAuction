@@ -19,4 +19,10 @@ public class BiddingServiceImpl implements BiddingService {
     public List<Bidding> findBiddingByCategory(Integer category_id, String exclude_email) {
         return biddingRepository.findBiddingByCategory(category_id, exclude_email);
     }
+
+    @Override
+    public List<Bidding> findAllByWinner(Integer user_id){
+        biddingRepository.findAllByWinner(user_id);
+        return null;
+    }
 }

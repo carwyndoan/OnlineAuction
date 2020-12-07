@@ -14,4 +14,5 @@ public interface BiddingRepository extends CrudRepository<Bidding, Integer> {
             "where c.category_id = :category_id and u.email <> :exclude_email")
     List<Bidding> findBiddingByCategory(Integer category_id, String exclude_email);
 
+    List<Bidding> findAllByWinner(Integer user_id);
 }
