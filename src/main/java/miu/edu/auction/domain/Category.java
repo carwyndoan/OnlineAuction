@@ -25,6 +25,6 @@ public class Category {
     private int active;
 
     @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(name = "product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+    @JoinTable(name = "catetory_product", joinColumns = @JoinColumn(name = "category_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product> products = new ArrayList<Product>();
 }

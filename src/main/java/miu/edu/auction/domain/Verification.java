@@ -17,12 +17,18 @@ public class Verification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int verification_id;
 
-    private int code;
+    private String code;
 
     private LocalDateTime generated_time;
 
     @NotNull
-    private int type;
+    private int type; //0: generated uniqueID, 1: User verification
+
+    private LocalDateTime verifying_time;
+
+    @NotNull
+    @Column(columnDefinition = "integer default 0")
+    private int status;
 
     private String description;
 

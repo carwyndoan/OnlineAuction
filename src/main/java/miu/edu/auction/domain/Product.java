@@ -26,14 +26,13 @@ public class Product {
     private int active;
 
     @NotNull
-    private int status;
+    private int status; //0: Save without release, 1: Save and Release
 
     private String image_path;
 
     private String description;
 
-    @ManyToMany(cascade = CascadeType.DETACH)
-    private List<Category> categories;
+//    private List<Category> categories;
 
     @ManyToOne
     @JoinColumn(name = "seller_id", nullable = false)
