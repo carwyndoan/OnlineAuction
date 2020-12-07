@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.Subject;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -30,6 +31,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     EmailService emailService;
+
+    @Autowired
+    EmailSender emailSender;
 
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
@@ -53,8 +57,15 @@ public class UserServiceImpl implements UserService {
         verificationRepository.save(verification);
         //Send Email
         String content = "Your activation code is " + verification.getCode();
-        emailService.sendSimpleMessage("ndt.rachkien@gmail.com", "Activation Code", content);
+        emailService.sendSimpleMessage(savedUser.getEmail(), "Activation Code", content);
+//        this.addObserver(emailSender);
+//        measureChanges(verification.getCode());
         return savedUser;
     }
+
+//    public void measureChanges(String message) {
+//        this.setChanged();
+//        this.notifyObservers(message);
+//    }
 
 }
