@@ -32,9 +32,6 @@ public class Product {
 
     private String description;
 
-    @ManyToMany(mappedBy = "products")
-    private List<Category> categories;
-
     @ManyToOne
     @JoinColumn(name = "seller_id", nullable = false)
     private User user;
