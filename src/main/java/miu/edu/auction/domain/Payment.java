@@ -17,8 +17,10 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int payment_id;
 
+    @Column(columnDefinition = "double default 0")
     private double deposit;
 
+    @Column(columnDefinition = "double default 0")
     private double remainingAmount;
 
     private LocalDate depositDate;
@@ -36,10 +38,6 @@ public class Payment {
     private String state;
 
     private String zipcode;
-
-    @NotNull
-    @Column(columnDefinition = "integer default 0")
-    private int type; //0: deposit, 1: bidding, 2: full payment after winning, 3: system payment for seller
 
     @ManyToOne
     @JoinColumn(name = "user_payment_id")
