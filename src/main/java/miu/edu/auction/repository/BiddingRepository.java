@@ -1,7 +1,6 @@
 package miu.edu.auction.repository;
 
 import miu.edu.auction.domain.Bidding;
-import miu.edu.auction.domain.BiddingDTO;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -22,7 +21,7 @@ public interface BiddingRepository extends CrudRepository<Bidding, Integer> {
             )
     List<Bidding> findBiddingByCategory(Integer category_id, String exclude_email);
 
-    @Query(value = "select bid from Bidding bid inner join fetch  User u where u.user_id= ?1")
+    @Query(value = "select bid from User u join u.winBiddings bid")
     List<Bidding> findByWinner(@Param("user_id")Integer user_id);
 
 //    SELECT ph FROM Employee e JOIN e.phones ph WHERE ph LIKE '1%'

@@ -29,5 +29,5 @@ public class Payment {
 
     @ManyToOne
     @JoinColumn(name = "bidding_id")
-    private Bidding bidding;
+    private Bidding biddingPayment;
 }
