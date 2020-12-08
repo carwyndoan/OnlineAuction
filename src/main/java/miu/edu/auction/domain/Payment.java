@@ -23,9 +23,14 @@ public class Payment {
     @Column(columnDefinition = "double default 0")
     private double remainingAmount;
 
+    @Column(columnDefinition = "double default 0")
+    private double returnDeposit;
+
     private LocalDate depositDate;
 
     private LocalDate paymentDate;
+
+    private LocalDate returnDepositDate;
 
     private LocalDate shipDate;
 

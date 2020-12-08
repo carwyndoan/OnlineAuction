@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Bidding Histories</title>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script type="text/javascript"
+            src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+</head>
+<body>
+
+<section>
+    <div class="jumbotron">
+        <div class="container">
+            <h1>The Bidding Histories</h1>
+        </div>
+    </div>
+</section>
+
+
+<section class="container">
+    <div>
+        <table class="table table-hover">
+            <tr>
+                <th>---ID---</th>
+                <th>Username</th>
+                <th>Product</th>
+                <th>Bidding Price</th>
+                <th>Bidding Date</th>
+            </tr>
+        </table>
+        <table id="cart_table" class="table table-hover">
+            <tr th:each="item: ${activities}">
+                <td th:text="${item.id}"></td>
+                <td th:text="${item.productName}"></td>
+                <td th:text="${item.userName}"></td>
+                <td th:text="${item.biddingPrice}"></td>
+                <td th:text="${item.biddingDate}"></td>
+            </tr>
+        </table>
+    </div>
+</section>
+</body>
+</html>

@@ -78,6 +78,7 @@ public class TestController {
         List<BiddingActivityDTO> listDTO = biddingService.findBidingHistories(id);
         System.out.println("Size: "+ listDTO.size());
         listDTO.forEach(dto -> System.out.println(dto.getId() + " " +  dto.getUserName() + " " + dto.getProductName() + " " + dto.getBiddingPrice() + " " + dto.getBiddingPrice() + " " + dto.getBiddingDate() ));
-        return "registration/success";
+        model.addAttribute("activities", listDTO);
+        return "bidding/BiddingHistories";
     }
 }
