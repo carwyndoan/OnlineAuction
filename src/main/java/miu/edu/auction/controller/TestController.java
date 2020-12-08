@@ -76,8 +76,6 @@ public class TestController {
         String userEmail = userDetails.getUsername();
         User user = userService.findUserByEmail(userEmail);
         List<BiddingActivityDTO> listDTO = biddingService.findBidingHistories(id);
-        System.out.println("Size: "+ listDTO.size());
-        listDTO.forEach(dto -> System.out.println(dto.getId() + " " +  dto.getUserName() + " " + dto.getProductName() + " " + dto.getBiddingPrice() + " " + dto.getBiddingPrice() + " " + dto.getBiddingDate() ));
         model.addAttribute("activities", listDTO);
         return "bidding/BiddingHistories";
     }

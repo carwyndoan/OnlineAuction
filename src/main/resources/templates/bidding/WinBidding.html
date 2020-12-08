@@ -18,7 +18,7 @@
 <section>
     <div class="jumbotron">
         <div class="container">
-            <h1>Do payments for the win biddings</h1>
+            <h1><span th:text="#{winbidding.list.title}"> List of Biddings</span></h1>
         </div>
     </div>
 </section>
@@ -28,14 +28,14 @@
     <div>
         <table class="table table-hover">
             <tr>
-                <th>---ID---</th>
-                <th>Product</th>
-                <th>Start Price</th>
-                <th>Final Price</th>
-                <th>Deposit</th>
-                <th>Closed Date</th>
-                <th>Payment Due Date</th>
-                <th>Action</th>
+                <th><span th:text="#{winbidding.list.id}">ID</span></th>
+                <th><span th:text="#{winbidding.list.product}">Product</span></th>
+                <th><span th:text="#{winbidding.list.startprice}">Start Price</span></th>
+                <th><span th:text="#{winbidding.list.finalprice}">Final Price</span></th>
+                <th><span th:text="#{winbidding.list.deposit}">Deposit</span></th>
+                <th><span th:text="#{winbidding.list.closeddate}">Closed Date</span></th>
+                <th><span th:text="#{winbidding.list.paymentduedate}">Payment Due Date</span></th>
+                <th><span th:text="#{winbidding.list.action}"></span></th>
             </tr>
         </table>
         <table id="cart_table" class="table table-hover">
