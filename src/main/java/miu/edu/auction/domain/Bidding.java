@@ -41,7 +41,7 @@ public class Bidding {
 
     private String description;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product;
 
@@ -51,9 +51,6 @@ public class Bidding {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "bidding")
     private List<Bidding_Activities> bidding_activities;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "biddingShipping")
-    private List<Shipping> shippings;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "biddingPayment")
     private List<Payment> payments;

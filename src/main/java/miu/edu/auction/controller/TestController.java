@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/bid")
 public class TestController {
     @Autowired
     BiddingService biddingService;
@@ -28,12 +28,8 @@ public class TestController {
 
         System.out.println(userDetails);
         String userEmail = userDetails.getUsername();
-//        User user = userService.findUserByEmail(userEmail);
-//        System.out.println("User information: " + user);
-//        List<Bidding> bids = user.getWinBiddings();
-//        System.out.println("bids " + bids.size());
-//        model.addAttribute("bids", bids);
-
-        return "/registration/success";
+        List<Bidding> list = biddingService.findByWinner(userEmail);
+        model.addAttribute("biddinglist", list);
+        return "bidding/WinBidding";
     }
 }

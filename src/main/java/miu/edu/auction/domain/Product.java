@@ -32,7 +32,8 @@ public class Product {
 
     private String description;
 
-//    private List<Category> categories;
+    @ManyToMany(mappedBy = "products")
+    private List<Category> categories;
 
     @ManyToOne
     @JoinColumn(name = "seller_id", nullable = false)

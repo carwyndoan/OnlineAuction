@@ -16,7 +16,7 @@ import javax.validation.Valid;
 
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/registration")
 public class UserController {
 
     @Autowired

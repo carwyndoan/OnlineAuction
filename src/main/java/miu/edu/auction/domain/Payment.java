@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -16,8 +17,25 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int payment_id;
 
-    @NotNull
-    private double amount;
+    private double deposit;
+
+    private double remainingAmount;
+
+    private LocalDate depositDate;
+
+    private LocalDate paymentDate;
+
+    private LocalDate shipDate;
+
+    private LocalDate deliveryDate;
+
+    private String street;
+
+    private String city;
+
+    private String state;
+
+    private String zipcode;
 
     @NotNull
     @Column(columnDefinition = "integer default 0")
