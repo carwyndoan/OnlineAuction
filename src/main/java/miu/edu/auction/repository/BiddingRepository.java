@@ -15,8 +15,14 @@ import java.util.Optional;
 @Repository
 public interface BiddingRepository extends JpaRepository<Bidding, Integer> {
 
-    @Query("select bid from Bidding bid inner join Product p inner join Category c inner join User u " +
-            "where c.category_id = :category_id and u.email <> :exclude_email")
+    @Query(value = "select bid from Bidding bid "
+            + "inner join fetch bid.product p "
+            + "inner join p.user seller "
+            + "inner join p.categories cat "
+            + "left join fetch bid.bidding_activities ba "
+            + "where seller.email <> :exclude_email "
+            + "and (:category_id = 0 or cat.category_id = :category_id)"
+            )
     List<Bidding> findBiddingByCategory(Integer category_id, String exclude_email);
 
     @Query("select bid from Bidding bid inner join fetch bid.winner u where u.email = :email")
