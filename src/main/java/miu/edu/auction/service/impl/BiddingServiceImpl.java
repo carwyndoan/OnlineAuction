@@ -93,6 +93,6 @@ public class BiddingServiceImpl implements BiddingService {
             biddingHistoryDTO.setProductName(activity.getBidding().getProduct().getName());
             listDto.add(biddingHistoryDTO);
         }
-        return null;
+        return listDto;
     }
 }
