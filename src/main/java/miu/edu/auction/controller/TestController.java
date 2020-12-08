@@ -11,12 +11,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.Option;
+import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,24 +42,35 @@ public class TestController {
         return "bidding/WinBidding";
     }
 
-    @GetMapping(value = {"/paymentform"})
-    public String loadPayment(@AuthenticationPrincipal UserDetails userDetails, @RequestParam("bidding_id") String bidding_id, @ModelAttribute("payment") Payment payment) {
-        int bID = Integer.parseInt(bidding_id);
+    @GetMapping(value = {"/paymentform/{id}"})
+    public String loadPayment(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer id, Model model) {
+//        int bID = Integer.parseInt(id);
         String userEmail = userDetails.getUsername();
         User user = userService.findUserByEmail(userEmail);
-        System.out.println("UserID: " + user.getEmail());
+//        System.out.println("UserID: " + user.getEmail());
 
-        Optional<Bidding> bidding = biddingService.findByID(bID);
-        System.out.println("Bidding: "+ bidding.get().getBidding_id());
+        Optional<Bidding> bidding = biddingService.findByID(id);
+//        System.out.println("Bidding: " + bidding.get().getBidding_id());
 
-        Payment p = paymentService.findPaymentByBiddingID(Integer.valueOf(bID));
-        System.out.println("PaymentID: " + p.getPayment_id());
-        if (p != null) {
-            payment = p;
+        Payment payment = paymentService.findPaymentByBiddingID(Integer.valueOf(id));
+//        System.out.println("PaymentID: " + payment.getPayment_id());
+        if (payment != null) {
             payment.setUser_payment(user);
-            if (bidding.isPresent())
+            if (bidding.isPresent()) {
                 payment.setBiddingPayment(bidding.get());
+                payment.setRemainingAmount(bidding.get().getFinalprice() - bidding.get().getDeposit());
+                payment.setPaymentDate(LocalDate.now());
+            }
         }
-        return "registration/success";
+        model.addAttribute("payment", payment);
+        return "bidding/Payment";
+    }
+
+    @PostMapping(value = {"/payment"})
+    public String savePayment(@Valid Payment payment, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return "bidding/Payment";
+        paymentService.savePayment(payment);
+        return "redirect:/bidding/winbiddings";
     }
 }

@@ -18,7 +18,7 @@
 <section>
     <div class="jumbotron">
         <div class="container">
-            <h1>Winning Bidding List</h1>
+            <h1>Do payments for the win biddings</h1>
         </div>
     </div>
 </section>
@@ -47,7 +47,7 @@
                 <td th:text="${item.deposit}"></td>
                 <td th:text="${item.duedate}"></td>
                 <td th:text="${item.payment_duedate}"></td>
-                <td><a href="#" class="label label-danger product-remove-btn" th:data="${item.bidding_id}">
+                <td><a th:href="@{/bidding/paymentform/{id}(id=${item.bidding_id})}" class="label label-danger product-remove-btn" th:data="${item.bidding_id}">
                     <span class="glyphicon glyphicon-remove" /></span> Payment</a></td>
             </tr>
         </table>

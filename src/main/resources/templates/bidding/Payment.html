@@ -9,7 +9,7 @@
 <body>
 
 	<div id="global">
-		<form action="#" th:action="@{/bidding/savepayment}" th:object="${payment}"
+		<form action="#" th:action="@{/bidding/payment}" th:object="${payment}"
 			method="post">
 			<fieldset>
 				<legend><span th:text="#{new.payment}">Make Payment</span></legend>
@@ -19,38 +19,40 @@
 				</ul>
 				<p>
 					<input id="payment_id" th:field="*{payment_id}" type="hidden">
-					<input id="bidding_id" th:field="*{bidding_id}" type="hidden">
-					<label for="email"><span data-th-text="#{user.new.email}">Email:</span></label>
-					<input type="text" id="email" th:field="*{email}" tabindex="1"/>
-					<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:errorclass="fieldError">Incorrect Data</p>
+					<input id="paymentDate" th:field="*{paymentDate}" type="hidden">
+					<label for="deposit"><span data-th-text="#{payment.deposit}">Deposit:</span></label>
+					<input type="text" id="deposit" th:field="*{deposit}" tabindex="1" readonly/>
+					<p th:if="${#fields.hasErrors('deposit')}" th:errors="*{deposit}" th:errorclass="fieldError">Incorrect Data</p>
 				</p>
 				<p>
-					<label for="password"><span data-th-text="#{user.new.password}">Password:</span></label>
-					<input type="password" id="password" th:field = "*{password}" tabindex="2"/>
-					<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" th:errorclass="fieldError">Incorrect Data</p>
+					<label for="remainingAmount"><span data-th-text="#{payment.remainingamount}">Remaining Amount:</span></label>
+					<input type="text" id="remainingAmount" th:field = "*{remainingAmount}" tabindex="2" readonly/>
+					<p th:if="${#fields.hasErrors('remainingAmount')}" th:errors="*{remainingAmount}" th:errorclass="fieldError">Incorrect Data</p>
 				</p>
 				<p>
-					<label for="name"><span data-th-text="#{user.new.name}">Full Name:</span></label>
-					<input type="text" id="name" th:field="*{name}" tabindex="3"/>
-					<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorclass="fieldError"></p>
+					<label for="street"><span data-th-text="#{payment.street}">Street:</span></label>
+					<input type="text" id="street" th:field="*{street}" tabindex="3"/>
+					<p th:if="${#fields.hasErrors('street')}" th:errors="*{street}" th:errorclass="fieldError"></p>
 				</p>
 				<p>
-					<label for="driverlicense"><span data-th-text="#{user.new.driverlicense}"></span></label>
-					<input id="driverlicense" th:field="*{driver_license}"  tabindex="4"/>
-					<p th:if="${#fields.hasErrors('driver_license')}" th:errors="*{driver_license}" th:errorclass="fieldError"></p>
+					<label for="city"><span data-th-text="#{payment.city}">City:</span></label>
+					<input type="text" id="city" th:field="*{city}" tabindex="3"/>
+				<p th:if="${#fields.hasErrors('city')}" th:errors="*{city}" th:errorclass="fieldError"></p>
 				</p>
 				<p>
-					<label for="type"><span data-th-text="#{user.new.usertype}"> User Type:</span></label>
-					<select id = "type" th:field="*{user_type}"  tabindex="5">
-						<option th:value="0" th:text="#{user.new.usertype.user}"></option>
-						<option th:value="1" th:text="#{user.new.usertype.admin}"></option>
-						<option th:value="2" th:text="#{user.new.usertype.customer}"></option>
-						<option th:value="3" th:text="#{user.new.usertype.seller}"></option>
-					</select>
+					<label for="state"><span data-th-text="#{payment.state}">City:</span></label>
+					<input type="text" id="state" th:field="*{state}" tabindex="3"/>
+				<p th:if="${#fields.hasErrors('state')}" th:errors="*{state}" th:errorclass="fieldError"></p>
 				</p>
+				<p>
+					<label for="zipcode"><span data-th-text="#{payment.zipcode}">City:</span></label>
+					<input type="text" id="zipcode" th:field="*{zipcode}" tabindex="3"/>
+				<p th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}" th:errorclass="fieldError"></p>
+				</p>
+
 				<p id="buttons">
 					<input id="reset" type="reset" th:value="#{user.new.button.reset}" value="Reset" tabindex="4"> <input
-						id="submit" type="submit" tabindex="5" th:value="#{user.new.button.add}" value="Add Employee">
+						id="submit" type="submit" tabindex="5" th:value="#{user.new.button.save}" value="Save">
 				</p>
 			</fieldset>
 		</form>

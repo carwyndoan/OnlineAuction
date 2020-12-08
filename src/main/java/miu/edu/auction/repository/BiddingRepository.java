@@ -23,9 +23,10 @@ public interface BiddingRepository extends JpaRepository<Bidding, Integer> {
             + "where seller.enable = 1 and seller.profile_verified = 1 and seller.registration_verified = 1 "
             + "and seller.email <> :exclude_email "
             + "and (:category_id = 0 or cat.category_id = :category_id)"
-            )
+    )
     List<Bidding> findBiddingByCategory(Integer category_id, String exclude_email);
 
-    @Query("select bid from Bidding bid inner join fetch bid.winner u where u.email = :email")
+    //    @Query("select bid from Bidding bid inner join fetch bid.winner u where u.email = :email")
+    @Query("select bid from Bidding bid inner join fetch bid.winner u inner join bid.payments p where u.email = :email and p.paymentDate is null")
     List<Bidding> findByWinner(String email);
 }
