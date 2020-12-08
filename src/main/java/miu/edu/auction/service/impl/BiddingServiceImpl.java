@@ -1,6 +1,7 @@
 package miu.edu.auction.service.impl;
 
 import miu.edu.auction.domain.*;
+import miu.edu.auction.dto.BiddingHistory;
 import miu.edu.auction.repository.BiddingActivitiesRepository;
 import miu.edu.auction.repository.BiddingRepository;
 import miu.edu.auction.repository.PaymentRepository;
@@ -12,10 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.OptionalDouble;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -72,12 +70,27 @@ public class BiddingServiceImpl implements BiddingService {
 
 
     @Override
-    public List<Bidding> findByWinner(String email) {
-        return biddingRepository.findByWinner(email);
+    public List<Bidding> findByWinner(String email, LocalDate paymentDate) {
+        return biddingRepository.findByWinner(email, paymentDate);
     }
 
     @Override
     public Optional<Bidding> findByID(Integer key) {
         return biddingRepository.findById(key);
+    }
+
+    @Override
+    public List<BiddingHistory> findBidingHistories(Integer bidding_id) {
+        Optional<Bidding> bidding = biddingRepository.findById(bidding_id);
+        List<Bidding_Activities> activitiesList = biddingActivitiesRepository.findByBidding(bidding.get());
+        List<BiddingHistory> listDto = new ArrayList<>();
+        for (int i = 0; i <activitiesList.size(); i++){
+            BiddingHistory biddingHistory = new BiddingHistory();
+            biddingHistory.setId(i);
+            biddingHistory.setBiddingPrice(activitiesList.get(i).getAmount());
+            biddingHistory.setBiddingDate(activitiesList.get(i).getBidding_date());
+//            biddingHistory.setUserName(activitiesList.get(i).getBidding_date());
+        }
+        return null;
     }
 }

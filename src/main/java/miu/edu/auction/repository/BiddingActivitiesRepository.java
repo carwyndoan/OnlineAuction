@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface BiddingActivitiesRepository extends JpaRepository<Bidding_Activities, Integer> {
 
@@ -13,4 +15,6 @@ public interface BiddingActivitiesRepository extends JpaRepository<Bidding_Activ
             + "inner join Bidding b "
             + "where b.bidding_id = :bidding_id")
     Double getMaxBiddingActivitiesByBidding(Integer bidding_id);
+
+    List<Bidding_Activities> findByBidding(Bidding bidding);
 }

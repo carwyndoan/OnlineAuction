@@ -37,7 +37,7 @@ public class TestController {
 
         System.out.println(userDetails);
         String userEmail = userDetails.getUsername();
-        List<Bidding> list = biddingService.findByWinner(userEmail);
+        List<Bidding> list = biddingService.findByWinner(userEmail, LocalDate.now());
         model.addAttribute("biddinglist", list);
         return "bidding/WinBidding";
     }
