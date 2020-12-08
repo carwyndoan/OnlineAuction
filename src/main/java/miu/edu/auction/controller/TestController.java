@@ -76,8 +76,7 @@ public class TestController {
         String userEmail = userDetails.getUsername();
         User user = userService.findUserByEmail(userEmail);
         List<BiddingActivityDTO> listDTO = biddingService.findBidingHistories(id);
-        if (listDTO != null)
-            System.out.println("The size of DTO is "+ listDTO.size());
+        listDTO.forEach(dto -> System.out.println(dto.getId() + " " +  dto.getUserName() + " " + dto.getProductName() + " " + dto.getBiddingPrice() + " " + dto.getBiddingPrice() + " " + dto.getBiddingDate() ));
         return "registration/success";
     }
 }

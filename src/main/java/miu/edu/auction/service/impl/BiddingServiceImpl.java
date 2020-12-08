@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -48,7 +49,7 @@ public class BiddingServiceImpl implements BiddingService {
         Bidding_Activities bidding_activities = new Bidding_Activities();
         bidding_activities.setBidding(bidding);
         bidding_activities.setBidding_user(user);
-        bidding_activities.setBidding_date(LocalDate.now());
+        bidding_activities.setBidding_date(LocalDateTime.now());
 
         if(!max.isPresent())
         {

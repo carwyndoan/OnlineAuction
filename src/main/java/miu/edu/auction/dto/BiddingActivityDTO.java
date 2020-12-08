@@ -3,6 +3,7 @@ package miu.edu.auction.dto;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -14,5 +15,5 @@ public class BiddingActivityDTO {
     private String productName;
     private String userName;
     private Double biddingPrice;
-    private LocalDate biddingDate;
+    private LocalDateTime biddingDate;
 }
