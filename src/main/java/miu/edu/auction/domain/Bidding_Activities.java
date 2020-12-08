@@ -1,9 +1,11 @@
 package miu.edu.auction.domain;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Data
 @Setter
@@ -17,12 +19,12 @@ public class Bidding_Activities {
     private int bidding_activities_id;
 
     @NotNull
-    private int activity;
-
-    @NotNull
     private double amount;
 
     private String description;
+
+    @DateTimeFormat(pattern = "MM-dd-YYYY HH:mm:ss")
+    private LocalDate bidding_date;
 
     @ManyToOne
     @JoinColumn(name = "bidding_id")

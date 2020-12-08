@@ -1,7 +1,6 @@
 package miu.edu.auction.controller;
 
 import miu.edu.auction.domain.Bidding;
-import miu.edu.auction.domain.BiddingDTO;
 import miu.edu.auction.service.BiddingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
