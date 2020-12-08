@@ -41,7 +41,7 @@ public class Bidding {
 
     private String description;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product;
 
