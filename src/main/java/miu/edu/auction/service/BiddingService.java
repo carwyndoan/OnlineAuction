@@ -1,7 +1,7 @@
 package miu.edu.auction.service;
 
 import miu.edu.auction.domain.Bidding;
-import miu.edu.auction.dto.BiddingHistory;
+import miu.edu.auction.dto.BiddingActivityDTO;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,5 +17,5 @@ public interface BiddingService {
 
     Optional<Bidding> findByID(Integer key);
 
-    List<BiddingHistory> findBidingHistories(Integer bidding_id);
+    List<BiddingActivityDTO> findBidingHistories(Integer bidding_id);
 }

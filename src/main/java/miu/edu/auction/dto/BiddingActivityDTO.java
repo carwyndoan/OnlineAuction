@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Setter
 @Getter
-public class BiddingHistory {
+public class BiddingActivityDTO {
     private Integer id;
     private String productName;
     private String userName;

@@ -16,5 +16,6 @@ public interface BiddingActivitiesRepository extends JpaRepository<Bidding_Activ
             + "where b.bidding_id = :bidding_id")
     Double getMaxBiddingActivitiesByBidding(Integer bidding_id);
 
-    List<Bidding_Activities> findByBidding(Bidding bidding);
+    @Query("select act from Bidding_Activities act inner join fetch act.bidding_user u inner join fetch act.bidding b inner join fetch b.product product where b.bidding_id = :bidding_id")
+    List<Bidding_Activities> findByBidding(Integer bidding_id);
 }

@@ -1,20 +1,17 @@
 package miu.edu.auction.service.impl;
 
 import miu.edu.auction.domain.*;
-import miu.edu.auction.dto.BiddingHistory;
+import miu.edu.auction.dto.BiddingActivityDTO;
 import miu.edu.auction.repository.BiddingActivitiesRepository;
 import miu.edu.auction.repository.BiddingRepository;
-import miu.edu.auction.repository.PaymentRepository;
 import miu.edu.auction.repository.UserRepository;
 import miu.edu.auction.service.BiddingService;
 import miu.edu.auction.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class BiddingServiceImpl implements BiddingService {
@@ -80,16 +77,20 @@ public class BiddingServiceImpl implements BiddingService {
     }
 
     @Override
-    public List<BiddingHistory> findBidingHistories(Integer bidding_id) {
-        Optional<Bidding> bidding = biddingRepository.findById(bidding_id);
-        List<Bidding_Activities> activitiesList = biddingActivitiesRepository.findByBidding(bidding.get());
-        List<BiddingHistory> listDto = new ArrayList<>();
+    public List<BiddingActivityDTO> findBidingHistories(Integer bidding_id) {
+//        Optional<Bidding> bidding = biddingRepository.findById(bidding_id);
+        List<Bidding_Activities> activitiesList = biddingActivitiesRepository.findByBidding(bidding_id);
+        System.out.println("The number record of bidding history: "+ activitiesList.size());
+        List<BiddingActivityDTO> listDto = new ArrayList<>();
         for (int i = 0; i <activitiesList.size(); i++){
-            BiddingHistory biddingHistory = new BiddingHistory();
-            biddingHistory.setId(i);
-            biddingHistory.setBiddingPrice(activitiesList.get(i).getAmount());
-            biddingHistory.setBiddingDate(activitiesList.get(i).getBidding_date());
-//            biddingHistory.setUserName(activitiesList.get(i).getBidding_date());
+            Bidding_Activities activity = activitiesList.get(i);
+            BiddingActivityDTO biddingHistoryDTO = new BiddingActivityDTO();
+            biddingHistoryDTO.setId(i);
+            biddingHistoryDTO.setBiddingPrice(activity.getAmount());
+            biddingHistoryDTO.setBiddingDate(activity.getBidding_date());
+            biddingHistoryDTO.setUserName(activity.getBidding_user().getName());
+            biddingHistoryDTO.setProductName(activity.getBidding().getProduct().getName());
+            listDto.add(biddingHistoryDTO);
         }
         return null;
     }

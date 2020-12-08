@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Setter
@@ -23,8 +24,8 @@ public class Bidding_Activities {
 
     private String description;
 
-    @DateTimeFormat(pattern = "MM-dd-YYYY HH:mm:ss")
-    private LocalDate bidding_date;
+    @DateTimeFormat(pattern = "YYYY-MM-dd HH:mm:ss")
+    private LocalDateTime bidding_date;
 
     @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "bidding_id")

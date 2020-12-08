@@ -3,6 +3,7 @@ package miu.edu.auction.controller;
 import miu.edu.auction.domain.Bidding;
 import miu.edu.auction.domain.Payment;
 import miu.edu.auction.domain.User;
+import miu.edu.auction.dto.BiddingActivityDTO;
 import miu.edu.auction.service.BiddingService;
 import miu.edu.auction.service.PaymentService;
 import miu.edu.auction.service.UserService;
@@ -47,13 +48,9 @@ public class TestController {
 //        int bID = Integer.parseInt(id);
         String userEmail = userDetails.getUsername();
         User user = userService.findUserByEmail(userEmail);
-//        System.out.println("UserID: " + user.getEmail());
-
         Optional<Bidding> bidding = biddingService.findByID(id);
-//        System.out.println("Bidding: " + bidding.get().getBidding_id());
-
         Payment payment = paymentService.findPaymentByBiddingID(Integer.valueOf(id));
-//        System.out.println("PaymentID: " + payment.getPayment_id());
+
         if (payment != null) {
             payment.setUser_payment(user);
             if (bidding.isPresent()) {
@@ -72,5 +69,15 @@ public class TestController {
             return "bidding/Payment";
         paymentService.savePayment(payment);
         return "redirect:/bidding/winbiddings";
+    }
+
+    @GetMapping(value = {"/activities/{id}"})
+    public String loadActivites(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer id, Model model) {
+        String userEmail = userDetails.getUsername();
+        User user = userService.findUserByEmail(userEmail);
+        List<BiddingActivityDTO> listDTO = biddingService.findBidingHistories(id);
+        if (listDTO != null)
+            System.out.println("The size of DTO is "+ listDTO.size());
+        return "registration/success";
     }
 }
