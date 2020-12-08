@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
@@ -31,6 +32,8 @@ public class User {
     @Column(columnDefinition = "integer default 1")
     private int enable;
 
+    @NotBlank
+    @Size(min = 4, max = 20, message = "{Size.name.validation}")
     private String name;
 
     @Column(columnDefinition = "integer default 0")

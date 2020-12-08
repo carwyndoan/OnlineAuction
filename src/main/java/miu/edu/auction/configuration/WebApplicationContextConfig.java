@@ -32,19 +32,19 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource resource = new ReloadableResourceBundleMessageSource();
-        resource.setBasenames("classpath:messages", "classpath:errorMessages");
+        resource.setBasenames("classpath:errorMessages", "classpath:messages");
         resource.setDefaultEncoding("UTF-8");
         return resource;
     }
 
     @Bean
-    public LocaleResolver localeResolver(){
-        SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
-        sessionLocaleResolver.setDefaultLocale(Locale.ENGLISH);
-        return sessionLocaleResolver;
+    public LocaleResolver localeResolver() {
+        SessionLocaleResolver slr = new SessionLocaleResolver();
+        slr.setDefaultLocale(Locale.ENGLISH);
+        return slr;
     }
 
-    @Bean(name="validator")
+    @Bean
     public LocalValidatorFactoryBean validator() {
         LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
         bean.setValidationMessageSource(messageSource());
@@ -60,4 +60,6 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
 }
