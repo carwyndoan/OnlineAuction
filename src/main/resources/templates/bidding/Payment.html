@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head>
+<meta charset="UTF-8">
+<title>Employee Form</title>
+<link href="css/main.css" type="text/css" rel="stylesheet">
+<link rel="stylesheet" th:href="@{/css/user.css}" href="../css/user.css" />
+</head>
+<body>
+
+	<div id="global">
+		<form action="#" th:action="@{/bidding/savepayment}" th:object="${payment}"
+			method="post">
+			<fieldset>
+				<legend><span th:text="#{new.payment}">Make Payment</span></legend>
+				<ul th:if="${#fields.hasErrors('*')}">
+					<li th:each="err : ${#fields.errors('*')}" th:text="${err}"> Incorrect Data
+					</li>
+				</ul>
+				<p>
+					<input id="payment_id" th:field="*{payment_id}" type="hidden">
+					<input id="bidding_id" th:field="*{bidding_id}" type="hidden">
+					<label for="email"><span data-th-text="#{user.new.email}">Email:</span></label>
+					<input type="text" id="email" th:field="*{email}" tabindex="1"/>
+					<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:errorclass="fieldError">Incorrect Data</p>
+				</p>
+				<p>
+					<label for="password"><span data-th-text="#{user.new.password}">Password:</span></label>
+					<input type="password" id="password" th:field = "*{password}" tabindex="2"/>
+					<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" th:errorclass="fieldError">Incorrect Data</p>
+				</p>
+				<p>
+					<label for="name"><span data-th-text="#{user.new.name}">Full Name:</span></label>
+					<input type="text" id="name" th:field="*{name}" tabindex="3"/>
+					<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorclass="fieldError"></p>
+				</p>
+				<p>
+					<label for="driverlicense"><span data-th-text="#{user.new.driverlicense}"></span></label>
+					<input id="driverlicense" th:field="*{driver_license}"  tabindex="4"/>
+					<p th:if="${#fields.hasErrors('driver_license')}" th:errors="*{driver_license}" th:errorclass="fieldError"></p>
+				</p>
+				<p>
+					<label for="type"><span data-th-text="#{user.new.usertype}"> User Type:</span></label>
+					<select id = "type" th:field="*{user_type}"  tabindex="5">
+						<option th:value="0" th:text="#{user.new.usertype.user}"></option>
+						<option th:value="1" th:text="#{user.new.usertype.admin}"></option>
+						<option th:value="2" th:text="#{user.new.usertype.customer}"></option>
+						<option th:value="3" th:text="#{user.new.usertype.seller}"></option>
+					</select>
+				</p>
+				<p id="buttons">
+					<input id="reset" type="reset" th:value="#{user.new.button.reset}" value="Reset" tabindex="4"> <input
+						id="submit" type="submit" tabindex="5" th:value="#{user.new.button.add}" value="Add Employee">
+				</p>
+			</fieldset>
+		</form>
+	</div>
+</body>
+</html>

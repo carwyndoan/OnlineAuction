@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BiddingServiceImpl implements BiddingService {
@@ -24,5 +25,10 @@ public class BiddingServiceImpl implements BiddingService {
     @Override
     public List<Bidding> findByWinner(String email) {
         return biddingRepository.findByWinner(email);
+    }
+
+    @Override
+    public Optional<Bidding> findByID(Integer key) {
+        return biddingRepository.findById(key);
     }
 }

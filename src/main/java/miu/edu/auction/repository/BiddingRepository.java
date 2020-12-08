@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BiddingRepository extends JpaRepository<Bidding, Integer> {
@@ -27,8 +28,11 @@ public interface BiddingRepository extends JpaRepository<Bidding, Integer> {
     @Query("select bid from Bidding bid inner join fetch bid.winner u where u.email = :email")
     List<Bidding> findByWinner(String email);
 
+//    @Override
+//    Optional<Bidding> findById(Integer integer);
 
-//    @Query("select bid from Bidding bid")
+
+    //    @Query("select bid from Bidding bid")
 //    Collection<Bidding> findByWinner(@Param("user_id")Integer user_id);
 
 
