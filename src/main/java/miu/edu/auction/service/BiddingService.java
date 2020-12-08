@@ -1,6 +1,7 @@
 package miu.edu.auction.service;
 
 import miu.edu.auction.domain.Bidding;
+import miu.edu.auction.domain.BiddingDTO;
 
 import java.util.List;
 

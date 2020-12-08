@@ -1,6 +1,7 @@
 package miu.edu.auction.service.impl;
 
 import miu.edu.auction.domain.Bidding;
+import miu.edu.auction.domain.BiddingDTO;
 import miu.edu.auction.repository.BiddingRepository;
 import miu.edu.auction.service.BiddingService;
 import org.springframework.beans.factory.annotation.Autowired;

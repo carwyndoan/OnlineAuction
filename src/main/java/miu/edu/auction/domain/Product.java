@@ -40,4 +40,11 @@ public class Product {
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "product")
     private Bidding bidding;
+
+    @ManyToMany
+    @JoinTable(
+            name = "category_product",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    List<Category> categories;
 }
