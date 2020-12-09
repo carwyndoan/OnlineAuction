@@ -21,8 +21,8 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Payment findPaymentByBiddingID(Integer biddingID) {
-        return paymentRepository.findPaymentByBiddingID(biddingID);
+    public Payment findPaymentByBiddingID(Integer biddingID, Integer userID) {
+        return paymentRepository.findPaymentByBiddingID(biddingID, userID);
     }
 
     @Override

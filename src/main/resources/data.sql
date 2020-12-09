@@ -42,9 +42,9 @@ insert into bidding(bidding_id, deposit, description, start_price, finalprice, d
 insert into bidding(bidding_id, deposit, description, start_price, finalprice, duedate, payment_duedate, status, product_id) values
 				   (5, 10000, 'Final Worldcup Ball', 120000, 500000, '2020-12-07', '2020-12-30', 1, 2);
 
-insert into payment(payment_id, deposit, deposit_date, bidding_id) values (1, 2000, '2020-12-07', 1);
-insert into payment(payment_id, deposit, deposit_date, bidding_id) values (2, 20000, '2020-12-07', 2);
-insert into payment(payment_id, deposit, deposit_date, bidding_id) values (3, 1200, '2020-12-07', 3);
+insert into payment(payment_id, deposit, deposit_date, bidding_id, user_payment_id) values (1, 2000, '2020-12-07', 1, 1);
+insert into payment(payment_id, deposit, deposit_date, bidding_id, user_payment_id) values (2, 20000, '2020-12-07', 2, 1);
+insert into payment(payment_id, deposit, deposit_date, bidding_id, user_payment_id) values (3, 1200, '2020-12-07', 3, 2);
 insert into payment(payment_id, deposit, deposit_date, bidding_id) values (4, 200000, '2020-12-07', 4);
 insert into payment(payment_id, deposit, deposit_date, bidding_id) values (5, 10000, '2020-12-07', 5);
 

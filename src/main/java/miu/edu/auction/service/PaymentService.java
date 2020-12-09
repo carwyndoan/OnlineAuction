@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface PaymentService {
     Payment savePayment(Payment payment);
 
-    Payment findPaymentByBiddingID(Integer biddingID);
+    Payment findPaymentByBiddingID(Integer biddingID, Integer userID);
 
     Payment deposit(Bidding bidding, User user);
 }

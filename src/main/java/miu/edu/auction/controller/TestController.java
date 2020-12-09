@@ -51,7 +51,7 @@ public class TestController {
         String userEmail = userDetails.getUsername();
         User user = userService.findUserByEmail(userEmail);
         Optional<Bidding> bidding = biddingService.findByID(id);
-        Payment payment = paymentService.findPaymentByBiddingID(Integer.valueOf(id));
+        Payment payment = paymentService.findPaymentByBiddingID(Integer.valueOf(id), user.getUser_id());
 
         if (payment != null) {
             payment.setUser_payment(user);
@@ -60,9 +60,10 @@ public class TestController {
                 payment.setRemainingAmount(bidding.get().getFinalprice() - bidding.get().getDeposit());
                 payment.setPaymentDate(LocalDate.now());
             }
+            model.addAttribute("payment", payment);
+            return "bidding/Payment";
         }
-        model.addAttribute("payment", payment);
-        return "bidding/Payment";
+        return "bidding/error";
     }
 
     @PostMapping(value = {"/payment"})
