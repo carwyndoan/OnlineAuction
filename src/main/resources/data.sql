@@ -25,11 +25,11 @@ insert into category(category_id, name, active) values (5, 'Laptop shop', 1);
 insert into category(category_id, name, active) values (6, 'Watch shop', 1);
 insert into category(category_id, name, active) values (7, 'Shoe shop', 1);
 
-insert into product(product_id, active, name, status, seller_id) values (1, 1, 'Seller_Product_1', 1, 3);
-insert into product(product_id, active, name, status, seller_id) values (2, 1, 'Seller_Product_2', 1, 3);
-insert into product(product_id, active, name, status, seller_id) values (3, 1, 'Seller_Product_3', 1, 3);
-insert into product(product_id, active, name, status, seller_id) values (4, 1, 'Seller_Product_4', 1, 3);
-insert into product(product_id, active, name, status, seller_id) values (5, 1, 'Seller_Product_5', 1, 3);
+insert into product(product_id, active, description, image_path, name, status, seller_id) values (1, 1, '200','200.jpg', 'Seller_Product_1', 1, 3);
+insert into product(product_id, active, description, image_path, name, status, seller_id) values (2, 1, 'civic','civic.jpg', 'Seller_Product_2', 1, 3);
+insert into product(product_id, active, description, image_path, name, status, seller_id) values (3, 1, 'lx','lx.jpg', 'Seller_Product_3', 1, 3);
+insert into product(product_id, active, description, image_path, name, status, seller_id) values (4, 1, 'alphard','alphard.jpg', 'Seller_Product_4', 1, 3);
+insert into product(product_id, active, description, image_path, name, status, seller_id) values (5, 1, 'corolla','corolla.jpg', 'Seller_Product_5', 1, 3);
 
 insert into bidding(bidding_id, deposit, description, start_price, finalprice, duedate, payment_duedate, status, product_id, winner_id) values
 				   (1, 2000, 'Macbook Pro 2020', 500, 1500, '2020-12-25', '2020-12-30', 2, 1, 1);
