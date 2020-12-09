@@ -190,6 +190,7 @@
     </div>
 </div>
 
+<!--
 <div class="container-fluid bg-light ">
     <div class="row align-items-center justify-content-center">
         <div class="col-md-2 pt-3">
@@ -237,6 +238,7 @@
         </div>
     </div>
 </div>
+-->
 
 <div class="container">
 
@@ -245,27 +247,15 @@
         <div class="row">
             <div class="col-lg-3" th:each="photo : ${photos}">
                 <div class="card" style="width: 18rem;">
-                    <img th:src="'/images/'+${photo.getUrl()}" alt="User name">
+                    <img th:src="'/images/'+${photo.getImage_path()}" alt="User name">
 
                     <div class="card-body">
-                        <h5 class="card-title" th:utext="${photo.getCaption()}"></h5>
+                        <h5 class="card-title" th:utext="${photo.getDescription()}"></h5>
                         <p class="card-text" th:utext="${photo.getDescription()}"></p><!--
                         <button type="button" class="btn btn-dark" th:href="@{/detail.html}">More...</button>-->
                         <a class="btn btn-light" th:href="@{/detail}">More...</a>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="row">
-            Total Items: [[${totalItems}]]
-            <div class='pagination'>
-                <a th:if="${currentPage > 1}" th:href="/@{'/page/1'}">First</a>
-                <span th:unless="${currentPage > 1}">First</span>
-
-                <a th:if="${currentPage > 1}" th:href="/@{'/page/' + ${currentPage - 1}}">Previous</a>
-                <span th:unless="${currentPage > 1}">Previous</span>
-
             </div>
         </div>
 

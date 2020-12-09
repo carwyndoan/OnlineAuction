@@ -1,0 +1,77 @@
+body {
+
+}
+
+header h1 {
+    text-align: center;
+}
+
+.main-section {
+    margin-top: 100px;
+}
+
+.img-block {
+    width: 100%;
+    clear: both;
+    display: block;
+    position: relative;
+}
+
+.img-block img {
+    display: block;
+    clear: both;
+    width: 100%;
+}
+
+.sidebar {
+    width: 100%;
+    height:100%;
+}
+
+.side-block {
+
+}
+
+
+.dislike-icon {
+    color: #808080;
+}
+
+.textarea-addon {
+    border-bottom-left-radius: 0px !important;
+    border-top-right-radius: 4px !important;
+    border:1px solid #ccc !important;
+    border-bottom: none !important;
+}
+
+.btn-add {
+    background-color: #FF4F67;
+    border-color: #FF4F67;
+    color: white;
+}
+
+.btn-small {
+    background-color: #FF4F67;
+    border-color: #FF4F67;
+    color: white;
+    height: 25px;
+    font-size: 12px;
+}
+
+.profiles {
+    background: #ffffff;
+    padding: 15px;
+    display: block;
+    overflow: hidden;
+    margin-bottom: 15px;
+    /*margin-top:16px;*/
+}
+
+.profile-block {
+    padding: 10px;
+    height: 150px;
+}
+
+.profile-name {
+    margin-top: 10px;
+}
