@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -28,15 +29,17 @@ public class Payment {
     @Column(columnDefinition = "double default 0")
     private double returnDeposit;
 
-    private LocalDate depositDate;
+    private LocalDateTime depositDate;
 
-    private LocalDate paymentDate;
+    private LocalDateTime paymentDate;
 
-    private LocalDate returnDepositDate;
+    private LocalDateTime returnDepositDate;
 
-    private LocalDate shipDate;
+    private LocalDateTime shipDate;
 
-    private LocalDate deliveryDate;
+    private LocalDateTime deliveryDate;
+
+    private LocalDateTime paySellerDate;
 
     @NotBlank
     private String street;
@@ -58,4 +61,8 @@ public class Payment {
     @ManyToOne
     @JoinColumn(name = "bidding_id")
     private Bidding biddingPayment;
+
+    @OneToOne
+    @JoinColumn(name = "seller_payment_id")
+    private User seller;
 }

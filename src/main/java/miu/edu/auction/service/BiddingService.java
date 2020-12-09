@@ -1,6 +1,7 @@
 package miu.edu.auction.service;
 
 import miu.edu.auction.domain.Bidding;
+import miu.edu.auction.dto.BiddingActivityDTO;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,8 +21,6 @@ public interface BiddingService {
     List<BiddingActivityDTO> findBidingHistoriesByMonthAndYear(Integer bidding_id, Integer year, Integer month);
 
     Boolean closeBidding(Integer bidding_id);//Setup winner, return deposit to others
-
-    Boolean payFullAmount(Integer bidding_id);//Pay full amount and shiped / return deposit
 
     Boolean paySeller(Integer bidding_id);//pay for seller when delivered / after shiped 30 days
 
