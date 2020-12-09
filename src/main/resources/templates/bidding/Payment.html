@@ -30,6 +30,13 @@
 					<input type="text" id="remainingAmount" th:field = "*{remainingAmount}" tabindex="2" readonly/>
 					<p th:if="${#fields.hasErrors('remainingAmount')}" th:errors="*{remainingAmount}" th:errorclass="fieldError">Incorrect Data</p>
 				</p>
+
+				<p>
+					<label for="receiverName"><span data-th-text="#{payment.receiverName}">Receiver:</span></label>
+					<input type="text" id="receiverName" th:field="*{receiverName}" tabindex="3"/>
+				<p th:if="${#fields.hasErrors('receiverName')}" th:errors="*{receiverName}" th:errorclass="fieldError"></p>
+				</p>
+
 				<p>
 					<label for="street"><span data-th-text="#{payment.street}">Street:</span></label>
 					<input type="text" id="street" th:field="*{street}" tabindex="3"/>

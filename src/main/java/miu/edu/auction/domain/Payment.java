@@ -42,6 +42,9 @@ public class Payment {
     private LocalDateTime paySellerDate;
 
     @NotBlank
+    private String receiverName;
+
+    @NotBlank
     private String street;
 
     @NotBlank
