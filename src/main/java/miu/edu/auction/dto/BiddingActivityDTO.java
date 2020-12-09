@@ -14,6 +14,8 @@ public class BiddingActivityDTO {
     private Integer id;
     private String productName;
     private String userName;
+    private Double startPrice;
     private Double biddingPrice;
     private LocalDateTime biddingDate;
+    private LocalDate biddingDueDate;
 }

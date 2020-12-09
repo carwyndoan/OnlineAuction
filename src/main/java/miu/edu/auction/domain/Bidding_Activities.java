@@ -27,7 +27,7 @@ public class Bidding_Activities {
     @DateTimeFormat(pattern = "YYYY-MM-dd HH:mm:ss")
     private LocalDateTime bidding_date;
 
-    @ManyToOne (fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "bidding_id")
     private Bidding bidding;
 
