@@ -18,4 +18,5 @@ public interface BiddingActivitiesRepository extends JpaRepository<Bidding_Activ
 
     @Query("select act from Bidding_Activities act inner join fetch act.bidding_user u inner join fetch act.bidding b inner join fetch b.product product where b.bidding_id = :bidding_id")
     List<Bidding_Activities> findByBidding(Integer bidding_id);
+
 }

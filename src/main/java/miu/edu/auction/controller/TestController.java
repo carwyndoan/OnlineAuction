@@ -77,7 +77,7 @@ public class TestController {
     public String loadActivites(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer id, Model model) {
         String userEmail = userDetails.getUsername();
         User user = userService.findUserByEmail(userEmail);
-        List<BiddingActivityDTO> listDTO = biddingService.findBidingHistories(id);
+        List<BiddingActivityDTO> listDTO = biddingService.findBidingHistoriesByMonthAndYear(id, -1, -1);
         int startYear = LocalDate.now().getYear();
         List<Integer> months = new ArrayList<>();
         List<Integer> years = new ArrayList<>();
@@ -97,9 +97,25 @@ public class TestController {
     }
 
     @GetMapping(value = {"/activitiesByMonthAndYear/{bidding_id}"})
-    public String loadHistoryByYearAndMonth(@PathVariable Integer bidding_id, @RequestParam Integer year, @RequestParam Integer month, Model model){
-
-        System.out.println(year + " " + month + " " + bidding_id);
-        return "registration/success";
+    public String loadHistoryByYearAndMonth(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer bidding_id, @RequestParam Integer year, @RequestParam Integer month, Model model){
+        String userEmail = userDetails.getUsername();
+        User user = userService.findUserByEmail(userEmail);
+        List<BiddingActivityDTO> listDTO = biddingService.findBidingHistoriesByMonthAndYear(bidding_id, year, month);
+        int startYear = LocalDate.now().getYear();
+        List<Integer> months = new ArrayList<>();
+        List<Integer> years = new ArrayList<>();
+        for(int i = 1; i <=12; i++){
+            months.add(i);
+        }
+        int i = startYear - 10;
+        while (i <= startYear + 10){
+            years.add(i);
+            i++;
+        }
+        model.addAttribute("months", months);
+        model.addAttribute("years", years);
+        model.addAttribute("activities", listDTO);
+        model.addAttribute("biddingid", bidding_id);
+        return "bidding/BiddingHistories";
     }
 }

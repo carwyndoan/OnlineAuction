@@ -35,7 +35,7 @@ public class BiddingServiceImpl implements BiddingService {
     }
 
     /*
-    * Return max bid
+     * Return max bid
      */
     @Override
     public Double placeBid(Integer bidding_id, Integer user_id, Double bid) {
@@ -51,14 +51,12 @@ public class BiddingServiceImpl implements BiddingService {
         bidding_activities.setBidding_user(user);
         bidding_activities.setBidding_date(LocalDateTime.now());
 
-        if(!max.isPresent())
-        {
+        if (!max.isPresent()) {
             //Deposit
             paymentService.deposit(bidding, user);
             bidding_activities.setAmount(bid);
             biddingActivitiesRepository.save(bidding_activities);
-        }
-        else if(max.getAsDouble() < bid) {
+        } else if (max.getAsDouble() < bid) {
             bidding_activities.setAmount(bid);
             biddingActivitiesRepository.save(bidding_activities);
         }
@@ -79,12 +77,42 @@ public class BiddingServiceImpl implements BiddingService {
 
     @Override
     public List<BiddingActivityDTO> findBidingHistories(Integer bidding_id) {
-//        Optional<Bidding> bidding = biddingRepository.findById(bidding_id);
         List<Bidding_Activities> activitiesList = biddingActivitiesRepository.findByBidding(bidding_id);
-        System.out.println("The number record of bidding history: "+ activitiesList.size());
+        System.out.println("The number record of bidding history: " + activitiesList.size());
         List<BiddingActivityDTO> listDto = new ArrayList<>();
-        for (int i = 0; i <activitiesList.size(); i++){
+        for (int i = 0; i < activitiesList.size(); i++) {
             Bidding_Activities activity = activitiesList.get(i);
+            BiddingActivityDTO biddingHistoryDTO = new BiddingActivityDTO();
+            biddingHistoryDTO.setId(i);
+            biddingHistoryDTO.setBiddingPrice(activity.getAmount());
+            biddingHistoryDTO.setBiddingDate(activity.getBidding_date());
+            biddingHistoryDTO.setUserName(activity.getBidding_user().getName());
+            biddingHistoryDTO.setProductName(activity.getBidding().getProduct().getName());
+            listDto.add(biddingHistoryDTO);
+        }
+        return listDto;
+    }
+
+    @Override
+    public List<BiddingActivityDTO> findBidingHistoriesByMonthAndYear(Integer bidding_id, Integer year, Integer month) {
+        List<Bidding_Activities> activitiesList = biddingActivitiesRepository.findByBidding(bidding_id);
+        System.out.println("The number record of bidding history: " + activitiesList.size());
+        List<BiddingActivityDTO> listDto = new ArrayList<>();
+        for (int i = 0; i < activitiesList.size(); i++) {
+            Bidding_Activities activity = activitiesList.get(i);
+            if ((year > 0) && (month > 0)) {
+                if ((activity.getBidding_date().getYear() != year) ||
+                        (activity.getBidding_date().getMonthValue() != month)) {
+                    continue;
+                }
+            } else if ((year > 0) && (month <= 0)) {
+                if (activity.getBidding_date().getYear() != year) {
+                    continue;
+                }
+            } else if ((year <= 0) && (month > 0)) {
+                if (activity.getBidding_date().getMonthValue() != month)
+                    continue;
+            }
             BiddingActivityDTO biddingHistoryDTO = new BiddingActivityDTO();
             biddingHistoryDTO.setId(i);
             biddingHistoryDTO.setBiddingPrice(activity.getAmount());

@@ -18,4 +18,5 @@ public interface BiddingService {
     Optional<Bidding> findByID(Integer key);
 
     List<BiddingActivityDTO> findBidingHistories(Integer bidding_id);
+    List<BiddingActivityDTO> findBidingHistoriesByMonthAndYear(Integer bidding_id, Integer year, Integer month);
 }
