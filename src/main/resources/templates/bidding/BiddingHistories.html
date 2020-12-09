@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Bidding Histories</title>
@@ -24,6 +24,19 @@
 
 <section class="container">
     <div>
+        <form action="#" th:action="@{/bidding/activitiesByMonthAndYear/{id}(id=*{biddingid})}" method="get">
+            <label><span>Month: </span></label>
+            <select name="month" th:width="6">
+                <option th:each="month : ${months}" th:value="${month.intValue()}" th:text="${month.intValue()}"></option>
+            </select> &nbsp&nbsp&nbsp
+            <label>Year:</label>
+            <select name="year" th:width="12">
+                <option th:each="year:${years}" th:value="${year.intValue()}" th:text="${year.intValue()}"></option>
+            </select>
+<!--            <h3 th:text="*{biddingid}"></h3>-->
+<!--            <input th:field="*{biddingid}" type="hidden">-->
+            <input type="submit" value="Search">
+        </form>
         <table class="table table-hover">
             <tr>
 <!--                <label for="deposit"><span data-th-text="#{payment.deposit}">Deposit:</span></label>-->
