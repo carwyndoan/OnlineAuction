@@ -14,4 +14,11 @@ public interface BiddingService {
     List<Bidding> findByWinner(String email);
 
     Optional<Bidding> findByID(Integer key);
+
+    Boolean closeBidding(Integer bidding_id);//Setup winner, return deposit to others
+
+    Boolean payFullAmount(Integer bidding_id);//Pay full amount and shiped / return deposit
+
+    Boolean paySeller(Integer bidding_id);//pay for seller when delivered / after shiped 30 days
+
 }

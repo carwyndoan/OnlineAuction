@@ -80,4 +80,30 @@ public class BiddingServiceImpl implements BiddingService {
     public Optional<Bidding> findByID(Integer key) {
         return biddingRepository.findById(key);
     }
+
+    @Override
+    public Boolean closeBidding(Integer bidding_id) {
+        try {
+            Double maxBid = biddingActivitiesRepository.getMaxBiddingActivitiesByBidding(bidding_id);
+            Bidding_Activities bidding_activities = biddingActivitiesRepository.getMaxBiddingActivity(bidding_id, maxBid);
+            Bidding bidding = biddingRepository.findById(bidding_id).get();
+            bidding.setWinner(bidding_activities.getBidding_user());
+            bidding = biddingRepository.save(bidding);
+            return true;
+        }
+        catch (Exception ex){
+            System.out.println(ex);
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean payFullAmount(Integer bidding_id) {
+        return null;
+    }
+
+    @Override
+    public Boolean paySeller(Integer bidding_id) {
+        return null;
+    }
 }
