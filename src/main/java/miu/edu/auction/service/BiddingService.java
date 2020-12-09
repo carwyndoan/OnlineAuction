@@ -19,4 +19,9 @@ public interface BiddingService {
 
     List<BiddingActivityDTO> findBidingHistories(Integer bidding_id);
     List<BiddingActivityDTO> findBidingHistoriesByMonthAndYear(Integer bidding_id, Integer year, Integer month);
+
+    Boolean closeBidding(Integer bidding_id);//Setup winner, return deposit to others
+
+    Boolean paySeller(Integer bidding_id);//pay for seller when delivered / after shiped 30 days
+
 }

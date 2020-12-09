@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.swing.text.html.Option;
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -58,7 +59,7 @@ public class TestController {
             if (bidding.isPresent()) {
                 payment.setBiddingPayment(bidding.get());
                 payment.setRemainingAmount(bidding.get().getFinalprice() - bidding.get().getDeposit());
-                payment.setPaymentDate(LocalDate.now());
+                payment.setPaymentDate(LocalDateTime.now());
             }
             model.addAttribute("payment", payment);
             return "bidding/Payment";

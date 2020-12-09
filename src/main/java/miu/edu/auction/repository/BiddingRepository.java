@@ -32,5 +32,11 @@ public interface BiddingRepository extends JpaRepository<Bidding, Integer> {
     List<Bidding> findByWinner(String email, LocalDate paymentDate);
 
     @Override
+    @Query(value = "select bid from Bidding bid "
+            + "inner join fetch bid.product pr "
+            + "inner join fetch bid.payments p "
+            //+ "inner join fetch bid.bidding_activities ba "
+            + "inner join fetch bid.winner win "
+            + "where bid.bidding_id = :integer")
     Optional<Bidding> findById(Integer integer);
 }

@@ -8,6 +8,9 @@ import miu.edu.auction.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,12 +29,30 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Payment deposit(Bidding bidding, User user) {
-        Payment payment = new Payment();
-        payment.setUser_payment(user);
-        payment.setBiddingPayment(bidding);
-        payment.setDeposit(bidding.getDeposit() <= 0 ? bidding.getStart_price() * 0.1 : bidding.getDeposit());
+    public Payment chargeDeposit(Payment payment) {
+        //TODO: payment with paypal
+        payment.setDepositDate(LocalDateTime.now());
+        paymentRepository.save(payment);
         return  savePayment(payment);
+    }
+
+    @Override
+    public Payment returnDeposit(Payment payment) {
+        //TODO: payment with paypal
+        //Update system
+        payment.setReturnDeposit(payment.getDeposit());
+        payment.setReturnDepositDate(LocalDateTime.now());
+        paymentRepository.save(payment);
+        return payment;
+    }
+
+    @Override
+    public Payment payToSeller(Payment payment) {
+        //TODO: payment with paypal
+        //Update system
+        payment.setPaySellerDate(LocalDateTime.now());
+        paymentRepository.save(payment);
+        return  payment;
     }
 
 
