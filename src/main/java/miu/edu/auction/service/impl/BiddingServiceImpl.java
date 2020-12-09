@@ -78,6 +78,11 @@ public class BiddingServiceImpl implements BiddingService {
     }
 
     @Override
+    public List<Bidding> findByUserBidding(String email) {
+        return biddingRepository.findByUserBidding(email);
+    }
+
+    @Override
     public Optional<Bidding> findByID(Integer key) {
         return biddingRepository.findById(key);
     }

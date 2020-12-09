@@ -38,13 +38,22 @@ public class TestController {
     PaymentService paymentService;
 
     @GetMapping(value = {"/winbiddings"})
-    public String loadBidding(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+    public String loadWinBidding(@AuthenticationPrincipal UserDetails userDetails, Model model) {
 
         System.out.println(userDetails);
         String userEmail = userDetails.getUsername();
         List<Bidding> list = biddingService.findByWinner(userEmail, LocalDate.now());
-        model.addAttribute("biddinglist", list);
+        model.addAttribute("winbiddings", list);
         return "bidding/WinBidding";
+    }
+
+    @GetMapping(value = {"/biddings"})
+    public String loadAllBidding(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        System.out.println(userDetails);
+        String userEmail = userDetails.getUsername();
+        List<Bidding> list = biddingService.findByUserBidding(userEmail);
+        model.addAttribute("allbiddings", list);
+        return "bidding/AllBidding";
     }
 
     @GetMapping(value = {"/paymentform/{id}"})
