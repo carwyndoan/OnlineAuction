@@ -62,7 +62,6 @@ public class TestController {
         User user = userService.findUserByEmail(userEmail);
         Optional<Bidding> bidding = biddingService.findByID(id);
         Payment payment = paymentService.findPaymentByBiddingID(Integer.valueOf(id), user.getUser_id());
-
         if (payment != null) {
             payment.setUser_payment(user);
             if (bidding.isPresent()) {
@@ -77,10 +76,11 @@ public class TestController {
     }
 
     @PostMapping(value = {"/payment"})
-    public String savePayment(@Valid Payment payment, BindingResult bindingResult) {
+    public String savePayment(@AuthenticationPrincipal UserDetails userDetails, @Valid Payment payment, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "bidding/Payment";
-        paymentService.savePayment(payment);
+        String userEmail = userDetails.getUsername();
+        Payment payment1 =  paymentService.savePayment(payment);
         return "redirect:/bidding/winbiddings";
     }
 
