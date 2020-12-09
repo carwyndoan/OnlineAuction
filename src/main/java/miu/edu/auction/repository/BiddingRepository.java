@@ -8,6 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +28,9 @@ public interface BiddingRepository extends JpaRepository<Bidding, Integer> {
     List<Bidding> findBiddingByCategory(Integer category_id, String exclude_email);
 
     //    @Query("select bid from Bidding bid inner join fetch bid.winner u where u.email = :email")
-    @Query("select bid from Bidding bid inner join fetch bid.winner u inner join bid.payments p where u.email = :email and p.paymentDate is null")
-    List<Bidding> findByWinner(String email);
+    @Query("select bid from Bidding bid inner join fetch bid.winner u inner join bid.payments p where bid.payment_duedate >= :paymentDate and u.email = :email and p.paymentDate is null")
+    List<Bidding> findByWinner(String email, LocalDate paymentDate);
+
+    @Override
+    Optional<Bidding> findById(Integer integer);
 }

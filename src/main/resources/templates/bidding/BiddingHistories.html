@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Bidding Histories</title>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script type="text/javascript"
+            src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+</head>
+<body>
+
+<section>
+    <div class="jumbotron">
+        <div class="container">
+            <h1><span th:text="#{bidding.activities.form}">The Bidding History</span></h1>
+        </div>
+    </div>
+</section>
+
+<section class="container">
+    <div>
+        <form action="#" th:action="@{/bidding/activitiesByMonthAndYear/{id}(id=*{biddingid})}" method="get">
+            <label><span>Month: </span></label>
+            <select name="month" th:width="6">
+                <option value="0" th:text="All" selected></option>
+                <option th:each="month : ${months}" th:value="${month.intValue()}" th:text="${month.intValue()}"></option>
+            </select> &nbsp&nbsp&nbsp
+            <label>Year:</label>
+            <select name="year" th:width="12">
+                <option value="0" th:text="All" selected> </option>
+                <option th:each="year:${years}" th:value="${year.intValue()}" th:text="${year.intValue()}"></option>
+            </select>
+<!--            <h3 th:text="*{biddingid}"></h3>-->
+<!--            <input th:field="*{biddingid}" type="hidden">-->
+            <input type="submit" value="Search">
+        </form>
+        <table class="table table-hover">
+            <tr>
+<!--                <label for="deposit"><span data-th-text="#{payment.deposit}">Deposit:</span></label>-->
+                <th><span th:text="#{bidding.activities.id}">ID</span></th>
+                <th><span th:text="#{bidding.activities.product}">Product</span></th>
+                <th><span th:text="#{bidding.activities.username}">Username</span></th>
+                <th><span th:text="#{bidding.activities.biddingprice}">Biding Price</span></th>
+                <th><span th:text="#{bidding.activities.biddingdate}">Bidding Date</span></th>
+            </tr>
+        </table>
+        <table id="cart_table" class="table table-hover">
+            <tr th:each="item: ${activities}">
+                <td th:text="${item.id}"></td>
+                <td th:text="${item.productName}"></td>
+                <td th:text="${item.userName}"></td>
+                <td th:text="${item.biddingPrice}"></td>
+                <td th:text="${item.biddingDate}"></td>
+            </tr>
+        </table>
+    </div>
+</section>
+</body>
+</html>
