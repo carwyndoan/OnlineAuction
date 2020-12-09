@@ -29,7 +29,7 @@ public class User {
     private String password;
 
     @NotNull
-    @Column(columnDefinition = "integer default 1")
+    @Column(columnDefinition = "integer default 0")
     private int enable;
 
     @NotBlank
