@@ -33,6 +33,28 @@
 					<input type="text" id="name" th:field="*{name}" tabindex="3"/>
 					<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorclass="fieldError"></p>
 				</p>
+
+				<p>
+					<label for="street"><span data-th-text="#{user.new.street}">Street:</span></label>
+					<input type="text" id="street" th:field="*{street}" tabindex="3"/>
+				<p th:if="${#fields.hasErrors('street')}" th:errors="*{street}" th:errorclass="fieldError"></p>
+				</p>
+				<p>
+					<label for="city"><span data-th-text="#{user.new.city}">City:</span></label>
+					<input type="text" id="city" th:field="*{city}" tabindex="3"/>
+				<p th:if="${#fields.hasErrors('city')}" th:errors="*{city}" th:errorclass="fieldError"></p>
+				</p>
+				<p>
+					<label for="state"><span data-th-text="#{user.new.state}">City:</span></label>
+					<input type="text" id="state" th:field="*{state}" tabindex="3"/>
+				<p th:if="${#fields.hasErrors('state')}" th:errors="*{state}" th:errorclass="fieldError"></p>
+				</p>
+				<p>
+					<label for="zipcode"><span data-th-text="#{user.new.zipcode}">City:</span></label>
+					<input type="text" id="zipcode" th:field="*{zipcode}" tabindex="3"/>
+				<p th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}" th:errorclass="fieldError"></p>
+				</p>
+
 				<p>
 					<label for="driverlicense"><span data-th-text="#{user.new.driverlicense}"></span></label>
 					<input id="driverlicense" th:field="*{driver_license}"  tabindex="4"/>

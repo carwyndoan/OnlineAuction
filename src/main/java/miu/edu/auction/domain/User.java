@@ -36,6 +36,19 @@ public class User {
     @Size(min = 4, max = 20, message = "{Size.name.validation}")
     private String name;
 
+    @NotBlank
+    private String street;
+
+    @NotBlank
+    private String city;
+
+    @NotBlank
+    @Size(min = 2, max = 2, message = "{Size.state.validation}")
+    private String state;
+
+    @NotBlank
+    private String zipcode;
+
     @Column(columnDefinition = "integer default 0")
     private int registration_verified;
 
