@@ -82,11 +82,11 @@ public class TestController {
         int startYear = LocalDate.now().getYear();
         List<Integer> months = new ArrayList<>();
         List<Integer> years = new ArrayList<>();
-        for(int i = 1; i <=12; i++){
+        for (int i = 1; i <= 12; i++) {
             months.add(i);
         }
         int i = startYear - 10;
-        while (i <= startYear + 10){
+        while (i <= startYear + 10) {
             years.add(i);
             i++;
         }
@@ -98,18 +98,18 @@ public class TestController {
     }
 
     @GetMapping(value = {"/activitiesByMonthAndYear/{bidding_id}"})
-    public String loadHistoryByYearAndMonth(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer bidding_id, @RequestParam Integer year, @RequestParam Integer month, Model model){
+    public String loadHistoryByYearAndMonth(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer bidding_id, @RequestParam Integer year, @RequestParam Integer month, Model model) {
         String userEmail = userDetails.getUsername();
         User user = userService.findUserByEmail(userEmail);
         List<BiddingActivityDTO> listDTO = biddingService.findBidingHistoriesByMonthAndYear(bidding_id, year, month);
         int startYear = LocalDate.now().getYear();
         List<Integer> months = new ArrayList<>();
         List<Integer> years = new ArrayList<>();
-        for(int i = 1; i <=12; i++){
+        for (int i = 1; i <= 12; i++) {
             months.add(i);
         }
         int i = startYear - 10;
-        while (i <= startYear + 10){
+        while (i <= startYear + 10) {
             years.add(i);
             i++;
         }
