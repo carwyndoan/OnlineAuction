@@ -18,6 +18,17 @@
     <script th:src="'/js/scripts.js'"></script>
 
     <script language="JavaScript">
+
+        $(document).ready(function () {
+            changePageAndSize();
+        });
+
+        function changePageAndSize() {
+            $('#pageSizeSelect').change(function (evt) {
+                window.location.replace("/home?pageSize=" + this.value + "&page=1");
+            });
+        }
+
         $(document).ready(function () {
 
             $('.navbar .dropdown-item').on('click', function (e) {
@@ -94,6 +105,20 @@
                 border-left: .3em solid;
             }
         }
+
+        .pagination-centered {
+            text-align: center;
+        }
+
+        .disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .pointer-disabled {
+            pointer-events: none;
+        }
+
     </style>
 </head>
 <body>
@@ -235,7 +260,7 @@
         <div class="col-md-4">
             <form th:action="@{/search}" method="get" enctype='application/json'>
                 <input type="text" name="searchValue">
-                <input type="submit" class="btn btn-dark">
+                <input type="submit" class="btn btn-dark" value="Search">
             </form>
 
         </div>
@@ -262,7 +287,47 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="form-group col-md-1">
+                <select class="form-control pagination" id="pageSizeSelect">
+                    <option th:each="pageSize : ${pageSizes}" th:text="${pageSize}"
+                            th:value="${pageSize}"
+                            th:selected="${pageSize} == ${selectedPageSize}"></option>
+                </select>
+            </div>
+        </div>
     </section>
+
+    <div th:if="${photos.totalPages != 1}"
+         class="form-group col-md-11 pagination-centered">
+        <ul class="pagination">
+            <li class="page-item" th:class="${photos.number == 0} ? disabled"><a
+                    class="pageLink"
+                    th:href="@{/home(pageSize=${selectedPageSize}, page=1)}">&laquo;</a>
+            </li>
+            <li class="page-item" th:class="${photos.number == 0} ? disabled"><a
+                    class="pageLink"
+                    th:href="@{/home(pageSize=${selectedPageSize}, page=${photos.number})}">&larr;</a>
+            </li>
+            <li class="page-item"
+                th:class="${photos.number == (page - 1)} ? 'active pointer-disabled'"
+                th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+                <a class="pageLink"
+                   th:href="@{/home(pageSize=${selectedPageSize}, page=${page})}"
+                   th:text="${page}"></a>
+            </li>
+            <li class="page-item"
+                th:class="${photos.number + 1 == photos.totalPages} ? disabled">
+                <a class="pageLink"
+                   th:href="@{/home(pageSize=${selectedPageSize}, page=${photos.number + 2})}">&rarr;</a>
+            </li>
+            <li class="page-item"
+                th:class="${photos.number + 1 == photos.totalPages} ? disabled">
+                <a class="pageLink"
+                   th:href="@{/home(pageSize=${selectedPageSize}, page=${photos.totalPages})}">&raquo;</a>
+            </li>
+        </ul>
+    </div>
 
 
 </div>
