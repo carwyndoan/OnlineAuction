@@ -107,9 +107,10 @@ public class TestController {
         String userEmail = userDetails.getUsername();
         User user = userService.findUserByEmail(userEmail);
         InvoiceDTO dto = paymentService.makeInvoice(id, user.getUser_id());
+        model.addAttribute("invoice", dto);
         System.out.println(dto.getProduct_Name() + " " + dto.getOrder_Name() + " " +  dto.getShipping_Name() +  " " + dto.getProduct_VendorName());
         //build template here
-        return "registration/success";
+        return "bidding/invoice";
     }
 
     @ModelAttribute("months")
