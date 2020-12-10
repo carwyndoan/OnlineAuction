@@ -59,7 +59,32 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public InvoiceDTO makeInvoice(Integer biddingID, Integer userID) {
         Payment payment = paymentRepository.findPaymentByBiddingID(biddingID, userID);
-        return null;
+        InvoiceDTO dto = new InvoiceDTO();
+        dto.setShipping_Name(payment.getReceiverName());
+        dto.setShipping_State(payment.getState());
+        dto.setShipping_Street(payment.getStreet());
+        dto.setShipping_City(payment.getCity());
+        dto.setShipping_ZipCode(payment.getZipcode());
+        dto.setShipping_Date(payment.getShipDate());
+        dto.setDeliveredDate(payment.getDeliveryDate());
+        dto.setPayment_DepositAmount(payment.getDeposit());
+        dto.setPayment_DepositDate(payment.getDepositDate());
+        dto.setPayment_DepositDate(payment.getDepositDate());
+        dto.setPayment_RemainingAmount(payment.getRemainingAmount());
+        dto.setPayment_Date(payment.getPaymentDate());
+        dto.setTotal(payment.getDeposit() + payment.getRemainingAmount());
+
+        dto.setOrder_Name(payment.getUser_payment().getName());
+        dto.setOrder_Street(payment.getUser_payment().getStreet());
+        dto.setOrder_City(payment.getUser_payment().getCity());
+        dto.setOrder_State(payment.getUser_payment().getState());
+        dto.setOrder_ZipCode(payment.getUser_payment().getZipcode());
+
+        dto.setProduct_Name(payment.getBiddingPayment().getProduct().getName());
+        dto.setProduct_Price(payment.getBiddingPayment().getFinalprice());
+        dto.setProduct_VendorName(payment.getBiddingPayment().getProduct().getUser().getName());
+
+        return dto;
     }
 
 

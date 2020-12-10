@@ -32,11 +32,11 @@ insert into product(product_id, active, name, status, seller_id) values (4, 1, '
 insert into product(product_id, active, name, status, seller_id) values (5, 1, 'Seller_Product_5', 1, 3);
 
 insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id, winner_id) values
-				   (1, 2000, 'Macbook Pro 2020', 500, 1500, '2020-11-25', '2020-12-25', '2020-12-30', 2, 1, 1);
+				   (1, 2000, 'Macbook Pro 2020', 500, 1500, '2020-11-25', '2020-12-25', '2020-12-30', 1, 1, 1);
 insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id, winner_id) values
-				   (2, 20000, 'Dimond', 2000, 20000,'2020-11-25', '2020-12-25', '2020-12-30', 2, 2, 1);
+				   (2, 20000, 'Dimond', 2000, 20000,'2020-11-25', '2020-12-25', '2020-12-30', 1, 2, 1);
 insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id, winner_id) values
-				   (3, 1200, 'Apple Watch 2020', 120, 1500, '2020-11-25','2020-12-25', '2020-12-30', 2, 3, 2);
+				   (3, 1200, 'Apple Watch 2020', 120, 1500, '2020-11-25','2020-12-25', '2020-12-30', 1, 3, 2);
 insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id) values
 				   (4, 200000, 'Tesla', 50000, 0, '2020-9-25','2020-12-25', '2020-12-30', 0, 4);
 insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id) values

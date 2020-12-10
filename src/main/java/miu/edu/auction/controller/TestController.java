@@ -4,6 +4,7 @@ import miu.edu.auction.domain.Bidding;
 import miu.edu.auction.domain.Payment;
 import miu.edu.auction.domain.User;
 import miu.edu.auction.dto.BiddingActivityDTO;
+import miu.edu.auction.dto.InvoiceDTO;
 import miu.edu.auction.service.BiddingService;
 import miu.edu.auction.service.PaymentService;
 import miu.edu.auction.service.UserService;
@@ -96,7 +97,10 @@ public class TestController {
         if (bindingResult.hasErrors())
             return "bidding/Payment";
         Payment payment1 = paymentService.savePayment(payment);
-        return "redirect:/bidding/winbiddings";
+        Bidding bidding = payment1.getBiddingPayment();
+        bidding.setStatus(2);
+        biddingService.saveBidding(bidding);
+        return "redirect:/bidding/biddings";
     }
 
     @GetMapping(value = {"/activities/{bidding_id}"})
@@ -126,5 +130,15 @@ public class TestController {
         model.addAttribute("activities", listDTO);
         model.addAttribute("biddingid", bidding_id);
         return "bidding/BiddingHistories";
+    }
+
+    @GetMapping(value = {"/invoice/{id}"})
+    public String invoice(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer id, Model model) {
+        String userEmail = userDetails.getUsername();
+        User user = userService.findUserByEmail(userEmail);
+        InvoiceDTO dto = paymentService.makeInvoice(id, user.getUser_id());
+        System.out.println(dto.getProduct_Name() + " " + dto.getOrder_Name() + " " +  dto.getShipping_Name() +  " " + dto.getProduct_VendorName());
+        //build template here
+        return "registration/success";
     }
 }

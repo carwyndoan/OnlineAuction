@@ -3,6 +3,7 @@ package miu.edu.auction.dto;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -23,12 +24,12 @@ public class InvoiceDTO {
     private String shipping_City;
     private String shipping_State;
     private String shipping_ZipCode;
-    private LocalDate shipping_Date;
-    private LocalDate deliveredDate;
+    private LocalDateTime shipping_Date;
+    private LocalDateTime deliveredDate;
     private Double payment_DepositAmount;
-    private LocalDate payment_DepositDate;
+    private LocalDateTime payment_DepositDate;
     private Double payment_RemainingAmount;
-    private LocalDate payment_Date;
+    private LocalDateTime payment_Date;
     private Double total;
 
     //Bidding, Product

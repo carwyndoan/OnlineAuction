@@ -93,26 +93,6 @@ public class BiddingServiceImpl implements BiddingService {
         return biddingRepository.findById(key);
     }
 
-//    @Override
-//    public List<BiddingActivityDTO> findBidingHistories(Integer bidding_id) {
-//        List<Bidding_Activities> activitiesList = biddingActivitiesRepository.findByBidding(bidding_id);
-//        System.out.println("The number record of bidding history: " + activitiesList.size());
-//        List<BiddingActivityDTO> listDto = new ArrayList<>();
-//        for (int i = 0; i < activitiesList.size(); i++) {
-//            Bidding_Activities activity = activitiesList.get(i);
-//            BiddingActivityDTO biddingHistoryDTO = new BiddingActivityDTO();
-//            biddingHistoryDTO.setId(i);
-//            biddingHistoryDTO.setStartPrice(activity.getBidding().getStart_price());
-//            biddingHistoryDTO.setBiddingPrice(activity.getAmount());
-//            biddingHistoryDTO.setBiddingDate(activity.getBidding_date());
-//            biddingHistoryDTO.setUserName(activity.getBidding_user().getName());
-//            biddingHistoryDTO.setProductName(activity.getBidding().getProduct().getName());
-//            biddingHistoryDTO.setBiddingDueDate(activity.getBidding().getDuedate());
-//            listDto.add(biddingHistoryDTO);
-//        }
-//        return listDto;
-//    }
-
     @Override
     public List<BiddingActivityDTO> findBidingHistoriesByMonthAndYear(Integer bidding_id, Integer year, Integer month) {
         List<Bidding_Activities> activitiesList = biddingActivitiesRepository.findByBidding(bidding_id);
@@ -192,5 +172,10 @@ public class BiddingServiceImpl implements BiddingService {
             System.out.println(ex);
             return false;
         }
+    }
+
+    @Override
+    public Bidding saveBidding(Bidding bidding) {
+        return biddingRepository.save(bidding);
     }
 }

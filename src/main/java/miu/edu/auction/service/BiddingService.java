@@ -26,4 +26,5 @@ public interface BiddingService {
 
     Boolean paySeller(Integer bidding_id);//pay for seller when delivered / after shiped 30 days
 
+    Bidding saveBidding(Bidding bidding);
 }
