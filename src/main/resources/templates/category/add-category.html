@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Form</title>
+    <link href="css/main.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../css/main.css" />
+</head>
+<body>
+
+<div id="global">
+    <form action="#" th:action="@{/addCategory}" th:object="${category}"
+          method="post">
+        <fieldset>
+            <legend><strong></strong><span th:text="#{category.form.title}">Add a Employee</span></legend>
+            <ul th:if="${#fields.hasErrors('*')}">
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}" >Input
+                    is incorrect</li>
+            </ul>
+
+            <p>
+                <label for="name"><span th:text="#{category.form.name}">First Name: </span></label> <input type="text"
+                                                                                                                     th:field="*{name}" />
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorclass="fieldError">Incorrect date</p>
+            </p>
+            <p>
+                <label for="description"><span th:text="#{category.form.description}">Last Name: </span></label> <input type="text"
+                                                                                                                  th:field="*{description}" />
+            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:errorclass="fieldError">Incorrect date</p>
+            </p>
+
+            <p id="buttons">
+                <input id="reset" type="reset" th:value="#{category.form.resetbtn}" value="Add Category" tabindex="4"> <input
+                    id="submit" type="submit" tabindex="5" th:value="#{category.form.addbtn}" value="Add Category">
+            </p>
+        </fieldset>
+    </form>
+</div>
+
+</body>
+</html>
