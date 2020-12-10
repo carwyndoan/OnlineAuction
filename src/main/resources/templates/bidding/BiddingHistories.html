@@ -35,8 +35,6 @@
                 <option value="0" th:text="All" selected> </option>
                 <option th:each="year:${years}" th:value="${year.intValue()}" th:text="${year.intValue()}"></option>
             </select>
-<!--            <h3 th:text="*{biddingid}"></h3>-->
-<!--            <input th:field="*{biddingid}" type="hidden">-->
             <input type="submit" value="Search">
         </form>
         <table class="table table-hover">

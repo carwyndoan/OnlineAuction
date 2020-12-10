@@ -25,22 +25,22 @@ insert into category(category_id, name, active) values (5, 'Laptop shop', 1);
 insert into category(category_id, name, active) values (6, 'Watch shop', 1);
 insert into category(category_id, name, active) values (7, 'Shoe shop', 1);
 
-insert into product(product_id, caption, active, description, image_path, name, status, seller_id) values (1, 'Land Cruiser 200', 1, 'The 200 Series is loaded with refined creature comforts, like heated and ventilated front seats, leather-wrapped surfaces and four-zone automatic climate control','200.jpg', 'Seller_Product_1', 1, 3);
-insert into product(product_id, caption, active, description, image_path, name, status, seller_id) values (2, 'Honda Civic', 1, 'The Honda Civic is a line of cars manufactured by Honda. Originally a subcompact, the Civic has gone through several generational changes, becoming both .','civic.jpg', 'Seller_Product_2', 1, 3);
-insert into product(product_id, caption, active, description, image_path, name, status, seller_id) values (3, 'Lexus RX 450', 1, 'The Lexus RX  is a mid-size luxury crossover SUV sold since 1998 by Lexus, a luxury division of Toyota. Originally released in its home market of Japan in late 1997 as the Toyota Harrier, export sales began in March 1998 as the Lexus RX','lx.jpg', 'Seller_Product_3', 1, 3);
-insert into product(product_id, caption, active, description, image_path, name, status, seller_id) values (4, 'Toyota Alphard', 1, 'The Toyota Alphard  is a luxury minivan produced by the Japanese automaker Toyota since 2002. It is available as a seven- or eight-seater with petrol and hybrid engine','alphard.jpg', 'Seller_Product_4', 1, 3);
-insert into product(product_id, caption, active, description, image_path, name, status, seller_id) values (5, 'Toyota Corolla', 1, 'The Toyota Corolla is a line of subcompact and compact cars manufactured by Toyota. Introduced in 1966, the Corolla was the best-selling car worldwide by','corolla.jpg', 'Seller_Product_5', 1, 3);
+insert into product(product_id, active, name, status, seller_id) values (1, 1, 'Seller_Product_1', 1, 3);
+insert into product(product_id, active, name, status, seller_id) values (2, 1, 'Seller_Product_2', 1, 3);
+insert into product(product_id, active, name, status, seller_id) values (3, 1, 'Seller_Product_3', 1, 3);
+insert into product(product_id, active, name, status, seller_id) values (4, 1, 'Seller_Product_4', 1, 3);
+insert into product(product_id, active, name, status, seller_id) values (5, 1, 'Seller_Product_5', 1, 3);
 
-insert into bidding(bidding_id, deposit, description, start_price, finalprice, duedate, payment_duedate, status, product_id, winner_id) values
-				   (1, 2000, 'Macbook Pro 2020', 500, 1500, '2020-12-25', '2020-12-30', 2, 1, 1);
-insert into bidding(bidding_id, deposit, description, start_price, finalprice, duedate, payment_duedate, status, product_id, winner_id) values
-				   (2, 20000, 'Dimond', 2000, 20000, '2020-12-25', '2020-12-30', 2, 2, 1);
-insert into bidding(bidding_id, deposit, description, start_price, finalprice, duedate, payment_duedate, status, product_id, winner_id) values
-				   (3, 1200, 'Apple Watch 2020', 120, 1500, '2020-12-25', '2020-12-30', 2, 3, 2);
-insert into bidding(bidding_id, deposit, description, start_price, finalprice, duedate, payment_duedate, status, product_id) values
-				   (4, 200000, 'Tesla', 50000, 0, '2020-12-25', '2020-12-30', 0, 4);
-insert into bidding(bidding_id, deposit, description, start_price, finalprice, duedate, payment_duedate, status, product_id) values
-				   (5, 10000, 'Final Worldcup Ball', 120000, 500000, '2020-12-25', '2020-12-30', 1, 2);
+insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id, winner_id) values
+				   (1, 2000, 'Macbook Pro 2020', 500, 1500, '2020-11-25', '2020-12-25', '2020-12-30', 2, 1, 1);
+insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id, winner_id) values
+				   (2, 20000, 'Dimond', 2000, 20000,'2020-11-25', '2020-12-25', '2020-12-30', 2, 2, 1);
+insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id, winner_id) values
+				   (3, 1200, 'Apple Watch 2020', 120, 1500, '2020-11-25','2020-12-25', '2020-12-30', 2, 3, 2);
+insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id) values
+				   (4, 200000, 'Tesla', 50000, 0, '2020-9-25','2020-12-25', '2020-12-30', 0, 4);
+insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id) values
+				   (5, 10000, 'Final Worldcup Ball', 120000, 500000, '2020-10-25', '2020-12-25', '2020-12-30', 1, 2);
 
 insert into payment(payment_id, deposit, deposit_date, bidding_id, user_payment_id) values (1, 2000, '2020-12-07', 1, 1);
 insert into payment(payment_id, deposit, deposit_date, bidding_id, user_payment_id) values (2, 20000, '2020-12-07', 2, 1);

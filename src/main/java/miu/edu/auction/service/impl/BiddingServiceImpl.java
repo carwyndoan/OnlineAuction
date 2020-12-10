@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class BiddingServiceImpl implements BiddingService {
@@ -78,8 +79,13 @@ public class BiddingServiceImpl implements BiddingService {
     }
 
     @Override
-    public List<Bidding> findByUserBidding(String email) {
-        return biddingRepository.findByUserBidding(email);
+    public List<Bidding> findByUserBidding(String email, Integer month, Integer year) {
+//        System.out.println(year + " " + month);
+        List<Bidding> list = biddingRepository.findByUserBidding(email).stream()
+                .filter(bidding -> ((bidding.getStartdate() == null) || (bidding.getStartdate().getYear() == year) || (year == 0)))
+                .filter(bidding -> ((bidding.getStartdate() == null) || (bidding.getStartdate().getMonthValue() == month) || (month == 0))).collect(Collectors.toList());
+//        System.out.println("size: "+ list.size());
+        return list;
     }
 
     @Override

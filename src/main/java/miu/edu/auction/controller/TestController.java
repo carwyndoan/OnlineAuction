@@ -48,9 +48,26 @@ public class TestController {
     }
 
     @GetMapping(value = {"/biddings"})
-    public String loadAllBidding(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+    public String loadAllBidding(@AuthenticationPrincipal UserDetails userDetails, Model model, @RequestParam(name = "year", required = false) Integer year, @RequestParam(name = "month", required = false) Integer month) {
+        int startYear = LocalDate.now().getYear();
+        List<Integer> months = new ArrayList<>();
+        List<Integer> years = new ArrayList<>();
+        for (int i = 1; i <= 12; i++) {
+            months.add(i);
+        }
+        int i = startYear - 10;
+        while (i <= startYear + 10) {
+            years.add(i);
+            i++;
+        }
+        model.addAttribute("months", months);
+        model.addAttribute("years", years);
+        if ((year == null) || (month == null)) {
+            year = 0;
+            month = 0;
+        }
         String userEmail = userDetails.getUsername();
-        List<Bidding> list = biddingService.findByUserBidding(userEmail);
+        List<Bidding> list = biddingService.findByUserBidding(userEmail, month, year);
         model.addAttribute("allbiddings", list);
         return "bidding/AllBidding";
     }

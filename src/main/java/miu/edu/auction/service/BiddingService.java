@@ -15,7 +15,7 @@ public interface BiddingService {
 
     List<Bidding> findByWinner(String email, LocalDate paymentDate);
 
-    List<Bidding> findByUserBidding(String email);
+    List<Bidding> findByUserBidding(String email, Integer month, Integer year);
 
     Optional<Bidding> findByID(Integer key);
 

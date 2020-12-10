@@ -26,6 +26,20 @@
 
 <section class="container">
     <div>
+        <form action="#" th:action="@{/bidding/biddings}" method="get">
+            <label><span>Month: </span></label>
+            <select name="month" th:width="6">
+                <option value="0" th:text="All" selected></option>
+                <option th:each="month : ${months}" th:value="${month.intValue()}" th:text="${month.intValue()}"></option>
+            </select> &nbsp&nbsp&nbsp
+            <label>Year:</label>
+            <select name="year" th:width="12">
+                <option value="0" th:text="All" selected> </option>
+                <option th:each="year:${years}" th:value="${year.intValue()}" th:text="${year.intValue()}"></option>
+            </select>
+            <input type="submit" value="Search">
+        </form>
+
         <table class="table table-hover">
             <tr>
                 <th style="text-align:left"><span th:text="#{winbidding.list.id}">ID</span></th>
