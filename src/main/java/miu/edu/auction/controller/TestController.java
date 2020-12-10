@@ -80,6 +80,9 @@ public class TestController {
         if (bindingResult.hasErrors())
             return "bidding/Payment";
         String userEmail = userDetails.getUsername();
+        User user = userService.findUserByEmail(userEmail);
+
+        payment.setUser_payment(user);
         Payment payment1 =  paymentService.savePayment(payment);
         return "redirect:/bidding/winbiddings";
     }

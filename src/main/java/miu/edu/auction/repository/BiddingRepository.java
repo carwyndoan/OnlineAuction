@@ -31,7 +31,7 @@ public interface BiddingRepository extends JpaRepository<Bidding, Integer> {
     @Query("select bid from Bidding bid inner join fetch bid.winner u inner join bid.payments p where bid.payment_duedate >= :paymentDate and u.email = :email and p.paymentDate is null")
     List<Bidding> findByWinner(String email, LocalDate paymentDate);
 
-    @Query("select bid from Bidding bid inner join fetch bid.payments p inner join p.user_payment u where u.email = :email")
+    @Query("select bid from Bidding bid inner join fetch bid.payments p inner join fetch p.user_payment u where u.email = :email")
     List<Bidding> findByUserBidding(String email);
 
     @Override

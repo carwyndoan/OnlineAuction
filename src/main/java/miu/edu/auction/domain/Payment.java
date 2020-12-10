@@ -57,7 +57,7 @@ public class Payment {
     @NotBlank
     private String zipcode;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_payment_id")
     private User user_payment;
 

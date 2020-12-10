@@ -20,6 +20,7 @@
 				<p>
 					<input id="payment_id" th:field="*{payment_id}" type="hidden">
 					<input id="user_id" th:field="*{user_payment.user_id}" type="hidden">
+					<input id="bidding_id" th:field="*{biddingPayment.bidding_id}" type="hidden">
 					<input id="paymentDate" th:field="*{paymentDate}" type="hidden">
 					<label for="deposit"><span data-th-text="#{payment.deposit}">Deposit:</span></label>
 					<input type="text" id="deposit" th:field="*{deposit}" tabindex="1" readonly/>
