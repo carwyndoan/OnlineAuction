@@ -38,13 +38,22 @@ public class TestController {
     PaymentService paymentService;
 
     @GetMapping(value = {"/winbiddings"})
-    public String loadBidding(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+    public String loadWinBidding(@AuthenticationPrincipal UserDetails userDetails, Model model) {
 
         System.out.println(userDetails);
         String userEmail = userDetails.getUsername();
         List<Bidding> list = biddingService.findByWinner(userEmail, LocalDate.now());
-        model.addAttribute("biddinglist", list);
+        model.addAttribute("winbiddings", list);
         return "bidding/WinBidding";
+    }
+
+    @GetMapping(value = {"/biddings"})
+    public String loadAllBidding(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        System.out.println(userDetails);
+        String userEmail = userDetails.getUsername();
+        List<Bidding> list = biddingService.findByUserBidding(userEmail);
+        model.addAttribute("allbiddings", list);
+        return "bidding/AllBidding";
     }
 
     @GetMapping(value = {"/paymentform/{id}"})
@@ -53,7 +62,6 @@ public class TestController {
         User user = userService.findUserByEmail(userEmail);
         Optional<Bidding> bidding = biddingService.findByID(id);
         Payment payment = paymentService.findPaymentByBiddingID(Integer.valueOf(id), user.getUser_id());
-
         if (payment != null) {
             payment.setUser_payment(user);
             if (bidding.isPresent()) {
@@ -68,10 +76,11 @@ public class TestController {
     }
 
     @PostMapping(value = {"/payment"})
-    public String savePayment(@Valid Payment payment, BindingResult bindingResult) {
+    public String savePayment(@AuthenticationPrincipal UserDetails userDetails, @Valid Payment payment, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "bidding/Payment";
-        paymentService.savePayment(payment);
+        String userEmail = userDetails.getUsername();
+        Payment payment1 =  paymentService.savePayment(payment);
         return "redirect:/bidding/winbiddings";
     }
 
@@ -83,11 +92,11 @@ public class TestController {
         int startYear = LocalDate.now().getYear();
         List<Integer> months = new ArrayList<>();
         List<Integer> years = new ArrayList<>();
-        for(int i = 1; i <=12; i++){
+        for (int i = 1; i <= 12; i++) {
             months.add(i);
         }
         int i = startYear - 10;
-        while (i <= startYear + 10){
+        while (i <= startYear + 10) {
             years.add(i);
             i++;
         }
@@ -99,18 +108,18 @@ public class TestController {
     }
 
     @GetMapping(value = {"/activitiesByMonthAndYear/{bidding_id}"})
-    public String loadHistoryByYearAndMonth(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer bidding_id, @RequestParam Integer year, @RequestParam Integer month, Model model){
+    public String loadHistoryByYearAndMonth(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer bidding_id, @RequestParam Integer year, @RequestParam Integer month, Model model) {
         String userEmail = userDetails.getUsername();
         User user = userService.findUserByEmail(userEmail);
         List<BiddingActivityDTO> listDTO = biddingService.findBidingHistoriesByMonthAndYear(bidding_id, year, month);
         int startYear = LocalDate.now().getYear();
         List<Integer> months = new ArrayList<>();
         List<Integer> years = new ArrayList<>();
-        for(int i = 1; i <=12; i++){
+        for (int i = 1; i <= 12; i++) {
             months.add(i);
         }
         int i = startYear - 10;
-        while (i <= startYear + 10){
+        while (i <= startYear + 10) {
             years.add(i);
             i++;
         }

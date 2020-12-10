@@ -42,6 +42,9 @@ public class Payment {
     private LocalDateTime paySellerDate;
 
     @NotBlank
+    private String receiverName;
+
+    @NotBlank
     private String street;
 
     @NotBlank
@@ -54,7 +57,7 @@ public class Payment {
     @NotBlank
     private String zipcode;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_payment_id")
     private User user_payment;
 

@@ -35,7 +35,7 @@ public class UserController {
 //        String[] errors = bindingResult.getSuppressedFields();
 
         User savedUser = userService.saveUserWithVerificationKey(user);
-        return "/registration/success";
+        return "redirect:/login";
     }
 
     @GetMapping("/edituser/{id}")

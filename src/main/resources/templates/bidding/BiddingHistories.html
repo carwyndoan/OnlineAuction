@@ -45,8 +45,10 @@
                 <th><span th:text="#{bidding.activities.id}">ID</span></th>
                 <th><span th:text="#{bidding.activities.product}">Product</span></th>
                 <th><span th:text="#{bidding.activities.username}">Username</span></th>
+                <th><span th:text="#{bidding.activities.biddingstartprice}">Start Price</span></th>
                 <th><span th:text="#{bidding.activities.biddingprice}">Biding Price</span></th>
                 <th><span th:text="#{bidding.activities.biddingdate}">Bidding Date</span></th>
+                <th><span th:text="#{bidding.activities.biddingduedate}">Due Date</span></th>
             </tr>
         </table>
         <table id="cart_table" class="table table-hover">
@@ -54,8 +56,10 @@
                 <td th:text="${item.id}"></td>
                 <td th:text="${item.productName}"></td>
                 <td th:text="${item.userName}"></td>
+                <td th:text="${item.startPrice}"></td>
                 <td th:text="${item.biddingPrice}"></td>
                 <td th:text="${item.biddingDate}"></td>
+                <td th:text="${item.biddingDueDate}"></td>
             </tr>
         </table>
     </div>

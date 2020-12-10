@@ -15,9 +15,11 @@ public interface BiddingService {
 
     List<Bidding> findByWinner(String email, LocalDate paymentDate);
 
+    List<Bidding> findByUserBidding(String email);
+
     Optional<Bidding> findByID(Integer key);
 
-    List<BiddingActivityDTO> findBidingHistories(Integer bidding_id);
+//    List<BiddingActivityDTO> findBidingHistories(Integer bidding_id);
     List<BiddingActivityDTO> findBidingHistoriesByMonthAndYear(Integer bidding_id, Integer year, Integer month);
 
     Boolean closeBidding(Integer bidding_id);//Setup winner, return deposit to others
