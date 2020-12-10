@@ -1,5 +1,6 @@
 package miu.edu.auction.repository;
 
+import miu.edu.auction.domain.Bidding;
 import miu.edu.auction.domain.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,4 +15,5 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
 
     @Query("Select p from Product p where p.description like %:str%")
     List<Product> findByNameLike(String str);
+  //  boolean findByBiddingContainsAndStatus();
 }
