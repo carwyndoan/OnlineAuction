@@ -3,6 +3,7 @@ package miu.edu.auction.service.impl;
 import miu.edu.auction.domain.Bidding;
 import miu.edu.auction.domain.Payment;
 import miu.edu.auction.domain.User;
+import miu.edu.auction.dto.InvoiceDTO;
 import miu.edu.auction.repository.PaymentRepository;
 import miu.edu.auction.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,12 @@ public class PaymentServiceImpl implements PaymentService {
         payment.setPaySellerDate(LocalDateTime.now());
         paymentRepository.save(payment);
         return  payment;
+    }
+
+    @Override
+    public InvoiceDTO makeInvoice(Integer biddingID, Integer userID) {
+        Payment payment = paymentRepository.findPaymentByBiddingID(biddingID, userID);
+        return null;
     }
 
 

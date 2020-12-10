@@ -20,4 +20,5 @@ public interface PaymentRepository extends JpaRepository<Payment, Integer> {
             "where b.bidding_id = :biddingID " +
             "and b.winner.user_id = p.user_payment.user_id")
     Payment findPaymentByWinner(Integer biddingID);
+
 }

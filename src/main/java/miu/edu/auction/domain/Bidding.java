@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -33,7 +34,11 @@ public class Bidding {
 
     @NotBlank
     @DateTimeFormat(pattern = "MM-dd-YYYY")
-    private LocalDate duedate;
+    private LocalDateTime startdate;
+
+    @NotBlank
+    @DateTimeFormat(pattern = "MM-dd-YYYY")
+    private LocalDateTime duedate;
 
     @NotBlank
     @DateTimeFormat(pattern = "MM-dd-YYYY")

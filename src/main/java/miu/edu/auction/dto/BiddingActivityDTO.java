@@ -17,5 +17,6 @@ public class BiddingActivityDTO {
     private Double startPrice;
     private Double biddingPrice;
     private LocalDateTime biddingDate;
-    private LocalDate biddingDueDate;
+    private LocalDateTime biddingStartDate;
+    private LocalDateTime biddingDueDate;
 }

@@ -134,6 +134,7 @@ public class BiddingServiceImpl implements BiddingService {
             biddingHistoryDTO.setBiddingDate(activity.getBidding_date());
             biddingHistoryDTO.setUserName(activity.getBidding_user().getName());
             biddingHistoryDTO.setProductName(activity.getBidding().getProduct().getName());
+            biddingHistoryDTO.setBiddingStartDate(activity.getBidding().getStartdate());
             biddingHistoryDTO.setBiddingDueDate(activity.getBidding().getDuedate());
             listDto.add(biddingHistoryDTO);
         }
