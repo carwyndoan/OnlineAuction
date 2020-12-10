@@ -50,19 +50,6 @@ public class TestController {
 
     @GetMapping(value = {"/biddings"})
     public String loadAllBidding(@AuthenticationPrincipal UserDetails userDetails, Model model, @RequestParam(name = "year", required = false) Integer year, @RequestParam(name = "month", required = false) Integer month) {
-        int startYear = LocalDate.now().getYear();
-        List<Integer> months = new ArrayList<>();
-        List<Integer> years = new ArrayList<>();
-        for (int i = 1; i <= 12; i++) {
-            months.add(i);
-        }
-        int i = startYear - 10;
-        while (i <= startYear + 10) {
-            years.add(i);
-            i++;
-        }
-        model.addAttribute("months", months);
-        model.addAttribute("years", years);
         if ((year == null) || (month == null)) {
             year = 0;
             month = 0;
@@ -108,19 +95,6 @@ public class TestController {
         String userEmail = userDetails.getUsername();
         User user = userService.findUserByEmail(userEmail);
 
-        int startYear = LocalDate.now().getYear();
-        List<Integer> months = new ArrayList<>();
-        List<Integer> years = new ArrayList<>();
-        for (int i = 1; i <= 12; i++) {
-            months.add(i);
-        }
-        int i = startYear - 10;
-        while (i <= startYear + 10) {
-            years.add(i);
-            i++;
-        }
-        model.addAttribute("months", months);
-        model.addAttribute("years", years);
         if ((year == null) || (month == null)) {
             year = 0;
             month = 0;
@@ -140,5 +114,26 @@ public class TestController {
         System.out.println(dto.getProduct_Name() + " " + dto.getOrder_Name() + " " +  dto.getShipping_Name() +  " " + dto.getProduct_VendorName());
         //build template here
         return "registration/success";
+    }
+
+    @ModelAttribute("months")
+    public List<Integer> getMonths(){
+        List<Integer> months = new ArrayList<>();
+        for (int i = 1; i <= 12; i++) {
+            months.add(i);
+        }
+        return months;
+    }
+
+    @ModelAttribute("years")
+    public List<Integer> getYears(){
+        int startYear = LocalDate.now().getYear();
+        List<Integer> years = new ArrayList<>();
+        int i = startYear - 5;
+        while (i <= startYear + 5) {
+            years.add(i);
+            i++;
+        }
+        return  years;
     }
 }
