@@ -24,7 +24,7 @@
 
 <section class="container">
     <div>
-        <form action="#" th:action="@{/bidding/activitiesByMonthAndYear/{id}(id=*{biddingid})}" method="get">
+        <form action="#" th:action="@{/bidding/activities/{id}(id=*{biddingid})}" method="get">
             <label><span>Month: </span></label>
             <select name="month" th:width="6">
                 <option value="0" th:text="All" selected></option>

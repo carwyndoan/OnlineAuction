@@ -49,7 +49,6 @@ public class TestController {
 
     @GetMapping(value = {"/biddings"})
     public String loadAllBidding(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        System.out.println(userDetails);
         String userEmail = userDetails.getUsername();
         List<Bidding> list = biddingService.findByUserBidding(userEmail);
         model.addAttribute("allbiddings", list);
@@ -79,42 +78,15 @@ public class TestController {
     public String savePayment(@AuthenticationPrincipal UserDetails userDetails, @Valid Payment payment, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "bidding/Payment";
-        String userEmail = userDetails.getUsername();
-        User user = userService.findUserByEmail(userEmail);
-
-        payment.setUser_payment(user);
-        Payment payment1 =  paymentService.savePayment(payment);
+        Payment payment1 = paymentService.savePayment(payment);
         return "redirect:/bidding/winbiddings";
     }
 
-    @GetMapping(value = {"/activities/{id}"})
-    public String loadActivites(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer id, Model model) {
+    @GetMapping(value = {"/activities/{bidding_id}"})
+    public String loadHistories(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer bidding_id, @RequestParam(name = "year", required = false) Integer year, @RequestParam(name = "month", required = false) Integer month, Model model) {
         String userEmail = userDetails.getUsername();
         User user = userService.findUserByEmail(userEmail);
-        List<BiddingActivityDTO> listDTO = biddingService.findBidingHistoriesByMonthAndYear(id, -1, -1);
-        int startYear = LocalDate.now().getYear();
-        List<Integer> months = new ArrayList<>();
-        List<Integer> years = new ArrayList<>();
-        for (int i = 1; i <= 12; i++) {
-            months.add(i);
-        }
-        int i = startYear - 10;
-        while (i <= startYear + 10) {
-            years.add(i);
-            i++;
-        }
-        model.addAttribute("months", months);
-        model.addAttribute("years", years);
-        model.addAttribute("activities", listDTO);
-        model.addAttribute("biddingid", id);
-        return "bidding/BiddingHistories";
-    }
 
-    @GetMapping(value = {"/activitiesByMonthAndYear/{bidding_id}"})
-    public String loadHistoryByYearAndMonth(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer bidding_id, @RequestParam Integer year, @RequestParam Integer month, Model model) {
-        String userEmail = userDetails.getUsername();
-        User user = userService.findUserByEmail(userEmail);
-        List<BiddingActivityDTO> listDTO = biddingService.findBidingHistoriesByMonthAndYear(bidding_id, year, month);
         int startYear = LocalDate.now().getYear();
         List<Integer> months = new ArrayList<>();
         List<Integer> years = new ArrayList<>();
@@ -128,6 +100,12 @@ public class TestController {
         }
         model.addAttribute("months", months);
         model.addAttribute("years", years);
+        if ((year == null) || (month == null)) {
+            year = 0;
+            month = 0;
+        }
+
+        List<BiddingActivityDTO> listDTO = biddingService.findBidingHistoriesByMonthAndYear(bidding_id, year, month);
         model.addAttribute("activities", listDTO);
         model.addAttribute("biddingid", bidding_id);
         return "bidding/BiddingHistories";
