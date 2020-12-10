@@ -44,8 +44,6 @@ insert into product(product_id, caption, active, description, image_path, name, 
 insert into product(product_id, caption, active, description, image_path, name, status, seller_id) values (14, 'Toyota Alphard (3)', 1, 'The Toyota Alphard  is a luxury minivan produced by the Japanese automaker Toyota since 2002. It is available as a seven- or eight-seater with petrol and hybrid engine','alphard.jpg', 'Seller_Product_4', 1, 3);
 insert into product(product_id, caption, active, description, image_path, name, status, seller_id) values (15, 'Toyota Corolla (3)', 1, 'The Toyota Corolla is a line of subcompact and compact cars manufactured by Toyota. Introduced in 1966, the Corolla was the best-selling car worldwide by','corolla.jpg', 'Seller_Product_5', 1, 3);
 
-
-
 insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id, winner_id) values
 				   (1, 2000, 'Macbook Pro 2020', 500, 1500, '2020-11-25', '2020-12-25', '2020-12-30', 1, 1, 1);
 insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id, winner_id) values

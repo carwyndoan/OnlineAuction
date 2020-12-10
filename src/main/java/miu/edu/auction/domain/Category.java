@@ -21,8 +21,10 @@ public class Category {
 
     @NotBlank
     private String name;
-    //@NotNull
-    // private int active;
+
+    @NotNull
+    private int active;
+
     @NotBlank
     private String description;
     @ManyToMany(cascade = CascadeType.MERGE, mappedBy = "categories")
