@@ -6,9 +6,11 @@ import miu.edu.auction.domain.User;
 import miu.edu.auction.dto.InvoiceDTO;
 import miu.edu.auction.repository.PaymentRepository;
 import miu.edu.auction.service.PaymentService;
+import miu.edu.auction.utils.GenerationUnique;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,17 +74,23 @@ public class PaymentServiceImpl implements PaymentService {
         dto.setPayment_DepositDate(payment.getDepositDate());
         dto.setPayment_RemainingAmount(payment.getRemainingAmount());
         dto.setPayment_Date(payment.getPaymentDate());
-        dto.setTotal(payment.getDeposit() + payment.getRemainingAmount());
+        dto.setTotal(payment.getBiddingPayment().getFinalprice());
 
         dto.setOrder_Name(payment.getUser_payment().getName());
         dto.setOrder_Street(payment.getUser_payment().getStreet());
         dto.setOrder_City(payment.getUser_payment().getCity());
         dto.setOrder_State(payment.getUser_payment().getState());
         dto.setOrder_ZipCode(payment.getUser_payment().getZipcode());
+        dto.setOrder_Email(payment.getUser_payment().getEmail());
 
         dto.setProduct_Name(payment.getBiddingPayment().getProduct().getName());
         dto.setProduct_Price(payment.getBiddingPayment().getFinalprice());
         dto.setProduct_VendorName(payment.getBiddingPayment().getProduct().getUser().getName());
+        dto.setProduct_Description(payment.getBiddingPayment().getProduct().getDescription().substring(0, 20));
+        dto.setProduct_Quantity(1);
+
+        dto.setInvoice_Number(GenerationUnique.generateInvoiceNumber());
+        dto.setInvoice_CreatedDate(LocalDate.now());
 
         return dto;
     }
