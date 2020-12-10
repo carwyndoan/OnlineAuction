@@ -40,8 +40,6 @@ public class TestController {
 
     @GetMapping(value = {"/winbiddings"})
     public String loadWinBidding(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-
-        System.out.println(userDetails);
         String userEmail = userDetails.getUsername();
         List<Bidding> list = biddingService.findByWinner(userEmail, LocalDate.now());
         model.addAttribute("winbiddings", list);
@@ -92,14 +90,12 @@ public class TestController {
 
     @GetMapping(value = {"/activities/{bidding_id}"})
     public String loadHistories(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer bidding_id, @RequestParam(name = "year", required = false) Integer year, @RequestParam(name = "month", required = false) Integer month, Model model) {
-        String userEmail = userDetails.getUsername();
-        User user = userService.findUserByEmail(userEmail);
-
         if ((year == null) || (month == null)) {
             year = 0;
             month = 0;
         }
-
+        String userEmail = userDetails.getUsername();
+        User user = userService.findUserByEmail(userEmail);
         List<BiddingActivityDTO> listDTO = biddingService.findBidingHistoriesByMonthAndYear(bidding_id, year, month);
         model.addAttribute("activities", listDTO);
         model.addAttribute("biddingid", bidding_id);
