@@ -74,7 +74,7 @@ public class PaymentServiceImpl implements PaymentService {
         dto.setPayment_DepositDate(payment.getDepositDate());
         dto.setPayment_RemainingAmount(payment.getRemainingAmount());
         dto.setPayment_Date(payment.getPaymentDate());
-        dto.setTotal(payment.getBiddingPayment().getFinalprice());
+        dto.setTotal(payment.getDeposit() + payment.getRemainingAmount());
 
         dto.setOrder_Name(payment.getUser_payment().getName());
         dto.setOrder_Street(payment.getUser_payment().getStreet());

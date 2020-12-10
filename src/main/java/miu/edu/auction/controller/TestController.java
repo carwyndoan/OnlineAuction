@@ -41,7 +41,7 @@ public class TestController {
     @GetMapping(value = {"/winbiddings"})
     public String loadWinBidding(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         String userEmail = userDetails.getUsername();
-        List<Bidding> list = biddingService.findByWinner(userEmail, LocalDate.now());
+        List<Bidding> list = biddingService.findByWinner(userEmail, LocalDateTime.now());
         model.addAttribute("winbiddings", list);
         return "bidding/WinBidding";
     }

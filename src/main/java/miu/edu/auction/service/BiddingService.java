@@ -4,6 +4,7 @@ import miu.edu.auction.domain.Bidding;
 import miu.edu.auction.dto.BiddingActivityDTO;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,7 +14,7 @@ public interface BiddingService {
 
     Double placeBid(Integer bidding_id, Integer user_id, Double bid);
 
-    List<Bidding> findByWinner(String email, LocalDate paymentDate);
+    List<Bidding> findByWinner(String email, LocalDateTime paymentDate);
 
     List<Bidding> findByUserBidding(String email, Integer month, Integer year);
 

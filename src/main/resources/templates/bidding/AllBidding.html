@@ -57,9 +57,9 @@
             <tr th:each="item: ${allbiddings}">
                 <td th:text="${item.bidding_id}"></td>
                 <td th:text="${item.product.name}"></td>
-                <td th:text="${item.start_price}"></td>
-                <td th:text="${item.finalprice}"></td>
-                <td th:text="${item.deposit}"></td>
+                <td th:text="${#numbers.formatCurrency(item.start_price)}"></td>
+                <td th:text="${#numbers.formatCurrency(item.finalprice)}" ></td>
+                <td th:text="${#numbers.formatCurrency(item.deposit)}"></td>
                 <td th:text="${item.startdate}"></td>
                 <td th:text="${item.duedate}"></td>
                 <td th:text="${item.payment_duedate}"></td>

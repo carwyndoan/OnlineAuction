@@ -74,7 +74,7 @@ public class BiddingServiceImpl implements BiddingService {
 
 
     @Override
-    public List<Bidding> findByWinner(String email, LocalDate paymentDate) {
+    public List<Bidding> findByWinner(String email, LocalDateTime paymentDate) {
         return biddingRepository.findByWinner(email, paymentDate);
     }
 
