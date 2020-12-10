@@ -1,0 +1,11 @@
+select bidding0_.bidding_id as bidding_1_0_0_, product1_.product_id as product_1_5_1_, bidding_ac5_.bidding_activities_id as bidding_1_1_2_, bidding0_.deposit as deposit2_0_0_, bidding0_.description as descript3_0_0_, bidding0_.duedate as duedate4_0_0_, bidding0_.finalprice as finalpri5_0_0_, bidding0_.payment_duedate as payment_6_0_0_, bidding0_.product_id as product_9_0_0_, bidding0_.start_price as start_pr7_0_0_, bidding0_.status as status8_0_0_, bidding0_.winner_id as winner_10_0_0_, product1_.active as active2_5_1_, product1_.description as descript3_5_1_, product1_.image_path as image_pa4_5_1_, product1_.name as name5_5_1_, product1_.status as status6_5_1_, product1_.seller_id as seller_i7_5_1_, bidding_ac5_.amount as amount2_1_2_, bidding_ac5_.bidding_id as bidding_5_1_2_, bidding_ac5_.bidding_date as bidding_3_1_2_, bidding_ac5_.user_bidding_id as user_bid6_1_2_, bidding_ac5_.description as descript4_1_2_, bidding_ac5_.bidding_id as bidding_5_1_0__, bidding_ac5_.bidding_activities_id as bidding_1_1_0__ from bidding bidding0_ inner join product product1_ on bidding0_.product_id=product1_.product_id inner join user user2_ on product1_.seller_id=user2_.user_id inner join category_product categories3_ on product1_.product_id=categories3_.product_id inner join category category4_ on categories3_.category_id=category4_.category_id left outer join bidding_activities bidding_ac5_ on bidding0_.bidding_id=bidding_ac5_.bidding_id where user2_.enable=1 and user2_.profile_verified=1 and user2_.registration_verified=1 and user2_.email<>'user@miu.edu' and (0=0);
+
+select * from user;
+
+select * from product;
+
+select * from category_product;
+
+select * from category;
+
+select * from bidding_activities;

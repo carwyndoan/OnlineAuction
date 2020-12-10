@@ -24,10 +24,10 @@ public class BiddingController {
 
         System.out.println(userDetails);
         String userEmail = userDetails.getUsername();
-        List<Bidding> bids = biddingService.findBiddingByCategory(0, userEmail);
+        List<Bidding> bids = biddingService.findBiddingByCategory(1, userEmail);
         for (Bidding bid:bids
              ) {
-            System.out.println(bid.getBidding_id() + " - " + bid.getBidding_activities());
+            System.out.println(bid.getProduct().getName() + " by " + bid.getProduct().getUser().getName());
         }
         model.addAttribute("bids", bids);
 

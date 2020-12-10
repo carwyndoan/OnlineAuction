@@ -63,6 +63,7 @@ public class BiddingServiceImpl implements BiddingService {
 
             bidding_activities.setAmount(bid);
             biddingActivitiesRepository.save(bidding_activities);
+            bidding.getBidding_activities().add(bidding_activities);
         } else if (max.getAsDouble() < bid) {
             bidding_activities.setAmount(bid);
             biddingActivitiesRepository.save(bidding_activities);

@@ -21,8 +21,8 @@ public interface BiddingRepository extends JpaRepository<Bidding, Integer> {
             + "inner join p.user seller "
             + "inner join p.categories cat "
             + "left join fetch bid.bidding_activities ba "
-            + "where seller.enable = 1 and seller.profile_verified = 1 and seller.registration_verified = 1 "
-            + "and seller.email <> :exclude_email "
+            //+ "where seller.enable = 1 and seller.profile_verified = 1 and seller.registration_verified = 1 "
+            + "where seller.email <> :exclude_email "
             + "and (:category_id = 0 or cat.category_id = :category_id)"
     )
     List<Bidding> findBiddingByCategory(Integer category_id, String exclude_email);
