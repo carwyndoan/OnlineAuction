@@ -112,11 +112,7 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="http://fontenele.github.io/bootstrap-navbar-dropdowns/"
-                   target="_blank">Github</a>
+                <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link disabled" href="#">Disabled</a>
@@ -190,24 +186,26 @@
     </div>
 </div>
 
-<!--
 <div class="container-fluid bg-light ">
     <div class="row align-items-center justify-content-center">
+
         <div class="col-md-2 pt-3">
             <div class="form-group ">
                 <select id="inputBrand" class="form-control">
-                    <option selected>Brand</option>
-                    <option th:each="brand : ${allBrand}" th:value="${brand.getBrandId()}"
-                            th:text="${brand.getBrandName()}"></option>
+                    <option selected>Category</option>
+                    <option th:each="category : ${categories}" th:value="${category.getCategory_id()}"
+                            th:text="${category.getName()}"></option>
                 </select>
             </div>
         </div>
+
+        <!--
         <div class="col-md-2 pt-3">
             <div class="form-group">
                 <select id="inputModel" class="form-control">
                     <option selected>Model</option>
-                    <option th:each="mo : ${allModel}" th:value="${mo.getModelId()}"
-                            th:text="${mo.getModelName()}"></option>
+                    &lt;!&ndash;<option th:each="mo : ${allModel}" th:value="${mo.getModelId()}"
+                            th:text="${mo.getModelName()}"></option>&ndash;&gt;
                 </select>
             </div>
         </div>
@@ -215,10 +213,13 @@
             <div class="form-group">
                 <select id="inputYear" class="form-control">
                     <option selected>Year</option>
-                    <option th:each="car : ${photos}" th:value="${car.getYear()}" th:text="${car.getYear()}"></option>
+                   &lt;!&ndash; <option th:each="car : ${photos}" th:value="${car.getYear()}" th:text="${car.getYear()}"></option>&ndash;&gt;
                 </select>
             </div>
         </div>
+-->
+
+
         <div class="col-md-2 pt-3">
             <div class="form-group">
                 <select id="inputState" class="form-control">
@@ -230,15 +231,17 @@
                 </select>
             </div>
         </div>
-        <div class="col-md-2">
-            <form th:action="@{/searchByBrand}" method="get">
-                <input type="submit" class="btn btn-dark" value="Search"/>
+
+        <div class="col-md-4">
+            <form th:action="@{/search}" method="get" enctype='application/json'>
+                <input type="text" name="searchValue">
+                <input type="submit" class="btn btn-dark">
             </form>
 
         </div>
     </div>
 </div>
--->
+
 
 <div class="container">
 

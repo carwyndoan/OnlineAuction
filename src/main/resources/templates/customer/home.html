@@ -190,15 +190,14 @@
     </div>
 </div>
 
-<!--
+
 <div class="container-fluid bg-light ">
     <div class="row align-items-center justify-content-center">
         <div class="col-md-2 pt-3">
             <div class="form-group ">
                 <select id="inputBrand" class="form-control">
                     <option selected>Brand</option>
-                    <option th:each="brand : ${allBrand}" th:value="${brand.getBrandId()}"
-                            th:text="${brand.getBrandName()}"></option>
+
                 </select>
             </div>
         </div>
@@ -206,8 +205,7 @@
             <div class="form-group">
                 <select id="inputModel" class="form-control">
                     <option selected>Model</option>
-                    <option th:each="mo : ${allModel}" th:value="${mo.getModelId()}"
-                            th:text="${mo.getModelName()}"></option>
+
                 </select>
             </div>
         </div>
@@ -215,7 +213,7 @@
             <div class="form-group">
                 <select id="inputYear" class="form-control">
                     <option selected>Year</option>
-                    <option th:each="car : ${photos}" th:value="${car.getYear()}" th:text="${car.getYear()}"></option>
+
                 </select>
             </div>
         </div>
@@ -231,14 +229,14 @@
             </div>
         </div>
         <div class="col-md-2">
-            <form th:action="@{/searchByBrand}" method="get">
+            <!--<form th:action="@{/searchByBrand}" method="get">
                 <input type="submit" class="btn btn-dark" value="Search"/>
-            </form>
+            </form>-->
 
         </div>
     </div>
 </div>
--->
+
 
 <div class="container">
 
