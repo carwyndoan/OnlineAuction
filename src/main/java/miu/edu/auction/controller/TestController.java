@@ -62,13 +62,13 @@ public class TestController {
     public String loadPayment(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer id, Model model) {
         String userEmail = userDetails.getUsername();
         User user = userService.findUserByEmail(userEmail);
-        Optional<Bidding> bidding = biddingService.findByID(id);
-        Payment payment = paymentService.findPaymentByBiddingID(Integer.valueOf(id), user.getUser_id());
+        Bidding bidding = biddingService.findByID(id);
+        Payment payment = paymentService.findPaymentByBiddingIDAndUser(Integer.valueOf(id), user.getUser_id());
         if (payment != null) {
             payment.setUser_payment(user);
-            if (bidding.isPresent()) {
-                payment.setBiddingPayment(bidding.get());
-                payment.setRemainingAmount(bidding.get().getFinalprice() - bidding.get().getDeposit());
+            if (bidding != null) {
+                payment.setBiddingPayment(bidding);
+                payment.setRemainingAmount(bidding.getFinalprice() - bidding.getDeposit());
                 payment.setStreet(null);
                 payment.setCity(null);
                 payment.setState(null);
