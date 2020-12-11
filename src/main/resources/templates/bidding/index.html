@@ -15,15 +15,23 @@
             integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" th:href="@{/css/user.css}" href="">
+<style>
+    .logout{
+        float: right;
+    }
+</style>
 </head>
 <body>
+
 <div id="mainContent">
+
     <div sec:authorize="isAuthenticated()">
         Authenticated as <span sec:authentication="name"></span></div>
 <!--    <tr th:each="student: ${students}">-->
 <!--        <td th:text="${student.id}" />-->
 <!--        <td th:text="${student.name}" />-->
 <!--    </tr>-->
+
     <div class="bd-example bd-example-images">
         <img th:src="@{images/macbookair.jpg}" src="../static/images/macbookair.jpg" alt="macbook air" class="img-thumbnail">
     </div>

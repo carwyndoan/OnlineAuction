@@ -20,24 +20,21 @@ public class forgetPassword {
     VerificationService verificationService;
 
     @GetMapping("/forget_password")
-    public String forgetPassword(@Valid @ModelAttribute("user") User user){
+    public String forgetPassword(@ModelAttribute("user")User user){
 
       //  System.out.println(user.getEmail());//null
         return "security/forget_password_form";
     }
     @PostMapping("/forget_password" )
-    public String postForgetPassword(@Valid Model model, User user, RedirectAttributes
-            redirectAttributes,BindingResult bindingResult) {
-        int i = 0;
-        if (bindingResult.hasErrors()) {
-            return "redirect:/forget_password";
-        }
+    public String postForgetPassword(@ModelAttribute("user") User user, RedirectAttributes
+            redirectAttributes) {
+
         System.out.println("useremail........" + user.getEmail());
         User savedUser = userService.findUserByEmail(user.getEmail());
-        System.out.println(savedUser.getEmail());
+//        System.out.println(savedUser.getEmail());
 
         User user1;
-        if(savedUser != null && savedUser.getEmail().equals(user.getEmail())) {
+        if(savedUser != null ) {
 
             System.out.println("model = " + "send email...................");
             user1 = userService.saveUserWithVerificationKey(savedUser);

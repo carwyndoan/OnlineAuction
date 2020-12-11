@@ -61,8 +61,7 @@ public class UserServiceImpl implements UserService {
         verification.setTrial(0);
         verification.setStatus(0);
         verificationRepository.save(verification);
-        //System.out.println("verication saved" + verificationRepository.findByUserAndType(savedUser,0).getCode());
-        //Send Email
+
         String content = "Your activation code is " + verification.getCode();
         emailService.sendSimpleMessage(savedUser.getEmail(), "Activation Code", content);
 //        this.addObserver(emailSender);

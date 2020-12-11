@@ -27,7 +27,7 @@ public class VerificationServiceImpl implements VerificationService {
 
     @Override
     public List<Verification> findByUser(int user_id) {
-//        return verificationRepository.findByUser_id(user_id);
+     //  return verificationRepository.findByUser_id(user_id);
         return null;
     }
 
