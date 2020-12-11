@@ -27,8 +27,8 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Payment findPaymentByBiddingID(Integer biddingID, Integer userID) {
-        return paymentRepository.findPaymentByBiddingID(biddingID, userID);
+    public Payment findPaymentByBiddingIDAndUser(Integer biddingID, Integer userID) {
+        return paymentRepository.findPaymentByBiddingIDAndUser(biddingID, userID);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public InvoiceDTO makeInvoice(Integer biddingID, Integer userID) {
-        Payment payment = paymentRepository.findPaymentByBiddingID(biddingID, userID);
+        Payment payment = paymentRepository.findPaymentByBiddingIDAndUser(biddingID, userID);
         InvoiceDTO dto = new InvoiceDTO();
         dto.setShipping_Name(payment.getReceiverName());
         dto.setShipping_State(payment.getState());
@@ -99,6 +99,11 @@ public class PaymentServiceImpl implements PaymentService {
             dto.setInvoice_Number(payment.getInvoiceNumber());
         }
         return dto;
+    }
+
+    @Override
+    public List<Payment> findPaymentByBidding(Integer bidding_id) {
+        return paymentRepository.findPaymentByBidding(bidding_id);
     }
 
 
