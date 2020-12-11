@@ -28,7 +28,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/bidding")
-public class TestController {
+public class BiddingPaymentController {
     @Autowired
     BiddingService biddingService;
 
@@ -86,7 +86,7 @@ public class TestController {
     public String savePayment(@AuthenticationPrincipal UserDetails userDetails, @Valid Payment payment, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "bidding/Payment";
-        Payment payment1 = paymentService.savePayment(payment);
+        Payment payment1 = paymentService.makePayment(payment);
         Bidding bidding = payment1.getBiddingPayment();
         bidding.setStatus(2);
         biddingService.saveBidding(bidding);

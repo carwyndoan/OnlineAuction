@@ -11,6 +11,8 @@ import java.util.Optional;
 public interface PaymentService {
     Payment savePayment(Payment payment);
 
+    Payment makePayment(Payment payment);
+
     Payment findPaymentByBiddingIDAndUser(Integer biddingID, Integer userID);
 
     Payment chargeDeposit(Payment payment);
