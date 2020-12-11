@@ -18,9 +18,9 @@ public interface BiddingRepository extends JpaRepository<Bidding, Integer> {
 
     @Query(value = "select bid from Bidding bid "
             + "inner join fetch bid.product p "
-            + "inner join p.user seller "
+            + "inner join fetch p.user seller "
             + "inner join p.categories cat "
-            + "left join fetch bid.bidding_activities ba "
+            //+ "left join fetch bid.bidding_activities ba "
             //+ "where seller.enable = 1 and seller.profile_verified = 1 and seller.registration_verified = 1 "
             + "where seller.email <> :exclude_email "
             + "and (:category_id = 0 or cat.category_id = :category_id)"
@@ -37,9 +37,9 @@ public interface BiddingRepository extends JpaRepository<Bidding, Integer> {
     @Override
     @Query(value = "select bid from Bidding bid "
             + "inner join fetch bid.product pr "
-            + "inner join fetch bid.payments p "
+            //+ "inner join fetch bid.payments p "
             //+ "inner join fetch bid.bidding_activities ba "
-            + "inner join fetch bid.winner win "
+            + "left join fetch bid.winner win "
             + "where bid.bidding_id = :integer")
     Optional<Bidding> findById(Integer integer);
 }

@@ -7,7 +7,10 @@ import miu.edu.auction.repository.BiddingRepository;
 import miu.edu.auction.repository.PaymentRepository;
 import miu.edu.auction.repository.UserRepository;
 import miu.edu.auction.service.BiddingService;
+import miu.edu.auction.service.EmailService;
 import miu.edu.auction.service.PaymentService;
+import miu.edu.auction.service.UserService;
+import org.jobrunr.scheduling.BackgroundJob;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -33,45 +36,54 @@ public class BiddingServiceImpl implements BiddingService {
 
     @Override
     public List<Bidding> findBiddingByCategory(Integer category_id, String exclude_email) {
-        return biddingRepository.findBiddingByCategory(category_id, exclude_email);
+        List<Bidding> biddingList = biddingRepository.findBiddingByCategory(category_id, exclude_email);
+        for (Bidding bid:biddingList) {
+            List<Bidding_Activities> biddingActivitiesList = biddingActivitiesRepository.findBidding_ActivitiesByBidding(bid.getBidding_id());
+            bid.setBidding_activities(biddingActivitiesList);
+        }
+        return biddingList;
     }
 
     /*
     * Return max bid
      */
     @Override
-    public Double placeBid(Integer bidding_id, Integer user_id, Double bid) {
-        Bidding bidding = biddingRepository.findById(bidding_id).get();
-        User user = userRepository.findById(user_id).get();
-        OptionalDouble max = biddingActivitiesRepository.findBidding_ActivitiesByBidding(bidding_id).stream()
-                .filter(ba -> ba.getBidding_user().getUser_id() == user_id)
-                .mapToDouble(Bidding_Activities::getAmount)
-                .max();
+    public Boolean placeBid(Integer bidding_id, Integer user_id, Double bid) {
+        try {
+            Bidding bidding = biddingRepository.findById(bidding_id).get();
+            User user = userRepository.findById(user_id).get();
+            OptionalDouble max = biddingActivitiesRepository.findBidding_ActivitiesByBidding(bidding_id).stream()
+                    .filter(ba -> ba.getBidding_user().getUser_id() == user_id)
+                    .mapToDouble(Bidding_Activities::getAmount)
+                    .max();
 
-        Bidding_Activities bidding_activities = new Bidding_Activities();
-        bidding_activities.setBidding(bidding);
-        bidding_activities.setBidding_user(user);
-        bidding_activities.setBidding_date(LocalDateTime.now());
+            Bidding_Activities bidding_activities = new Bidding_Activities();
+            bidding_activities.setBidding(bidding);
+            bidding_activities.setBidding_user(user);
+            bidding_activities.setBidding_date(LocalDateTime.now());
 
-        if (!max.isPresent()) {
-            //Deposit
-            Payment payment = new Payment();
-            payment.setUser_payment(user);
-            payment.setBiddingPayment(bidding);
-            payment.setDeposit(bidding.getDeposit() <= 0 ? bidding.getStart_price() * 0.1 : bidding.getDeposit());
-            paymentService.chargeDeposit(payment);
+            if (!max.isPresent()) {
+                //Deposit
+                Payment payment = new Payment();
+                payment.setUser_payment(user);
+                payment.setBiddingPayment(bidding);
+                payment.setDeposit(bidding.getDeposit() <= 0 ? bidding.getStart_price() * 0.1 : bidding.getDeposit());
+                paymentService.chargeDeposit(payment);
 
-            bidding_activities.setAmount(bid);
-            biddingActivitiesRepository.save(bidding_activities);
-            bidding.getBidding_activities().add(bidding_activities);
-        } else if (max.getAsDouble() < bid) {
-            bidding_activities.setAmount(bid);
-            biddingActivitiesRepository.save(bidding_activities);
+                bidding_activities.setAmount(bid);
+                biddingActivitiesRepository.save(bidding_activities);
+                bidding.getBidding_activities().add(bidding_activities);
+            } else if (max.getAsDouble() < bid) {
+                bidding_activities.setAmount(bid);
+                biddingActivitiesRepository.save(bidding_activities);
+            }
+
+            return true;
+        } catch (Exception ex) {
+            System.out.println(ex);
+            return false;
         }
-
-        return biddingActivitiesRepository.getMaxBidByBidding(bidding.getBidding_id());
     }
-
 
     @Override
     public List<Bidding> findByWinner(String email, LocalDate paymentDate) {
@@ -84,8 +96,15 @@ public class BiddingServiceImpl implements BiddingService {
     }
 
     @Override
-    public Optional<Bidding> findByID(Integer key) {
-        return biddingRepository.findById(key);
+    public Bidding findByID(Integer key) {
+        Bidding bidding = biddingRepository.findById(key).orElse(null);
+        List<Bidding_Activities> biddingActivities = biddingActivitiesRepository.findBidding_ActivitiesByBidding(key);
+        List<Payment> paymentList = paymentService.findPaymentByBidding(key);
+        if(bidding != null) {
+            bidding.setBidding_activities(biddingActivities);
+            bidding.setPayments(paymentList);
+        }
+        return bidding;
     }
 
 //    @Override

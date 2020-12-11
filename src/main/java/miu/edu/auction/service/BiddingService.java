@@ -11,13 +11,13 @@ public interface BiddingService {
 
     List<Bidding> findBiddingByCategory(Integer category_id, String exclude_email);
 
-    Double placeBid(Integer bidding_id, Integer user_id, Double bid);
+    Boolean placeBid(Integer bidding_id, Integer user_id, Double bid);
 
     List<Bidding> findByWinner(String email, LocalDate paymentDate);
 
     List<Bidding> findByUserBidding(String email);
 
-    Optional<Bidding> findByID(Integer key);
+    Bidding findByID(Integer key);
 
 //    List<BiddingActivityDTO> findBidingHistories(Integer bidding_id);
     List<BiddingActivityDTO> findBidingHistoriesByMonthAndYear(Integer bidding_id, Integer year, Integer month);

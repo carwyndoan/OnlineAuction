@@ -24,8 +24,8 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Payment findPaymentByBiddingID(Integer biddingID, Integer userID) {
-        return paymentRepository.findPaymentByBiddingID(biddingID, userID);
+    public Payment findPaymentByBiddingIDAndUser(Integer biddingID, Integer userID) {
+        return paymentRepository.findPaymentByBiddingIDAndUser(biddingID, userID);
     }
 
     @Override
@@ -53,6 +53,11 @@ public class PaymentServiceImpl implements PaymentService {
         payment.setPaySellerDate(LocalDateTime.now());
         paymentRepository.save(payment);
         return  payment;
+    }
+
+    @Override
+    public List<Payment> findPaymentByBidding(Integer bidding_id) {
+        return paymentRepository.findPaymentByBidding(bidding_id);
     }
 
 

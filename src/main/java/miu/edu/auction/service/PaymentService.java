@@ -10,11 +10,13 @@ import java.util.Optional;
 public interface PaymentService {
     Payment savePayment(Payment payment);
 
-    Payment findPaymentByBiddingID(Integer biddingID, Integer userID);
+    Payment findPaymentByBiddingIDAndUser(Integer biddingID, Integer userID);
 
     Payment chargeDeposit(Payment payment);
 
     Payment returnDeposit(Payment payment);
 
     Payment payToSeller(Payment payment);
+
+    List<Payment> findPaymentByBidding(Integer bidding_id);
 }
