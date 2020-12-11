@@ -2,9 +2,11 @@ package miu.edu.auction.controller;
 
 import lombok.extern.java.Log;
 import miu.edu.auction.domain.Category;
+import miu.edu.auction.domain.Photo;
 import miu.edu.auction.domain.Product;
 import miu.edu.auction.model.PagerModel;
 import miu.edu.auction.repository.CategoryRepository;
+import miu.edu.auction.repository.PhotoRepository;
 import miu.edu.auction.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,6 +27,9 @@ public class CustomerController {
 
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    PhotoRepository photoRepository;
 
     @Autowired
     CategoryRepository categoryRepository;
@@ -98,8 +103,12 @@ public class CustomerController {
 
     public String detail(Model model, @RequestParam("id") Integer id) {
         Product product = productRepository.findById(id).get();
+        List<Photo> photoList = photoRepository.findProductId(id);
+
+        System.out.println("photoList size = " + photoList.size());
 
         model.addAttribute("product", product);
+        model.addAttribute("photoList", photoList);
 
         return "detail";
     }

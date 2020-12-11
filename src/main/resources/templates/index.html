@@ -3,8 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.3.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
+
 <body>
-Homepage here
+<div>
+    <iframe src="header.html" name="targetframe" allowTransparency="true" scrolling="no" frameborder="0" >
+    </iframe>
+</div>
+
+<br/>
+
+<div>
+    <a href="header.html" target="targetframe">Link to Page 2</a><br />
+    <a href="footer.html" target="targetframe">Link to Page 3</a>
+</div>
 </body>
+
+
 </html>
