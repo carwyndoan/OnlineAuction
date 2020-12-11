@@ -6,6 +6,7 @@ import miu.edu.auction.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,19 +22,41 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getAllProduct() {
-        return (List<Product>) repo.findAll();
+        List<Product> newProducts=new ArrayList<>();
+
+        List<Product> products = (List<Product>)repo.findAll();
+
+        for(Product product:products){
+            if(product.getStatus()==1)
+                newProducts.add(product);
+        }
+
+//        if(role=="customer")
+//            return newProducts;
+//        else
+//            return products;
+
+        return products;
     }
 
     @Override
     public void deleteProduct(int id) {
-        repo.deleteById(id);
+        Product product = getProduct(id);
+        int bidStatus=product.getBidding().getStatus();
+
+        if(product.getStatus()==0 && bidStatus==0)
+            repo.deleteById(id);
 
 
     }
 
     @Override
     public Product updateProduct(Product product) {
-        return repo.save(product);
+        int bidStatus=product.getBidding().getStatus();
+        int status=product.getStatus();
+        if(status==1 && bidStatus==0)
+            return repo.save(product);
+        return null;
     }
 
     @Override

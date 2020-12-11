@@ -33,7 +33,6 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable("myDefaultServlet");
-
     }
 
     @Bean

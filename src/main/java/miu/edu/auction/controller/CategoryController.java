@@ -76,6 +76,8 @@ public class CategoryController {
 //         Category cate= service.getCategory(category_id);
 //         if(cate==null){
 //             throw new CategoryNotFoundException("message");
+//                     throw new IllegalArgumentException(new CategoryNotFoundException(""))
+
 //         }
 
          service.updateCateogry(category);
