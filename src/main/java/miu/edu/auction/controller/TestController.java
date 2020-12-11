@@ -4,6 +4,7 @@ import miu.edu.auction.domain.Bidding;
 import miu.edu.auction.domain.Payment;
 import miu.edu.auction.domain.User;
 import miu.edu.auction.dto.BiddingActivityDTO;
+import miu.edu.auction.dto.InvoiceDTO;
 import miu.edu.auction.service.BiddingService;
 import miu.edu.auction.service.PaymentService;
 import miu.edu.auction.service.UserService;
@@ -39,19 +40,20 @@ public class TestController {
 
     @GetMapping(value = {"/winbiddings"})
     public String loadWinBidding(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-
-        System.out.println(userDetails);
         String userEmail = userDetails.getUsername();
-        List<Bidding> list = biddingService.findByWinner(userEmail, LocalDate.now());
+        List<Bidding> list = biddingService.findByWinner(userEmail, LocalDateTime.now());
         model.addAttribute("winbiddings", list);
         return "bidding/WinBidding";
     }
 
     @GetMapping(value = {"/biddings"})
-    public String loadAllBidding(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        System.out.println(userDetails);
+    public String loadAllBidding(@AuthenticationPrincipal UserDetails userDetails, Model model, @RequestParam(name = "year", required = false) Integer year, @RequestParam(name = "month", required = false) Integer month) {
+        if ((year == null) || (month == null)) {
+            year = 0;
+            month = 0;
+        }
         String userEmail = userDetails.getUsername();
-        List<Bidding> list = biddingService.findByUserBidding(userEmail);
+        List<Bidding> list = biddingService.findByUserBidding(userEmail, month, year);
         model.addAttribute("allbiddings", list);
         return "bidding/AllBidding";
     }
@@ -79,54 +81,56 @@ public class TestController {
     public String savePayment(@AuthenticationPrincipal UserDetails userDetails, @Valid Payment payment, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "bidding/Payment";
-        String userEmail = userDetails.getUsername();
-        Payment payment1 =  paymentService.savePayment(payment);
-        return "redirect:/bidding/winbiddings";
+        Payment payment1 = paymentService.savePayment(payment);
+        Bidding bidding = payment1.getBiddingPayment();
+        bidding.setStatus(2);
+        biddingService.saveBidding(bidding);
+        return "redirect:/bidding/biddings";
     }
 
-    @GetMapping(value = {"/activities/{id}"})
-    public String loadActivites(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer id, Model model) {
-        String userEmail = userDetails.getUsername();
-        User user = userService.findUserByEmail(userEmail);
-        List<BiddingActivityDTO> listDTO = biddingService.findBidingHistoriesByMonthAndYear(id, -1, -1);
-        int startYear = LocalDate.now().getYear();
-        List<Integer> months = new ArrayList<>();
-        List<Integer> years = new ArrayList<>();
-        for (int i = 1; i <= 12; i++) {
-            months.add(i);
+    @GetMapping(value = {"/activities/{bidding_id}"})
+    public String loadHistories(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer bidding_id, @RequestParam(name = "year", required = false) Integer year, @RequestParam(name = "month", required = false) Integer month, Model model) {
+        if ((year == null) || (month == null)) {
+            year = 0;
+            month = 0;
         }
-        int i = startYear - 10;
-        while (i <= startYear + 10) {
-            years.add(i);
-            i++;
-        }
-        model.addAttribute("months", months);
-        model.addAttribute("years", years);
-        model.addAttribute("activities", listDTO);
-        model.addAttribute("biddingid", id);
-        return "bidding/BiddingHistories";
-    }
-
-    @GetMapping(value = {"/activitiesByMonthAndYear/{bidding_id}"})
-    public String loadHistoryByYearAndMonth(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer bidding_id, @RequestParam Integer year, @RequestParam Integer month, Model model) {
         String userEmail = userDetails.getUsername();
         User user = userService.findUserByEmail(userEmail);
         List<BiddingActivityDTO> listDTO = biddingService.findBidingHistoriesByMonthAndYear(bidding_id, year, month);
-        int startYear = LocalDate.now().getYear();
-        List<Integer> months = new ArrayList<>();
-        List<Integer> years = new ArrayList<>();
-        for (int i = 1; i <= 12; i++) {
-            months.add(i);
-        }
-        int i = startYear - 10;
-        while (i <= startYear + 10) {
-            years.add(i);
-            i++;
-        }
-        model.addAttribute("months", months);
-        model.addAttribute("years", years);
         model.addAttribute("activities", listDTO);
         model.addAttribute("biddingid", bidding_id);
         return "bidding/BiddingHistories";
+    }
+
+    @GetMapping(value = {"/invoice/{id}"})
+    public String invoice(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer id, Model model) {
+        String userEmail = userDetails.getUsername();
+        User user = userService.findUserByEmail(userEmail);
+        InvoiceDTO dto = paymentService.makeInvoice(id, user.getUser_id());
+        model.addAttribute("invoice", dto);
+        System.out.println(dto.getProduct_Name() + " " + dto.getOrder_Name() + " " +  dto.getShipping_Name() +  " " + dto.getProduct_VendorName());
+        //build template here
+        return "bidding/invoice";
+    }
+
+    @ModelAttribute("months")
+    public List<Integer> getMonths(){
+        List<Integer> months = new ArrayList<>();
+        for (int i = 1; i <= 12; i++) {
+            months.add(i);
+        }
+        return months;
+    }
+
+    @ModelAttribute("years")
+    public List<Integer> getYears(){
+        int startYear = LocalDate.now().getYear();
+        List<Integer> years = new ArrayList<>();
+        int i = startYear - 5;
+        while (i <= startYear + 5) {
+            years.add(i);
+            i++;
+        }
+        return  years;
     }
 }

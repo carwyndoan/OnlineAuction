@@ -24,7 +24,7 @@
 
 <section class="container">
     <div>
-        <form action="#" th:action="@{/bidding/activitiesByMonthAndYear/{id}(id=*{biddingid})}" method="get">
+        <form action="#" th:action="@{/bidding/activities/{id}(id=*{biddingid})}" method="get">
             <label><span>Month: </span></label>
             <select name="month" th:width="6">
                 <option value="0" th:text="All" selected></option>
@@ -35,8 +35,6 @@
                 <option value="0" th:text="All" selected> </option>
                 <option th:each="year:${years}" th:value="${year.intValue()}" th:text="${year.intValue()}"></option>
             </select>
-<!--            <h3 th:text="*{biddingid}"></h3>-->
-<!--            <input th:field="*{biddingid}" type="hidden">-->
             <input type="submit" value="Search">
         </form>
         <table class="table table-hover">
@@ -48,6 +46,7 @@
                 <th><span th:text="#{bidding.activities.biddingstartprice}">Start Price</span></th>
                 <th><span th:text="#{bidding.activities.biddingprice}">Biding Price</span></th>
                 <th><span th:text="#{bidding.activities.biddingdate}">Bidding Date</span></th>
+                <th><span th:text="#{bidding.activities.biddingstartdate}">Due Date</span></th>
                 <th><span th:text="#{bidding.activities.biddingduedate}">Due Date</span></th>
             </tr>
         </table>
@@ -59,6 +58,7 @@
                 <td th:text="${item.startPrice}"></td>
                 <td th:text="${item.biddingPrice}"></td>
                 <td th:text="${item.biddingDate}"></td>
+                <td th:text="${item.biddingStartDate}"></td>
                 <td th:text="${item.biddingDueDate}"></td>
             </tr>
         </table>

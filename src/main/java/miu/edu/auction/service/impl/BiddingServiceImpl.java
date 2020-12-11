@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class BiddingServiceImpl implements BiddingService {
@@ -86,13 +87,18 @@ public class BiddingServiceImpl implements BiddingService {
     }
 
     @Override
-    public List<Bidding> findByWinner(String email, LocalDate paymentDate) {
+    public List<Bidding> findByWinner(String email, LocalDateTime paymentDate) {
         return biddingRepository.findByWinner(email, paymentDate);
     }
 
     @Override
-    public List<Bidding> findByUserBidding(String email) {
-        return biddingRepository.findByUserBidding(email);
+    public List<Bidding> findByUserBidding(String email, Integer month, Integer year) {
+//        System.out.println(year + " " + month);
+        List<Bidding> list = biddingRepository.findByUserBidding(email).stream()
+                .filter(bidding -> ((bidding.getStartdate() == null) || (bidding.getStartdate().getYear() == year) || (year == 0)))
+                .filter(bidding -> ((bidding.getStartdate() == null) || (bidding.getStartdate().getMonthValue() == month) || (month == 0))).collect(Collectors.toList());
+//        System.out.println("size: "+ list.size());
+        return list;
     }
 
     @Override
@@ -106,26 +112,6 @@ public class BiddingServiceImpl implements BiddingService {
         }
         return bidding;
     }
-
-//    @Override
-//    public List<BiddingActivityDTO> findBidingHistories(Integer bidding_id) {
-//        List<Bidding_Activities> activitiesList = biddingActivitiesRepository.findByBidding(bidding_id);
-//        System.out.println("The number record of bidding history: " + activitiesList.size());
-//        List<BiddingActivityDTO> listDto = new ArrayList<>();
-//        for (int i = 0; i < activitiesList.size(); i++) {
-//            Bidding_Activities activity = activitiesList.get(i);
-//            BiddingActivityDTO biddingHistoryDTO = new BiddingActivityDTO();
-//            biddingHistoryDTO.setId(i);
-//            biddingHistoryDTO.setStartPrice(activity.getBidding().getStart_price());
-//            biddingHistoryDTO.setBiddingPrice(activity.getAmount());
-//            biddingHistoryDTO.setBiddingDate(activity.getBidding_date());
-//            biddingHistoryDTO.setUserName(activity.getBidding_user().getName());
-//            biddingHistoryDTO.setProductName(activity.getBidding().getProduct().getName());
-//            biddingHistoryDTO.setBiddingDueDate(activity.getBidding().getDuedate());
-//            listDto.add(biddingHistoryDTO);
-//        }
-//        return listDto;
-//    }
 
     @Override
     public List<BiddingActivityDTO> findBidingHistoriesByMonthAndYear(Integer bidding_id, Integer year, Integer month) {
@@ -154,6 +140,7 @@ public class BiddingServiceImpl implements BiddingService {
             biddingHistoryDTO.setBiddingDate(activity.getBidding_date());
             biddingHistoryDTO.setUserName(activity.getBidding_user().getName());
             biddingHistoryDTO.setProductName(activity.getBidding().getProduct().getName());
+            biddingHistoryDTO.setBiddingStartDate(activity.getBidding().getStartdate());
             biddingHistoryDTO.setBiddingDueDate(activity.getBidding().getDuedate());
             listDto.add(biddingHistoryDTO);
         }
@@ -205,5 +192,10 @@ public class BiddingServiceImpl implements BiddingService {
             System.out.println(ex);
             return false;
         }
+    }
+
+    @Override
+    public Bidding saveBidding(Bidding bidding) {
+        return biddingRepository.save(bidding);
     }
 }

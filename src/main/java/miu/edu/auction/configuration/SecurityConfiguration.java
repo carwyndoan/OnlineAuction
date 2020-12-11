@@ -71,10 +71,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //.anyRequest().authenticated()
                 .and()
                 .formLogin()
+                .loginPage("/login")
+                .permitAll()
                 .failureUrl("/login-error")
                 .defaultSuccessUrl("/bid")
                 .and()
-                .exceptionHandling().accessDeniedPage("/access-denied");;
+                .exceptionHandling().accessDeniedPage("/access-denied")
+                .and().logout().invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                //.logoutUrl("/doLogout")
+                .logoutSuccessUrl("/login").permitAll()
+        ;
+
 
         //Those two settings below is to enable access h2 database via browser
         http.csrf().disable();

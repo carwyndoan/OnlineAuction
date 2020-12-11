@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -32,6 +33,10 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         localeChangeInterceptor.setParamName("lang");
         registry.addInterceptor(localeChangeInterceptor);
     }
+    @Override
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        configurer.enable("myDefaultServlet");
+    }
 
     @Bean
     public MessageSource messageSource() {
@@ -44,7 +49,7 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver slr = new SessionLocaleResolver();
-        slr.setDefaultLocale(Locale.ENGLISH);
+        slr.setDefaultLocale(Locale.US);
         return slr;
     }
 
@@ -78,4 +83,6 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
                         "classpath:/static/css/",
                         "classpath:/static/js/");
     }
+
+
 }

@@ -15,6 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 public class Product {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int product_id;
@@ -29,6 +31,12 @@ public class Product {
     private int status; //0: Save without release, 1: Save and Release
 
     private String image_path;
+
+    private Long price;
+
+    private Long mile;
+
+    private String caption;
 
     private String description;
 
@@ -45,4 +53,6 @@ public class Product {
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     List<Category> categories;
+
+
 }

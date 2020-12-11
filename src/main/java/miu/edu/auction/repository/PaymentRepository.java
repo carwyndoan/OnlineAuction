@@ -24,4 +24,5 @@ public interface PaymentRepository extends JpaRepository<Payment, Integer> {
     @Query(value = "select p from Payment p "
         + "where p.biddingPayment.bidding_id = :biddingId")
     List<Payment> findPaymentByBidding(Integer biddingId);
+
 }

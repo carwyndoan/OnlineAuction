@@ -4,6 +4,7 @@ import miu.edu.auction.domain.Bidding;
 import miu.edu.auction.dto.BiddingActivityDTO;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,9 +14,9 @@ public interface BiddingService {
 
     Boolean placeBid(Integer bidding_id, Integer user_id, Double bid);
 
-    List<Bidding> findByWinner(String email, LocalDate paymentDate);
+    List<Bidding> findByWinner(String email, LocalDateTime paymentDate);
 
-    List<Bidding> findByUserBidding(String email);
+    List<Bidding> findByUserBidding(String email, Integer month, Integer year);
 
     Bidding findByID(Integer key);
 
@@ -26,4 +27,5 @@ public interface BiddingService {
 
     Boolean paySeller(Integer bidding_id);//pay for seller when delivered / after shiped 30 days
 
+    Bidding saveBidding(Bidding bidding);
 }

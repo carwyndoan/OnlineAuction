@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>The winning bidding list</title>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+<div th:object="${invoice}">
+    <section>
+        <div style="text-align: center">
+            <h3><span th:text="#{invoice.title}"> Invoice</span></h3>
+            <span th:text="#{invoice.number}">Invoice Number</span> <span th:text="*{invoice_Number}"></span> <br>
+            <span th:text="#{invoice.createddate}">Created Date</span> <span th:text="*{invoice_CreatedDate}"></span>
+        </div>
+    </section>
+
+
+    <section class="container">
+        <div>
+            <table class="table table-hover">
+                <tr>
+                    <th style="text-align:left">
+                        <span th:text="#{invoice.billto}">Bill To</span>
+                    </th>
+                    <th style="text-align:right">
+                        <span th:text="#{invoice.shipto}">Ship To</span>
+                    </th>
+                </tr>
+            </table>
+            <table id="cart_table" class="table table-hover" >
+                <tr>
+                    <td style="text-align: left">
+                        <span th:text="*{order_Name}"></span> <br/>
+                        <span th:text="*{order_Street}"></span> <br/>
+                        <span th:text="*{order_City}"></span> <span th:text="*{order_State}"></span> <span th:text="*{order_ZipCode}"></span> <br/>
+                        <span th:text="*{order_Email}"></span>
+                    </td>
+                    <td style="text-align: right">
+                        <span th:text="*{shipping_Name}"></span> <br/>
+                        <span th:text="*{shipping_Street}"></span> <br/>
+                        <span th:text="*{shipping_City}"></span> <span th:text="*{shipping_State}"></span> <span th:text="*{shipping_ZipCode}"></span> <br/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <table class="table table-hover" style="background-color: lightblue;">
+                <tr>
+                    <th> <span th:text="#{invoice.quantity}"> Quantity</span></th>
+                    <th> <span th:text="#{invoice.product}">Item Name</span></th>
+                    <th> <span th:text="#{invoice.description}">Description</span></th>
+                    <th> <span th:text="#{invoice.price}">Item Price</span></th>
+                    <th> <span th:text="#{invoice.total}">Item Total</span></th>
+                </tr>
+            </table>
+            <table id="cart_table" class="table table-hover">
+                <tr>
+                    <td style="text-align: left"><span th:text="*{product_Quantity}"></span></td>
+                    <td style="text-align: left"><span th:text="*{product_Name}"></span></td>
+                    <td style="text-align: left"><span th:text="*{product_Description}"></span></td>
+                    <td style="text-align: left"><span th:text="${#numbers.formatCurrency(invoice.product_Price)}" ></span></td>
+                    <td style="text-align: left"><span th:text="${#numbers.formatCurrency(invoice.total)}"></span></td>
+                </tr>
+            </table>
+        </div>
+
+        <div>
+            <table class="table table-hover">
+                <tr>
+                    <th style="text-align:right">
+                        <span th:text="#{invoice.payment.infor}"></span>
+                    </th>
+                </tr>
+            </table>
+            <table id="cart_table" class="table table-hover" >
+                <tr>
+                    <td style="text-align: right">
+                        <span th:text="#{invoice.payment.deposit}"></span> <span th:text="${#numbers.formatCurrency(invoice.payment_DepositAmount)}"></span> <br/>
+                        <span th:text="#{invoice.payment.remaining}"></span><span th:text="${#numbers.formatCurrency(invoice.payment_RemainingAmount)}"></span> <br/>
+                        <span th:text="#{invoice.payment.line}"></span> <br/>
+                        <span th:text="#{invoice.payment.total}"></span><span th:text="${#numbers.formatCurrency(invoice.total)}"></span> <br/>
+                    </td>
+                </tr>
+            </table>
+            <button type="button" class="btn btn-primary" onclick="window.print()">Print Invoice</button>
+        </div>
+
+    </section>
+</div>
+</body>
+</html>

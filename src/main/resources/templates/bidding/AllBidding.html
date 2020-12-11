@@ -26,6 +26,20 @@
 
 <section class="container">
     <div>
+        <form action="#" th:action="@{/bidding/biddings}" method="get">
+            <label><span>Month: </span></label>
+            <select name="month" th:width="6">
+                <option value="0" th:text="All" selected></option>
+                <option th:each="month : ${months}" th:value="${month.intValue()}" th:text="${month.intValue()}"></option>
+            </select> &nbsp&nbsp&nbsp
+            <label>Year:</label>
+            <select name="year" th:width="12">
+                <option value="0" th:text="All" selected> </option>
+                <option th:each="year:${years}" th:value="${year.intValue()}" th:text="${year.intValue()}"></option>
+            </select>
+            <input type="submit" value="Search">
+        </form>
+
         <table class="table table-hover">
             <tr>
                 <th style="text-align:left"><span th:text="#{winbidding.list.id}">ID</span></th>
@@ -33,6 +47,7 @@
                 <th style="text-align:left"><span th:text="#{winbidding.list.startprice}">Start Price</span></th>
                 <th style="text-align:left"><span th:text="#{winbidding.list.finalprice}">Final Price</span></th>
                 <th style="text-align:left"><span th:text="#{winbidding.list.deposit}">Deposit</span></th>
+                <th style="text-align:left"><span th:text="#{winbidding.list.startdate}">Closed Date</span></th>
                 <th style="text-align:left"><span th:text="#{winbidding.list.closeddate}">Closed Date</span></th>
                 <th style="text-align:left"><span th:text="#{winbidding.list.paymentduedate}">Payment Due Date</span></th>
                 <th style="text-align:left"><span th:text="#{winbidding.list.action}"></span></th>
@@ -42,15 +57,27 @@
             <tr th:each="item: ${allbiddings}">
                 <td th:text="${item.bidding_id}"></td>
                 <td th:text="${item.product.name}"></td>
-                <td th:text="${item.start_price}"></td>
-                <td th:text="${item.finalprice}"></td>
-                <td th:text="${item.deposit}"></td>
+                <td th:text="${#numbers.formatCurrency(item.start_price)}"></td>
+                <td th:text="${#numbers.formatCurrency(item.finalprice)}" ></td>
+                <td th:text="${#numbers.formatCurrency(item.deposit)}"></td>
+                <td th:text="${item.startdate}"></td>
                 <td th:text="${item.duedate}"></td>
                 <td th:text="${item.payment_duedate}"></td>
                 <td>
                    <a th:href="@{/bidding/activities/{id}(id=${item.bidding_id})}" class="label label-danger product-remove-btn">
-                        <span class="glyphicon glyphicon-remove" /></span> Details
-                    </a>
+                        <span class="glyphicon glyphicon-remove" ></span> Details
+                   </a> &nbsp;&nbsp;&nbsp;
+                    <span th:if="${(item.winner != null) && (item.status <= 1)}">
+                       <a th:href="@{/bidding/paymentform/{id}(id=${item.bidding_id})}" class="label label-danger product-remove-btn">
+                            <span class="glyphicon glyphicon-remove" ></span> Payment
+                       </a>&nbsp;
+                    </span>&nbsp;&nbsp;&nbsp;
+                    <span th:if="${item.status >= 2}">
+                       <a th:href="@{/bidding/invoice/{id}(id=${item.bidding_id})}" class="label label-danger product-remove-btn">
+                            <span class="glyphicon glyphicon-remove" ></span> Invoice
+                       </a>&nbsp;
+                    </span>&nbsp;&nbsp;&nbsp;
+
                 </td>
             </tr>
         </table>

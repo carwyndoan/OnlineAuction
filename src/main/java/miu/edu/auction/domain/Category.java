@@ -22,9 +22,19 @@ public class Category {
     @NotBlank
     private String name;
     @NotNull
-    private int active;
-
+     private int active;
+    @NotBlank
+    private String description;
     @ManyToMany(cascade = CascadeType.MERGE, mappedBy = "categories")
     //@JoinTable(name = "category_product", joinColumns = @JoinColumn(name = "category_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product> products;// = new ArrayList<Product>();
+
+
+    @Override
+    public boolean equals(Object o){
+        Category c1=(Category) o;
+        if(c1.getName().equals(this.getName()) && c1.description.equals(this.description))
+            return true;
+        return false;
+    }
 }

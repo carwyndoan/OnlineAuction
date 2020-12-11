@@ -41,6 +41,8 @@ public class Payment {
 
     private LocalDateTime paySellerDate;
 
+    private String invoiceNumber;
+
     @NotBlank
     private String receiverName;
 
