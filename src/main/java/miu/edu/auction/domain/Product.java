@@ -30,8 +30,12 @@ public class Product {
 
     private String image_path;
 
+    private Long price;
+
+    private Long mile;
 
     private String caption;
+
     private String description;
 
     @ManyToOne

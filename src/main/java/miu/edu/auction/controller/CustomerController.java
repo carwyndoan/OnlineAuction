@@ -75,8 +75,11 @@ public class CustomerController {
 
     @GetMapping("/detail")
 
-    public String detail(Model model) {
-        return "detail";
+    public String detail(Model model,@RequestParam("id") Integer id ) {
+        Product product = productRepository.findById(id).get();
 
+        model.addAttribute("product", product);
+
+        return "detail";
     }
 }
