@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail</title>
+</head>
+<body>
+<div id="global">
+    <h4>The product details have been saved.</h4>
+    <p>
+    <h5>Product:</h5>
+    Product name:<span th:text="${product.name}"></span><br/>
+    product status<span th:text="${product.status}"</span><br/>
+    Description: <span th:text="${product.description}"></span><br/>
+    </p>
+</div>
+
+</body>
+</html>

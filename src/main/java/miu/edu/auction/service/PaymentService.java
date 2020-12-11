@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface PaymentService {
     Payment savePayment(Payment payment);
 
-    Payment findPaymentByBiddingID(Integer biddingID, Integer userID);
+    Payment findPaymentByBiddingIDAndUser(Integer biddingID, Integer userID);
 
     Payment chargeDeposit(Payment payment);
 
@@ -20,4 +20,6 @@ public interface PaymentService {
     Payment payToSeller(Payment payment);
 
     InvoiceDTO makeInvoice(Integer biddingID, Integer userID);
+
+    List<Payment> findPaymentByBidding(Integer bidding_id);
 }

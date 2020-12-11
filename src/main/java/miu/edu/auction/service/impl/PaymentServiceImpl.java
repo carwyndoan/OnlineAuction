@@ -27,8 +27,8 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Payment findPaymentByBiddingID(Integer biddingID, Integer userID) {
-        return paymentRepository.findPaymentByBiddingID(biddingID, userID);
+    public Payment findPaymentByBiddingIDAndUser(Integer biddingID, Integer userID) {
+        return paymentRepository.findPaymentByBiddingIDAndUser(biddingID, userID);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public InvoiceDTO makeInvoice(Integer biddingID, Integer userID) {
-        Payment payment = paymentRepository.findPaymentByBiddingID(biddingID, userID);
+        Payment payment = paymentRepository.findPaymentByBiddingIDAndUser(biddingID, userID);
         InvoiceDTO dto = new InvoiceDTO();
         dto.setShipping_Name(payment.getReceiverName());
         dto.setShipping_State(payment.getState());
@@ -74,7 +74,7 @@ public class PaymentServiceImpl implements PaymentService {
         dto.setPayment_DepositDate(payment.getDepositDate());
         dto.setPayment_RemainingAmount(payment.getRemainingAmount());
         dto.setPayment_Date(payment.getPaymentDate());
-        dto.setTotal(payment.getBiddingPayment().getFinalprice());
+        dto.setTotal(payment.getDeposit() + payment.getRemainingAmount());
 
         dto.setOrder_Name(payment.getUser_payment().getName());
         dto.setOrder_Street(payment.getUser_payment().getStreet());
@@ -88,11 +88,22 @@ public class PaymentServiceImpl implements PaymentService {
         dto.setProduct_VendorName(payment.getBiddingPayment().getProduct().getUser().getName());
         dto.setProduct_Description(payment.getBiddingPayment().getProduct().getDescription().substring(0, 20));
         dto.setProduct_Quantity(1);
-
-        dto.setInvoice_Number(GenerationUnique.generateInvoiceNumber());
         dto.setInvoice_CreatedDate(LocalDate.now());
 
+        if (payment.getInvoiceNumber() == null) {
+            String invoiceNumber = GenerationUnique.generateInvoiceNumber();
+            dto.setInvoice_Number(invoiceNumber);
+            payment.setInvoiceNumber(invoiceNumber);
+            paymentRepository.save(payment);
+        } else {
+            dto.setInvoice_Number(payment.getInvoiceNumber());
+        }
         return dto;
+    }
+
+    @Override
+    public List<Payment> findPaymentByBidding(Integer bidding_id) {
+        return paymentRepository.findPaymentByBidding(bidding_id);
     }
 
 

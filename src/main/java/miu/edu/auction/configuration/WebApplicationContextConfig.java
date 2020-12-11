@@ -1,5 +1,8 @@
 package miu.edu.auction.configuration;
 
+import org.jobrunr.jobs.mappers.JobMapper;
+import org.jobrunr.storage.InMemoryStorageProvider;
+import org.jobrunr.storage.StorageProvider;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -28,6 +32,10 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
         localeChangeInterceptor.setParamName("lang");
         registry.addInterceptor(localeChangeInterceptor);
+    }
+    @Override
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        configurer.enable("myDefaultServlet");
     }
 
     @Bean
@@ -75,4 +83,6 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
                         "classpath:/static/css/",
                         "classpath:/static/js/");
     }
+
+
 }

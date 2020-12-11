@@ -21,11 +21,18 @@
 
         $(document).ready(function () {
             changePageAndSize();
+            sortP();
         });
 
         function changePageAndSize() {
             $('#pageSizeSelect').change(function (evt) {
                 window.location.replace("/home?pageSize=" + this.value + "&page=1");
+            });
+        }
+
+        function sortP() {
+            $('#inputSort').change(function (evt) {
+                window.location.replace("/home?pageSize=" + 8 + "&page=1" +"&sortVal=" + this.value);
             });
         }
 
@@ -247,12 +254,12 @@
 
         <div class="col-md-2 pt-3">
             <div class="form-group">
-                <select id="inputState" class="form-control">
-                    <option selected>State</option>
-                    <option>IOWA</option>
-                    <option>Illinois</option>
-                    <option>Arkansas</option>
-                    <option>California</option>
+                <select id="inputSort" class="form-control">
+                    <option selected>Sort</option>
+                    <option value="1">Price asc</option>
+                    <option value="2">Price desc</option>
+                    <option value="3">Mile asc</option>
+                    <option value="4">Mile desc</option>
                 </select>
             </div>
         </div>
@@ -279,9 +286,12 @@
 
                     <div class="card-body">
                         <h5 class="card-title" th:utext="${photo.getCaption()}"></h5>
-                        <p class="card-text" th:utext="${photo.getDescription()}"></p><!--
+                        <p class="card-text" th:utext="${photo.getDescription()}"></p>
+                        <p class="card-subtitle" th:utext="${photo.getPrice()}"></p>
+                        <p class="card-subtitle" th:utext="${photo.getMile()}"></p>
+                        <!--
                         <button type="button" class="btn btn-dark" th:href="@{/detail.html}">More...</button>-->
-                        <a class="btn btn-light" th:href="@{/detail}">More...</a>
+                        <a class="btn btn-light" th:href="${'/detail?id='+photo.getProduct_id()}">More...</a>
                     </div>
                 </div>
             </div>
