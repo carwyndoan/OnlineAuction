@@ -6,7 +6,6 @@ import miu.edu.auction.repository.UserRepository;
 import miu.edu.auction.repository.VerificationRepository;
 import miu.edu.auction.service.EmailService;
 import miu.edu.auction.service.UserService;
-import miu.edu.auction.service.VerificationService;
 import miu.edu.auction.utils.GenerationUnique;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,11 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.security.auth.Subject;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -63,8 +58,10 @@ public class UserServiceImpl implements UserService {
         verification.setGenerated_time(LocalDateTime.now());
         verification.setUser(savedUser);
         verification.setType(0);
+        verification.setTrial(0);
         verification.setStatus(0);
         verificationRepository.save(verification);
+        //System.out.println("verication saved" + verificationRepository.findByUserAndType(savedUser,0).getCode());
         //Send Email
         String content = "Your activation code is " + verification.getCode();
         emailService.sendSimpleMessage(savedUser.getEmail(), "Activation Code", content);

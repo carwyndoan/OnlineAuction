@@ -12,4 +12,8 @@ import java.util.List;
 @Repository
 public interface VerificationRepository extends CrudRepository<Verification, Integer> {
     Verification findByUserAndType(User user, @NotNull int type);
+
+    Verification findByUser(User user);
+    //List<Verification> findVerificationsByUserOrderByGenerated_timeDesc(User user);
+    //findVerificationByUserAndVerificationCodeTypeOrderByDateDesc(User user,VerificationCodeType VerificationCodeType.PASSWORD_RESET);
 }
