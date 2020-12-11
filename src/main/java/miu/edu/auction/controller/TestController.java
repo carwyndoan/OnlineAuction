@@ -69,6 +69,11 @@ public class TestController {
             if (bidding != null) {
                 payment.setBiddingPayment(bidding);
                 payment.setRemainingAmount(bidding.getFinalprice() - bidding.getDeposit());
+                payment.setStreet(null);
+                payment.setCity(null);
+                payment.setState(null);
+                payment.setZipcode(null);
+                payment.setReceiverName(null);
                 payment.setPaymentDate(LocalDateTime.now());
             }
             model.addAttribute("payment", payment);
