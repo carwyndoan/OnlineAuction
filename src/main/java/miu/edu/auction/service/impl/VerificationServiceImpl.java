@@ -76,6 +76,42 @@ public class VerificationServiceImpl implements VerificationService {
            throw new Exception("User does not exist in the database");
        }
         }
+    @Override
+    public void resetPassword(String email, String verificationcode) throws Exception {
+        User user = userRepository.findByEmail(email);
+        System.out.println("user.............." + user.getEmail());
+        if (user != null) {
+            Verification verification =
+                    verificationRepository.findByUser(user);
+//            //                findVerificationsByUserAndCodeOrderByGenerated_timeDesc(user);
+//
+//          //  Verification verification = verifications.get(0);
+//            // check the time here
+//            // check if it expires
+
+            LocalDateTime verificationCreatedDate = verification.getGenerated_time();
+            LocalDateTime currentDate = LocalDateTime.now();
+            System.out.println("time difference= "+ChronoUnit.MINUTES.between(verificationCreatedDate, currentDate));
+
+//
+//            // it expired therefore generate a new one and send it
+            if((ChronoUnit.MINUTES.between(verificationCreatedDate, currentDate) > 10)){
+                throw new Exception("The verification code you entered has expired. request a new code.");
+            }
+            if(!verification.getCode().equals(verificationcode)){
+                throw new Exception("Verification Code miss match .");
+            }else {
+
+               // user.setPassword(passwordEncoder.encode(password));
+                userRepository.save(user);
+                System.out.println("user....." + user.getPassword());
+
+            }
+
+        }else {
+            throw new Exception("User does not exist in the database");
+        }
+    }
 
     }
 

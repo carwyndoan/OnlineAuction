@@ -10,6 +10,6 @@ public interface VerificationService {
     Verification findByUserAndType(int user_id, int type);
 
     void resetPassword(String userEmail, String verificationcode, String password) throws Exception;
-
+    void resetPassword(String email, String verificationcode) throws Exception;
     //void resetPassword(String userEmail, String verificationcode, String password) throws Exception;
 }
