@@ -44,22 +44,30 @@ insert into product(product_id, caption, active, description, image_path, name, 
 insert into product(product_id, caption, active, description, image_path, name, status, seller_id) values (14, 'Toyota Alphard (3)', 1, 'The Toyota Alphard  is a luxury minivan produced by the Japanese automaker Toyota since 2002. It is available as a seven- or eight-seater with petrol and hybrid engine','alphard.jpg', 'Seller_Product_4', 1, 3);
 insert into product(product_id, caption, active, description, image_path, name, status, seller_id) values (15, 'Toyota Corolla (3)', 1, 'The Toyota Corolla is a line of subcompact and compact cars manufactured by Toyota. Introduced in 1966, the Corolla was the best-selling car worldwide by','corolla.jpg', 'Seller_Product_5', 1, 3);
 
-insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id, winner_id) values
-				   (1, 2000, 'Macbook Pro 2020', 500, 1500, '2020-11-25', '2020-12-25', '2020-12-30', 1, 1, 1);
-insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id, winner_id) values
-				   (2, 20000, 'Dimond', 2000, 20000,'2020-11-25', '2020-12-25', '2020-12-30', 1, 2, 1);
-insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id, winner_id) values
-				   (3, 1200, 'Apple Watch 2020', 120, 1500, '2020-11-25','2020-12-25', '2020-12-30', 1, 3, 2);
-insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id) values
-				   (4, 200000, 'Tesla', 50000, 0, '2020-9-25','2020-12-25', '2020-12-30', 0, 4);
-insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id) values
-				   (5, 10000, 'Final Worldcup Ball', 120000, 500000, '2020-10-25', '2020-12-25', '2020-12-30', 1, 2);
 
-insert into payment(payment_id, deposit, deposit_date, bidding_id, user_payment_id) values (1, 2000, '2020-12-07', 1, 1);
-insert into payment(payment_id, deposit, deposit_date, bidding_id, user_payment_id) values (2, 20000, '2020-12-07', 2, 1);
-insert into payment(payment_id, deposit, deposit_date, bidding_id, user_payment_id) values (3, 1200, '2020-12-07', 3, 2);
-insert into payment(payment_id, deposit, deposit_date, bidding_id) values (4, 200000, '2020-12-07', 4);
-insert into payment(payment_id, deposit, deposit_date, bidding_id) values (5, 10000, '2020-12-07', 5);
+
+insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id, winner_id) values
+				   (1, 200, 'Macbook Pro 2020', 2000, 3000, '2020-11-25', '2020-12-25', '2020-12-30', 1, 1, 1);
+insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id, winner_id) values
+				   (2, 10000, 'Dimond', 100000, 150000,'2020-11-25', '2020-12-25', '2020-12-30', 1, 2, 1);
+insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id, winner_id) values
+				   (3, 55, 'Apple Watch 2020', 550, 700, '2020-11-25','2020-12-25', '2020-12-30', 1, 3, 2);
+insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id) values
+				   (4, 5000, 'Tesla', 50000, 85000, '2020-9-25','2020-12-25', '2020-12-30', 0, 4);
+insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id) values
+				   (5, 12000, 'Final Worldcup Ball', 120000, 1000000, '2020-10-25', '2020-12-25', '2020-12-30', 1, 2);
+insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id) values
+				   (6, 10000, 'Dimond', 100000, 150000,'2020-11-25', '2020-12-25', '2020-12-30', 1, 10);
+insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id) values
+				   (7, 100000, 'The car owned by Elon Musk', 1000000, 1500000,'2020-10-25', '2020-12-25', '2020-12-30', 1, 13);
+
+insert into payment(payment_id, deposit, deposit_date, bidding_id, user_payment_id) values (1, 200, '2020-12-07', 1, 1);
+insert into payment(payment_id, deposit, deposit_date, bidding_id, user_payment_id) values (2, 10000, '2020-12-07', 2, 1);
+insert into payment(payment_id, deposit, deposit_date, bidding_id, user_payment_id) values (3, 55, '2020-12-07', 3, 2);
+insert into payment(payment_id, deposit, deposit_date, bidding_id, user_payment_id) values (4, 5000, '2020-12-07', 4, 1);
+insert into payment(payment_id, deposit, deposit_date, bidding_id, user_payment_id) values (5, 12000, '2020-12-07', 5, 3);
+insert into payment(payment_id, deposit, deposit_date, bidding_id, user_payment_id) values (6, 55, '2020-12-07', 6, 5);
+insert into payment(payment_id, deposit, deposit_date, bidding_id, user_payment_id) values (7, 100000, '2020-12-07', 6, 1);
 
 insert into bidding_activities(bidding_activities_id, amount, bidding_date, bidding_id, user_bidding_id) values
                               (1, 10000, '2019-12-07 09:09', 1, 1);
