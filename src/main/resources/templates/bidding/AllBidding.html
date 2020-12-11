@@ -67,7 +67,7 @@
                    <a th:href="@{/bidding/activities/{id}(id=${item.bidding_id})}" class="label label-danger product-remove-btn">
                         <span class="glyphicon glyphicon-remove" ></span> Details
                    </a> &nbsp;&nbsp;&nbsp;
-                    <span th:if="${(item.winner != null) && (item.status != 2)}">
+                    <span th:if="${(item.winner != null) && (item.status <= 1)}">
                        <a th:href="@{/bidding/paymentform/{id}(id=${item.bidding_id})}" class="label label-danger product-remove-btn">
                             <span class="glyphicon glyphicon-remove" ></span> Payment
                        </a>&nbsp;
