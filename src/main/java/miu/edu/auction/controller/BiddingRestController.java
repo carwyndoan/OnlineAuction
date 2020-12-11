@@ -1,7 +1,7 @@
 package miu.edu.auction.controller;
 
 import miu.edu.auction.domain.Bidding;
-import miu.edu.auction.domain.BiddingActivityRestDTO;
+import miu.edu.auction.dto.BiddingActivityRestDTO;
 import miu.edu.auction.domain.Bidding_Activities;
 import miu.edu.auction.service.BiddingService;
 import org.springframework.beans.factory.annotation.Autowired;

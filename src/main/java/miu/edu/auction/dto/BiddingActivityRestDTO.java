@@ -1,4 +1,4 @@
-package miu.edu.auction.domain;
+package miu.edu.auction.dto;
 
 import lombok.Data;
 
