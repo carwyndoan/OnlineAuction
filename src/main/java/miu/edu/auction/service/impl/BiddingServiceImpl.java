@@ -195,7 +195,7 @@ public class BiddingServiceImpl implements BiddingService {
     public Boolean paySeller(Integer bidding_id) {
         try {
             Bidding bidding = biddingRepository.findById(bidding_id).get();
-            if(bidding.getStatus() == 3 || bidding.getStatus() == 4) {//pay to seller after ship 30 days or delivered
+            if (bidding.getStatus() == 3 || bidding.getStatus() == 4) {//pay to seller after ship 30 days or delivered
                 Payment payment = bidding.getPayments().stream()
                         .filter(p -> p.getUser_payment().getUser_id() == bidding.getWinner().getUser_id())
                         .findFirst().get();
@@ -217,6 +217,16 @@ public class BiddingServiceImpl implements BiddingService {
             jobScheduler.schedule(() -> biddingService.closeBidding(bidding.getBidding_id()),
                     LocalDateTime.now().plusSeconds(CommonUtils.calculateDuration(bidding.getDuedate())));
         }
+        //Schedule if bidding status is Shipped
+        if (bidding.getStatus() == 3) {
+            //Start auto close bidding
+            Bidding oldBidding = biddingRepository.findById(bidding.getBidding_id()).orElse(null);
+            System.out.println("current status: " + oldBidding.getStatus());
+            jobScheduler.schedule(() -> biddingService.paySeller(bidding.getBidding_id()),
+                    LocalDateTime.now().plusSeconds(CommonUtils.calculateDuration(LocalDateTime.now().plusDays(30))));
+        }
+
+
         return biddingRepository.save(bidding);
     }
 
@@ -224,7 +234,7 @@ public class BiddingServiceImpl implements BiddingService {
     public void paySellerDeposit(Integer bidding_id) {
         try {
             Bidding bidding = biddingRepository.findById(bidding_id).get();
-            if(bidding.getStatus() == 1) {//Bidder has not pay full yet
+            if (bidding.getStatus() == 1) {//Bidder has not pay full yet
                 Payment payment = bidding.getPayments().stream()
                         .filter(p -> p.getUser_payment().getUser_id() == bidding.getWinner().getUser_id())
                         .findFirst().get();
@@ -241,7 +251,7 @@ public class BiddingServiceImpl implements BiddingService {
     public void returnBidderDeposit(Integer bidding_id) {
         try {
             Bidding bidding = biddingRepository.findById(bidding_id).get();
-            if(bidding.getStatus() == 2) {//Seller has not ship yet
+            if (bidding.getStatus() == 2) {//Seller has not ship yet
                 Payment payment = bidding.getPayments().stream()
                         .filter(p -> p.getUser_payment().getUser_id() == bidding.getWinner().getUser_id())
                         .findFirst().get();
@@ -254,13 +264,14 @@ public class BiddingServiceImpl implements BiddingService {
         }
     }
 
-    @Override
-    public void updateBiddingOverPaymentDuedate() {
-        List<Bidding> biddings = biddingRepository.findBiddingOverduePayment(LocalDateTime.now());
-        biddings.forEach(bidding -> {
-            bidding.setStatus(5);
-            biddingRepository.save(bidding);
-            //Do we need to call Paypal to charge Deposit or Deposit already charged before Bidding
-        });
-    }
+//    @Override
+//    public void updateBiddingOverPaymentDuedate(LocalDateTime dueDate) {
+//        List<Bidding> biddings = biddingRepository.findBiddingOverduePayment(dueDate);
+//        biddings.forEach(bidding -> {
+////            bidding.setStatus(5);
+////            biddingRepository.save(bidding);
+//            System.out.println("biddingID: " + bidding.getBidding_id());
+//            //Do we need to call Paypal to charge Deposit or Deposit already charged before Bidding
+//        });
+//    }
 }

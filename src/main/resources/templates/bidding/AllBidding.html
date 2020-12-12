@@ -76,6 +76,18 @@
                        </a>&nbsp;
                     </span>&nbsp;&nbsp;&nbsp;
 
+                    <span th:if="${item.status == 2}">
+                       <a th:href="@{/bidding/ship/{id}(id=${item.bidding_id})}" class="label label-danger product-remove-btn">
+                            <span class="glyphicon glyphicon-remove" ></span> Shipped
+                       </a>&nbsp;
+                    </span>
+
+                    <span th:if="${item.status == 3}">
+                       <a th:href="@{/bidding/delivery/{id}(id=${item.bidding_id})}" class="label label-danger product-remove-btn">
+                            <span class="glyphicon glyphicon-remove" ></span> Delivered
+                       </a>&nbsp;
+                    </span>
+
                 </td>
             </tr>
         </table>

@@ -34,5 +34,5 @@ public interface BiddingService {
 
     void returnBidderDeposit(Integer bidding_id);//return deposit to bidder in case seller cancel shipping
 
-    void updateBiddingOverPaymentDuedate();
+//    void updateBiddingOverPaymentDuedate(LocalDateTime dueDate);
 }

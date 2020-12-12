@@ -59,7 +59,7 @@ public class BiddingPaymentController {
         String userEmail = userDetails.getUsername();
         List<Bidding> list = biddingService.findByUserBidding(userEmail, month, year);
         model.addAttribute("allbiddings", list);
-        String baseUrl = String.format("%s://%s:%d/login/",request.getScheme(),  request.getServerName(), request.getServerPort());
+        String baseUrl = String.format("%s://%s:%d/login/", request.getScheme(), request.getServerName(), request.getServerPort());
         return "bidding/AllBidding";
 //        return "bidding/list";
     }
@@ -99,6 +99,38 @@ public class BiddingPaymentController {
         return "redirect:/bidding/biddings";
     }
 
+    @RequestMapping(value = {"/ship/{id}"})
+    public String ship(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer id) {
+        String userEmail = userDetails.getUsername();
+        User user = userService.findUserByEmail(userEmail);
+        Payment payment = paymentService.findPaymentByBiddingIDAndUser(Integer.valueOf(id), user.getUser_id());
+        payment.setShipDate(LocalDateTime.now());
+        paymentService.savePayment(payment);
+
+        Bidding bidding = biddingService.findByID(id);
+        bidding.setStatus(3);
+        biddingService.saveBidding(bidding);
+
+        return "redirect:/bidding/biddings";
+    }
+
+    @RequestMapping(value = {"/delivery/{id}"})
+    public String delivery(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer id) {
+        String userEmail = userDetails.getUsername();
+        User user = userService.findUserByEmail(userEmail);
+        Payment payment = paymentService.findPaymentByBiddingIDAndUser(Integer.valueOf(id), user.getUser_id());
+        payment.setDeliveryDate(LocalDateTime.now());
+        paymentService.savePayment(payment);
+
+        Bidding bidding = biddingService.findByID(id);
+        bidding.setStatus(4);
+        biddingService.saveBidding(bidding);
+        biddingService.paySeller(bidding.getBidding_id());
+
+        return "redirect:/bidding/biddings";
+    }
+
+
     @GetMapping(value = {"/activities/{bidding_id}"})
     public String loadHistories(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer bidding_id, @RequestParam(name = "year", required = false) Integer year, @RequestParam(name = "month", required = false) Integer month, Model model) {
         if ((year == null) || (month == null)) {
@@ -119,13 +151,13 @@ public class BiddingPaymentController {
         User user = userService.findUserByEmail(userEmail);
         InvoiceDTO dto = paymentService.makeInvoice(id, user.getUser_id());
         model.addAttribute("invoice", dto);
-        System.out.println(dto.getProduct_Name() + " " + dto.getOrder_Name() + " " +  dto.getShipping_Name() +  " " + dto.getProduct_VendorName());
+        System.out.println(dto.getProduct_Name() + " " + dto.getOrder_Name() + " " + dto.getShipping_Name() + " " + dto.getProduct_VendorName());
         //build template here
         return "bidding/invoice";
     }
 
     @ModelAttribute("months")
-    public List<Integer> getMonths(){
+    public List<Integer> getMonths() {
         List<Integer> months = new ArrayList<>();
         for (int i = 1; i <= 12; i++) {
             months.add(i);
@@ -134,7 +166,7 @@ public class BiddingPaymentController {
     }
 
     @ModelAttribute("years")
-    public List<Integer> getYears(){
+    public List<Integer> getYears() {
         int startYear = LocalDate.now().getYear();
         List<Integer> years = new ArrayList<>();
         int i = startYear - 5;
@@ -142,6 +174,6 @@ public class BiddingPaymentController {
             years.add(i);
             i++;
         }
-        return  years;
+        return years;
     }
 }
