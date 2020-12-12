@@ -1,6 +1,7 @@
 package miu.edu.auction.domain;
 
 import lombok.*;
+import miu.edu.auction.validator.EmailUnique;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -23,6 +24,7 @@ public class User {
 
     @NotBlank
     @Email
+    @EmailUnique
     private String email;
 
     @NotBlank
