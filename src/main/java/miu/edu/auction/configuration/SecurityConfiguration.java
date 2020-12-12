@@ -44,28 +44,30 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/registration","/login", "/h2-console/**").permitAll()
+                .antMatchers("/registration","/login", "/security/**", "/h2-console/**").permitAll()
                 .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
-                .antMatchers("/bidding/**","/bid/**").hasAuthority("ROLE_USER")
-                .antMatchers("/seller/**").hasAuthority("ROLE_USER")
-                .antMatchers("/customer/**").hasAuthority("ROLE_USER")
-                //.anyRequest().authenticated()
+                //.antMatchers("/bidding/**","/bid/**").hasAuthority("ROLE_USER")
+//                .antMatchers("/seller/**").hasAuthority("ROLE_USER")
+//                .antMatchers("/customer/**").hasAuthority("ROLE_USER")
+//                .antMatchers("/category/**").hasAuthority("ROLE_USER")
+//                .antMatchers("/Product/**").hasAuthority("ROLE_USER")
+//                .antMatchers("/customer/**").hasAuthority("ROLE_USER")
+//                .antMatchers("/seller/**").hasAuthority("ROLE_USER")
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
                 .permitAll()
                 .failureUrl("/login-error")
-                .defaultSuccessUrl("/bid")
+                .defaultSuccessUrl("/home2")
                 .and()
                 .exceptionHandling().accessDeniedPage("/access-denied")
                 .and().logout().invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 //.logoutUrl("/doLogout")
-                .logoutSuccessUrl("/login").permitAll()
-        ;
-
+                .logoutSuccessUrl("/login").permitAll();
 
         //Those two settings below is to enable access h2 database via browser
         http.csrf().disable();
