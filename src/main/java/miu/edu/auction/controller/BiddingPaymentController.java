@@ -61,7 +61,6 @@ public class BiddingPaymentController {
         model.addAttribute("allbiddings", list);
         String baseUrl = String.format("%s://%s:%d/login/", request.getScheme(), request.getServerName(), request.getServerPort());
         return "bidding/AllBidding";
-//        return "bidding/list";
     }
 
     @GetMapping(value = {"/paymentform/{id}"})
@@ -175,5 +174,10 @@ public class BiddingPaymentController {
             i++;
         }
         return years;
+    }
+
+    @GetMapping(value = {"/ui"})
+    public String testUI(){
+        return "bidding/view";
     }
 }
