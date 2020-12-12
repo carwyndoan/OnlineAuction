@@ -43,7 +43,7 @@ public class Product {
 
 
     @ManyToOne
-   // @JoinColumn(name = "seller_id", nullable = false)
+    @JoinColumn(name = "seller_id", nullable = true)
     private User user;
 
    @OneToOne(cascade = CascadeType.ALL, mappedBy = "product")
