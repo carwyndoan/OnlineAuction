@@ -2,19 +2,19 @@ package miu.edu.auction.service.impl;
 
 
 import miu.edu.auction.domain.Category;
-import miu.edu.auction.repository.ProductCategoryRepository;
-import miu.edu.auction.service.ProductCategoryService;
+import miu.edu.auction.repository.CategoryRepository;
+import miu.edu.auction.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ProductCategoryServiceImpl implements ProductCategoryService {
+public class CategoryServiceImpl implements CategoryService {
 
 
     @Autowired
-    ProductCategoryRepository repo;
+    CategoryRepository repo;
 
     @Override
     public Category addCategory(Category category) {

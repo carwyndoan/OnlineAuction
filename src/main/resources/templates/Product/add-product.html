@@ -12,40 +12,79 @@
     <script type="text/javascript" th:src="@{/js/list.js}"></script>
 </head>
 <body>
+<section>
+    <div class="pull-right" style="padding-right:50px">
+        <a th:href="@{/market/products}">Products</a>|<a th:href="@{/cart}">Shopping Cart</a>
+    </div>
+</section>
+<section>
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Products</h1>
+        </div>
+    </div>
+</section>
+<section class="container">
+    <div class="row">
+        <div class="col-md-5">
 
-<div id="global">
-    <form action="#" th:action="@{/addproduct}" th:object="${product}"
-          method="post">
-        <fieldset>
-            <legend><span th:text="#{product.form.title}">Add a Employee</span></legend>
-                <ul th:if="${#fields.hasErrors('*')}">
-                <li th:each="err : ${#fields.errors('*')}" th:text="${err}" >Input is incorrect</li>
-                 </ul>
-            <p><label for="name"><span th:text="#{product.form.name}">Product Name:</span></label> <input type="text"
-                                                                                                           th:field="*{name}"/>
-            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorclass="fieldError">Incorrect date</p>
-            </p>
-            <p><label for="status"><span th:text="#{product.form.status}">product status:</span></label> <input type="text"
-                                                                                                          th:field="*{status}"/>
-            <p th:if="${#fields.hasErrors('status')}" th:errors="*{status}" th:errorclass="fieldError">Incorrect date</p>
-            </p>
-<!--            <p>Active: <span th:if="${savedUser.active}" class="btn btn-outline-success" disabled>YES</span>-->
-<!--                <span th:unless="${savedUser.active}" class="btn btn-outline-warning">NO</span>-->
-<!--            </p>-->
-           <p><label for="active"><span th:text="#{product.form.active}"class="btn btn-outline-success" disabled>YES</span>
-               <span th:unless="#{product.form.active}" class="btn btn-outline-warning">NO</span></label></p>
+            <form action="#" th:action="@{/addproduct}" th:object="${product}"
+                  method="post" enctype="multipart/form-data">
+                <fieldset>
+                    <!--             <span th:text="#{product.form.title}"><strong>Add a new Product</strong></span>-->
+                    <!--                <ul th:if="${#fields.hasErrors('*')}">-->
+                    <!--                <li th:each="err : ${#fields.errors('*')}" th:text="${err}" >Input is incorrect</li>-->
+                    <!--                 </ul>-->
 
-          <p><label for="description"><span th:text="#{product.form.description}">Description:</span></label> <input type="text" th:field="*{description}"/>
-            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:errorclass="fieldError">Incorrect date</p>
-            </p>
+                    <p><label for="name"><span th:text="#{product.form.name}">Product Name:</span></label> <input type="text" th:field="*{name}"/></p>
+                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorclass="fieldError">Incorrect data</p>
+<!--                    <p><label for="status"><span th:text="#{product.form.status}">product status:</span></label> <input type="text" th:field="*{status}"/></p>-->
 
-            <p id="buttons">
-                <input id="reset" type="reset" th:value="#{product.form.resetbtn}" value="reset " tabindex="4"> <input
-                    id="submit" type="submit" tabindex="5" th:value="#{product.form.addbtn}" value="Add Product">
-            </p>
-        </fieldset>
-    </form>
-</div>
+
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="option1" name="option1" class="custom-control-input" value="0" th:field="*{status}">
+                        <label class="custom-control-label" for="option1">Option1</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="option2" name="option2" class="custom-control-input" value="1" th:field="*{status}">
+                        <label class="custom-control-label" for="option2">Option2</label>
+                    </div>
+
+
+                    <p th:if="${#fields.hasErrors('status')}" th:errors="*{status}" th:errorclass="fieldError">Incorrect data</p>
+                    <p><label for="active"><span th:text="#{product.form.active}"class="btn btn-outline-success" disabled>YES</span>
+                        <span th:unless="#{product.form.active}" class="btn btn-outline-warning">NO</span></label></p>
+                    <p><label for="price"><span th:text="#{product.form.price}">Price:</span></label> <input type="text" th:field="*{price}"/></p>
+                    <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" th:errorclass="fieldError">Incorrect data</p>
+                    <p><label for="mile"><span th:text="#{product.form.mile}">Mile:</span></label> <input type="text" th:field="*{mile}"/></p>
+                    <p th:if="${#fields.hasErrors('mile')}" th:errors="*{mile}" th:errorclass="fieldError">Incorrect data</p>
+                    <p><label for="caption"><span th:text="#{product.form.caption}">Caption:</span></label> <input type="text" th:field="*{caption}"/></p>
+                    <p th:if="${#fields.hasErrors('caption')}" th:errors="*{caption}" th:errorclass="fieldError">Incorrect data</p>
+
+                    <p><label for="description"><span th:text="#{product.form.description}">Description:</span></label> <input type="text" th:field="*{description}"/></p>
+                    <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:errorclass="fieldError">Incorrect data</p>
+<!--                    <p><label for="image"><span th:href="#{product.form.image}">Image: </span></label></p><inpt type="img" th:field="*{image_path}"/></p>-->
+                    Images: <form id="uploadImage" name="uploadImage" method="post" th:action=@{/uploadFiles} encType="multipart/form-data">
+                    <input type="file" name="files" multiple/>
+                    <!--<img src="images/corolla.jpg"/>-->
+                </fieldset>
+
+
+                <p id="buttons">
+                    <input id="reset" type="reset" th:value="#{product.form.resetbtn}" value="reset " tabindex="4"> <input
+                        id="submit" type="submit" tabindex="5" th:value="#{product.form.addbtn}" value="Add Product">
+
+                    <!--              <a th:href="@{/market/products}" class="btn btn-default">-->
+                    <!--                  <span class="glyphicon-hand-left glyphicon"></span> Back-->
+                    <!--              </a>-->
+                    <!--              <a href="#" class="btn btn-warning btn-large order-btn" th:data="${product.productId}">-->
+                    <!--                  <span class="glyphicon-shopping-cart glyphicon"></span> Order Now </a>-->
+
+
+                </p>
+                </fieldset>
+            </form>
+        </div>s
 
 </body>
 </html>

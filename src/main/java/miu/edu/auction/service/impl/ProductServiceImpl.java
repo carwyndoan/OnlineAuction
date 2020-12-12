@@ -5,9 +5,11 @@ import miu.edu.auction.repository.ProductRepository;
 import miu.edu.auction.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -69,4 +71,23 @@ public class ProductServiceImpl implements ProductService {
         return null;//repo.findByCategories_id();
     }
 
+         @Override
+         public Product saveFile(MultipartFile file){
+            String docname=file.getOriginalFilename();
+            try{
+//                Product product=new Product(docname, file.getContentType(),file.getBytes());
+            }catch (Exception e){
+                 e.printStackTrace();
+            }
+            return null;
+
+         }
+         @Override
+         public Optional<Product> getFile(Integer fileId){
+           return repo.findById(fileId);
+         }
+         @Override
+         public List<Product> getFiles(){
+        return (List<Product>) repo.findAll();
+         }
 }
