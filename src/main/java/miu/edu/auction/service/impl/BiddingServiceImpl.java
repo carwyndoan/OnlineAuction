@@ -195,10 +195,14 @@ public class BiddingServiceImpl implements BiddingService {
     public Boolean paySeller(Integer bidding_id) {
         try {
             Bidding bidding = biddingRepository.findById(bidding_id).get();
-            Payment payment = bidding.getPayments().stream()
-                    .filter(p -> p.getUser_payment().getUser_id() == bidding.getWinner().getUser_id())
-                    .findFirst().get();
-            paymentService.payToSeller(payment);
+            if(bidding.getStatus() == 3 || bidding.getStatus() == 4) {//pay to seller after ship 30 days or delivered
+                Payment payment = bidding.getPayments().stream()
+                        .filter(p -> p.getUser_payment().getUser_id() == bidding.getWinner().getUser_id())
+                        .findFirst().get();
+                paymentService.payToSeller(payment);
+                bidding.setStatus(7);//Complete
+                biddingRepository.save(bidding);
+            }
             return true;
         } catch (Exception ex) {
             System.out.println(ex);

@@ -5,8 +5,11 @@ import miu.edu.auction.domain.Payment;
 import miu.edu.auction.domain.User;
 import miu.edu.auction.dto.InvoiceDTO;
 import miu.edu.auction.repository.PaymentRepository;
+import miu.edu.auction.service.BiddingService;
 import miu.edu.auction.service.PaymentService;
+import miu.edu.auction.utils.CommonUtils;
 import miu.edu.auction.utils.GenerationUnique;
+import org.jobrunr.scheduling.JobScheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +24,12 @@ public class PaymentServiceImpl implements PaymentService {
     @Autowired
     PaymentRepository paymentRepository;
 
+    @Autowired // or @Inject
+    private JobScheduler jobScheduler;
+
+    @Autowired // or @Inject
+    private BiddingService biddingService;
+
     @Override
     public Payment savePayment(Payment payment) {
         return paymentRepository.save(payment);
@@ -28,9 +37,11 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Payment makePayment(Payment payment) {
-        //call Paypal service here
-
-        //
+        //TODO: call Paypal service here
+        //start job check winner cancel
+        Bidding bidding = payment.getBiddingPayment();
+        jobScheduler.schedule(() -> biddingService.returnBidderDeposit(bidding.getBidding_id()),
+                LocalDateTime.now().plusSeconds(CommonUtils.calculateDuration(payment.getPaymentDate().plusDays(3))));//Return full to bidder after 3 days
         return savePayment(payment);
     }
 
