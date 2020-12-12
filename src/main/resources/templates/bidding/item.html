@@ -22,10 +22,10 @@
 <body>
 <main role="main" class="container">
     <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded shadow-sm">
-        <img class="mr-3" src="../assets/brand/bootstrap-outline.svg" alt="" width="48" height="48">
+        <img th:src="@{/images/bootstrap-outline.svg}" class="mr-3" src="../assets/brand/bootstrap-outline.svg" alt="" width="48" height="48">
         <div class="lh-100">
-            <h6 class="mb-0 text-white lh-100">Bootstrap</h6>
-            <small>Since 2011</small>
+            <h6 class="mb-0 text-white lh-100"></h6>
+            <small></small>
         </div>
     </div>
     <div class="my-3 p-3 bg-white rounded shadow-sm">
@@ -41,14 +41,14 @@
                 [<span th:text="${bid.bidding_activities.size()} + ' bids'" id="total_bidder">0 bids</span>]
                 <br>
                 <span th:text="'Due date: ' + ${bid.duedate}" id="duedate">Due date</span>
+                <br>
+                <span th:text="${bid_activity.counterDueDate}" id="counter">Due date</span>
                 <p class="border-top">
-                    Current bid: <h5>$<span th:text="${#numbers.formatDecimal(current_bid, 3, 2)}"
+                    Current bid: <h5>$<span th:text="${#numbers.formatDecimal(bid_activity.current_bid, 3, 2)}"
                                             id="current_bid">0.00</span>
             </h5>
                 <span>Your bid:</span>
-                <h6 th:if="${your_bid} > 0">$<span th:text="${#numbers.formatDecimal(your_bid, 3, 2)}"
-                                                   id="your_bid">0.00</span></h6>
-                </p>
+                <h6>$<span th:text="${#numbers.formatDecimal(bid_activity.bid_amount, 3, 2)}" id="bid_amount">0.00</span></h6>
                 <p>
                 <div class="input-group mb-1">
                     <span class="input-group-text">$</span>
