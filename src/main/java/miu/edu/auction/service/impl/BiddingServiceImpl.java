@@ -245,12 +245,22 @@ public class BiddingServiceImpl implements BiddingService {
                 Payment payment = bidding.getPayments().stream()
                         .filter(p -> p.getUser_payment().getUser_id() == bidding.getWinner().getUser_id())
                         .findFirst().get();
-                paymentService.payBidderFull(payment);
+                paymentService.payBidderFull(payment); //return payment to Bidder in case not ship
                 bidding.setStatus(6);//seller cancel
                 biddingRepository.save(bidding);
             }
         } catch (Exception ex) {
             System.out.println(ex);
         }
+    }
+
+    @Override
+    public void updateBiddingOverPaymentDuedate() {
+        List<Bidding> biddings = biddingRepository.findBiddingOverduePayment(LocalDateTime.now());
+        biddings.forEach(bidding -> {
+            bidding.setStatus(5);
+            biddingRepository.save(bidding);
+            //Do we need to call Paypal to charge Deposit or Deposit already charged before Bidding
+        });
     }
 }

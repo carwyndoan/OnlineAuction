@@ -62,10 +62,30 @@ public class UserServiceImpl implements UserService {
         verification.setStatus(0);
         verificationRepository.save(verification);
 
-        String content = "Your activation code is " + verification.getCode();
-        emailService.sendSimpleMessage(savedUser.getEmail(), "Activation Code", content);
-//        this.addObserver(emailSender);
-//        measureChanges(verification.getCode());
+        StringBuilder content = new StringBuilder("Your activation code is ");
+        content.append(verification.getCode()) ;
+
+        emailService.sendSimpleMessage(savedUser.getEmail(), "Activation Code", content.toString());
+        return savedUser;
+    }
+
+    public User saveUserWithVerificationKey(User user, String urlBase) {
+        //Save User
+        User savedUser = saveUser(user);
+        //Save Verification with UniqueNumber for verification
+        Verification verification = new Verification();
+        verification.setCode(GenerationUnique.hash(savedUser.getEmail()));
+        verification.setGenerated_time(LocalDateTime.now());
+        verification.setUser(savedUser);
+        verification.setType(0);
+        verification.setTrial(0);
+        verification.setStatus(0);
+        verificationRepository.save(verification);
+
+        StringBuilder content = new StringBuilder("Your activation code is ");
+        content.append(verification.getCode()) ;
+        content.append(". Please click the link to login " + urlBase);
+        emailService.sendSimpleMessage(savedUser.getEmail(), "Activation Code", content.toString());
         return savedUser;
     }
 

@@ -12,6 +12,8 @@ public interface UserService {
     User findUserByEmail(String email);
     Optional<User> findById(int id);
     User saveUser(User user);
+    public User saveUserWithVerificationKey(User user, String urlBase);
     public User saveUserWithVerificationKey(User user);
+
     public Page<User> findUserListPaging(Pageable pageable);
 }

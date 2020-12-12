@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.swing.text.html.Option;
 import javax.validation.Valid;
@@ -38,6 +39,9 @@ public class BiddingPaymentController {
     @Autowired
     PaymentService paymentService;
 
+    @Autowired
+    ServletContext servletContext;
+
     @GetMapping(value = {"/winbiddings"})
     public String loadWinBidding(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         String userEmail = userDetails.getUsername();
@@ -47,7 +51,7 @@ public class BiddingPaymentController {
     }
 
     @GetMapping(value = {"/biddings"})
-    public String loadAllBidding(@AuthenticationPrincipal UserDetails userDetails, Model model, @RequestParam(name = "year", required = false) Integer year, @RequestParam(name = "month", required = false) Integer month) {
+    public String loadAllBidding(@AuthenticationPrincipal UserDetails userDetails, Model model, @RequestParam(name = "year", required = false) Integer year, @RequestParam(name = "month", required = false) Integer month, HttpServletRequest request) {
         if ((year == null) || (month == null)) {
             year = 0;
             month = 0;
@@ -55,6 +59,7 @@ public class BiddingPaymentController {
         String userEmail = userDetails.getUsername();
         List<Bidding> list = biddingService.findByUserBidding(userEmail, month, year);
         model.addAttribute("allbiddings", list);
+        String baseUrl = String.format("%s://%s:%d/login/",request.getScheme(),  request.getServerName(), request.getServerPort());
         return "bidding/AllBidding";
 //        return "bidding/list";
     }

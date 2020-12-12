@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 
@@ -35,13 +36,13 @@ public class UserController {
     This is to save User when creating a new User - Thai Nguyen
      */
     @PostMapping(value = {"/saveuser"})
-    public String saveUser(@Valid User user, BindingResult bindingResult) {
+    public String saveUser(@Valid User user, BindingResult bindingResult, HttpServletRequest request) {
         if (bindingResult.hasErrors())
             return "/registration/UserForm";
 
 //        String[] errors = bindingResult.getSuppressedFields();
-
-        User savedUser = userService.saveUserWithVerificationKey(user);
+        String baseUrl = String.format("%s://%s:%d/login/",request.getScheme(),  request.getServerName(), request.getServerPort());
+        User savedUser = userService.saveUserWithVerificationKey(user, baseUrl);
         return "redirect:/login";
     }
 
