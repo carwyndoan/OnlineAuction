@@ -26,28 +26,40 @@ function placeBid(data) {
 function updateBid(result) {
     console.log(result);
     $("#total_bidder").empty().append(result.total_bidder + " bids");
+    $("#counter").empty().append(result.counterDueDate);
     $("#current_bid").empty().append(result.current_bid);
-    $("#your_bid").empty().append(result.bid_amount);
-    $("#bid_value").empty();
+    $("#bid_amount").empty().append(result.bid_amount);
+    $("#bid_value").value = "";
+    $("#errors").empty();
+    make_hidden("errors");
 }
 
 function showErrors(XMLHttpRequest, textStatus, errorThrown) {
-    // make_visible('errors');
-    // make_hidden('formInput');
-    // $("#errors").empty();
-    // let errorObject = XMLHttpRequest.responseJSON;
-    // console.log(errorObject);
-    // if (errorObject.errorType === "ValidationError") {
-    //     let errorMsg = '<h3> Error(s)!! </h3>';
-    //     errorMsg += "<p>";
-    //     var errorList = errorObject.errors;
-    //     $.each(errorList, function(i, error) {
-    //         errorMsg = errorMsg + error.message + '<br>';
-    //     });
-    //     errorMsg += '</p>';
-    //     $('#errors').append(errorMsg);
-    //     $('#errors').show();
-    // } else {
-    //     alert(errorObject.errors(0)); // "non" Validation
-    // }
+    make_visible('errors');
+    $("#errors").empty();
+    let errorObject = XMLHttpRequest.responseJSON;
+    console.log(errorObject);
+    let errorMsg = '<h3> Error(s)!! </h3>';
+    if (errorObject.errorType === "ValidationError") {
+        errorMsg += "<p>";
+        var errorList = errorObject.errors;
+        $.each(errorList, function(i, error) {
+            errorMsg = errorMsg + error.message + '<br>';
+        });
+        errorMsg += '</p>';
+    } else {
+        errorMsg += errorObject.message; // "non" Validation
+    }
+    $('#errors').append(errorMsg);
+    $('#errors').show();
+}
+
+make_hidden = function(id) {
+    var element = document.getElementById(id);
+    element.style.display = 'none';
+}
+
+make_visible = function(id) {
+    var element = document.getElementById(id);
+    element.style.display = 'block';
 }

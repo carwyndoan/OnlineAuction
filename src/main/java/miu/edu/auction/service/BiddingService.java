@@ -2,6 +2,7 @@ package miu.edu.auction.service;
 
 import miu.edu.auction.domain.Bidding;
 import miu.edu.auction.dto.BiddingActivityDTO;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,4 +29,8 @@ public interface BiddingService {
     Boolean paySeller(Integer bidding_id);//pay for seller when delivered / after shiped 30 days
 
     Bidding saveBidding(Bidding bidding);
+
+    void paySellerDeposit(Integer bidding_id);//pay deposit to seller in case winner cancel pay full
+
+    void returnBidderDeposit(Integer bidding_id);//return deposit to bidder in case seller cancel shipping
 }

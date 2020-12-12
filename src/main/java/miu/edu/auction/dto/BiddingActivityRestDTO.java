@@ -9,4 +9,5 @@ public class BiddingActivityRestDTO {
     Double bid_amount;
     Double current_bid;
     Integer total_bidder;
+    String counterDueDate;
 }

@@ -106,5 +106,23 @@ public class PaymentServiceImpl implements PaymentService {
         return paymentRepository.findPaymentByBidding(bidding_id);
     }
 
+    @Override
+    public Boolean paySellerDeposit(Payment payment) {
+        //TODO: payment with paypal
+        //Update system
+        payment.setPaySellerDate(LocalDateTime.now());
+        paymentRepository.save(payment);
+        return true;
+    }
+
+    @Override
+    public Boolean payBidderFull(Payment payment) {
+        //TODO: payment with paypal
+        //Update system
+        payment.setReturnDepositDate(LocalDateTime.now());
+        paymentRepository.save(payment);
+        return true;
+    }
+
 
 }

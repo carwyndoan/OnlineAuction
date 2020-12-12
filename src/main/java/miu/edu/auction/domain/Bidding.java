@@ -30,7 +30,7 @@ public class Bidding {
     private double finalprice;
 
     @NotNull
-    private int status; //0: inactive, 1: active //2: Payment //3: Shipped //4: Delivery
+    private int status; //0: inactive, 1: active //2: Payment //3: Shipped //4: Delivery //5: bidder cancel //6: seller cancel
 
     @DateTimeFormat(pattern = "MM-dd-YYYY")
     private LocalDateTime startdate;

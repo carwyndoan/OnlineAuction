@@ -9,14 +9,14 @@ import miu.edu.auction.repository.UserRepository;
 import miu.edu.auction.service.BiddingService;
 import miu.edu.auction.service.EmailService;
 import miu.edu.auction.service.PaymentService;
-import miu.edu.auction.service.UserService;
+import miu.edu.auction.utils.CommonUtils;
 import org.jobrunr.scheduling.BackgroundJob;
+import org.jobrunr.scheduling.JobScheduler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -35,10 +35,16 @@ public class BiddingServiceImpl implements BiddingService {
     @Autowired
     PaymentService paymentService;
 
+    @Autowired // or @Inject
+    private JobScheduler jobScheduler;
+
+    @Autowired // or @Inject
+    private BiddingService biddingService;
+
     @Override
     public List<Bidding> findBiddingByCategory(Integer category_id, String exclude_email) {
         List<Bidding> biddingList = biddingRepository.findBiddingByCategory(category_id, exclude_email);
-        for (Bidding bid:biddingList) {
+        for (Bidding bid : biddingList) {
             List<Bidding_Activities> biddingActivitiesList = biddingActivitiesRepository.findBidding_ActivitiesByBidding(bid.getBidding_id());
             bid.setBidding_activities(biddingActivitiesList);
         }
@@ -46,44 +52,49 @@ public class BiddingServiceImpl implements BiddingService {
     }
 
     /*
-    * Return max bid
+     * Return max bid
      */
     @Override
     public Boolean placeBid(Integer bidding_id, Integer user_id, Double bid) {
-        try {
-            Bidding bidding = biddingRepository.findById(bidding_id).get();
-            User user = userRepository.findById(user_id).get();
-            OptionalDouble max = biddingActivitiesRepository.findBidding_ActivitiesByBidding(bidding_id).stream()
-                    .filter(ba -> ba.getBidding_user().getUser_id() == user_id)
-                    .mapToDouble(Bidding_Activities::getAmount)
-                    .max();
+        Bidding bidding = biddingRepository.findById(bidding_id).get();
+        User user = userRepository.findById(user_id).get();
+        List<Bidding_Activities> biddingActivitiesList = biddingActivitiesRepository.findBidding_ActivitiesByBidding(bidding_id);
+        Double max = biddingActivitiesList.stream()
+                .filter(ba -> ba.getBidding_user().getUser_id() == user_id)
+                .mapToDouble(Bidding_Activities::getAmount)
+                .max().orElse(bidding.getStart_price());
 
-            Bidding_Activities bidding_activities = new Bidding_Activities();
-            bidding_activities.setBidding(bidding);
-            bidding_activities.setBidding_user(user);
-            bidding_activities.setBidding_date(LocalDateTime.now());
-
-            if (!max.isPresent()) {
-                //Deposit
-                Payment payment = new Payment();
-                payment.setUser_payment(user);
-                payment.setBiddingPayment(bidding);
-                payment.setDeposit(bidding.getDeposit() <= 0 ? bidding.getStart_price() * 0.1 : bidding.getDeposit());
-                paymentService.chargeDeposit(payment);
-
-                bidding_activities.setAmount(bid);
-                biddingActivitiesRepository.save(bidding_activities);
-                bidding.getBidding_activities().add(bidding_activities);
-            } else if (max.getAsDouble() < bid) {
-                bidding_activities.setAmount(bid);
-                biddingActivitiesRepository.save(bidding_activities);
-            }
-
-            return true;
-        } catch (Exception ex) {
-            System.out.println(ex);
-            return false;
+        if (bid < max) {
+            throw new RuntimeException("Your bid must great than current bid !!!");
         }
+
+        Bidding_Activities bidding_activities = new Bidding_Activities();
+        bidding_activities.setBidding(bidding);
+        bidding_activities.setBidding_user(user);
+        bidding_activities.setBidding_date(LocalDateTime.now());
+
+        if (biddingActivitiesList.stream().noneMatch(p -> p.getBidding_user().getUser_id() == user_id)) {
+            //Deposit
+            Payment payment = new Payment();
+            payment.setUser_payment(user);
+            payment.setBiddingPayment(bidding);
+            payment.setDeposit(bidding.getDeposit() <= 0 ? bidding.getStart_price() * 0.1 : bidding.getDeposit());
+            payment.setReceiverName("NA");
+            payment.setStreet("NA");
+            payment.setCity("NA");
+            payment.setState("NA");
+            payment.setZipcode("NA");
+            paymentService.chargeDeposit(payment);
+
+            bidding_activities.setAmount(bid);
+            biddingActivitiesRepository.save(bidding_activities);
+            bidding.getBidding_activities().add(bidding_activities);
+        } else {
+            bidding_activities.setAmount(bid);
+            biddingActivitiesRepository.save(bidding_activities);
+        }
+
+        return true;
     }
 
     @Override
@@ -106,7 +117,7 @@ public class BiddingServiceImpl implements BiddingService {
         Bidding bidding = biddingRepository.findById(key).orElse(null);
         List<Bidding_Activities> biddingActivities = biddingActivitiesRepository.findBidding_ActivitiesByBidding(key);
         List<Payment> paymentList = paymentService.findPaymentByBidding(key);
-        if(bidding != null) {
+        if (bidding != null) {
             bidding.setBidding_activities(biddingActivities);
             bidding.setPayments(paymentList);
         }
@@ -158,11 +169,10 @@ public class BiddingServiceImpl implements BiddingService {
             bidding.setFinalprice(maxBid);
 
             //Return deposit
-            for (Payment payment:bidding.getPayments()) {
-                if(payment.getUser_payment().getUser_id() != bidding_activities.getBidding_user().getUser_id()) {
+            for (Payment payment : bidding.getPayments()) {
+                if (payment.getUser_payment().getUser_id() != bidding_activities.getBidding_user().getUser_id()) {
                     paymentService.returnDeposit(payment);
-                }
-                else {
+                } else {
                     User seller = userRepository.findById(bidding.getProduct().getUser().getUser_id()).get();
                     payment.setSeller(seller);
                     paymentService.savePayment(payment);
@@ -170,9 +180,12 @@ public class BiddingServiceImpl implements BiddingService {
             }
 
             biddingRepository.save(bidding);
+            //start job check winner cancel
+            jobScheduler.schedule(() -> biddingService.paySellerDeposit(bidding.getBidding_id()),
+                    LocalDateTime.now().plusSeconds(CommonUtils.calculateDuration(bidding.getPayment_duedate())));
+
             return true;
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex);
             return false;
         }
@@ -187,8 +200,7 @@ public class BiddingServiceImpl implements BiddingService {
                     .findFirst().get();
             paymentService.payToSeller(payment);
             return true;
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex);
             return false;
         }
@@ -196,6 +208,45 @@ public class BiddingServiceImpl implements BiddingService {
 
     @Override
     public Bidding saveBidding(Bidding bidding) {
+        if (bidding.getBidding_id() <= 0) {
+            //Start auto close bidding
+            jobScheduler.schedule(() -> biddingService.closeBidding(bidding.getBidding_id()),
+                    LocalDateTime.now().plusSeconds(CommonUtils.calculateDuration(bidding.getDuedate())));
+        }
         return biddingRepository.save(bidding);
+    }
+
+    @Override
+    public void paySellerDeposit(Integer bidding_id) {
+        try {
+            Bidding bidding = biddingRepository.findById(bidding_id).get();
+            if(bidding.getStatus() == 1) {//Bidder has not pay full yet
+                Payment payment = bidding.getPayments().stream()
+                        .filter(p -> p.getUser_payment().getUser_id() == bidding.getWinner().getUser_id())
+                        .findFirst().get();
+                paymentService.paySellerDeposit(payment);
+                bidding.setStatus(5);//Bidder cancel
+                biddingRepository.save(bidding);
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+    }
+
+    @Override
+    public void returnBidderDeposit(Integer bidding_id) {
+        try {
+            Bidding bidding = biddingRepository.findById(bidding_id).get();
+            if(bidding.getStatus() == 2) {//Seller has not ship yet
+                Payment payment = bidding.getPayments().stream()
+                        .filter(p -> p.getUser_payment().getUser_id() == bidding.getWinner().getUser_id())
+                        .findFirst().get();
+                paymentService.payBidderFull(payment);
+                bidding.setStatus(6);//seller cancel
+                biddingRepository.save(bidding);
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
     }
 }

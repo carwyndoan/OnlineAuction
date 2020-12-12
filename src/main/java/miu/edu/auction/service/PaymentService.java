@@ -22,4 +22,8 @@ public interface PaymentService {
     InvoiceDTO makeInvoice(Integer biddingID, Integer userID);
 
     List<Payment> findPaymentByBidding(Integer bidding_id);
+
+    Boolean paySellerDeposit(Payment payment);
+
+    Boolean payBidderFull(Payment payment);
 }
