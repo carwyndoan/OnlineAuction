@@ -31,19 +31,21 @@ public class UserController {
         return "/registration/UserForm";
     }
 
+    /*
+    This is to save User when creating a new User - Thai Nguyen
+     */
     @PostMapping(value = {"/saveuser"})
-    public String saveUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
+    public String saveUser(@Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "/registration/UserForm";
 
 //        String[] errors = bindingResult.getSuppressedFields();
 
         User savedUser = userService.saveUserWithVerificationKey(user);
-        System.out.println("saved user after registration"+ savedUser.getEmail());
-
-        return "redirect:/registration/confirm_email/" + savedUser.getEmail();
-
+        return "redirect:/login";
     }
+
+
   @GetMapping("/confirm_email/{email}")
   public String confirmEmail(@PathVariable("email")String email, Model model){
         model.addAttribute("email",email);

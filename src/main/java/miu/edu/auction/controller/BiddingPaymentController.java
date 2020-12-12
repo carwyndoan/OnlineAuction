@@ -56,6 +56,7 @@ public class BiddingPaymentController {
         List<Bidding> list = biddingService.findByUserBidding(userEmail, month, year);
         model.addAttribute("allbiddings", list);
         return "bidding/AllBidding";
+//        return "bidding/list";
     }
 
     @GetMapping(value = {"/paymentform/{id}"})

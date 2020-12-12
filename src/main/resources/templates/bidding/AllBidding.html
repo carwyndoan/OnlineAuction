@@ -11,10 +11,8 @@
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script type="text/javascript"
             src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script type="text/javascript" th:src="@{/js/cart.js}"></script>
 </head>
 <body>
-
 <section>
     <div class="jumbotron">
         <div class="container">
@@ -83,5 +81,6 @@
         </table>
     </div>
 </section>
+<th:block th:insert="/footer :: footer"></th:block>
 </body>
 </html>
