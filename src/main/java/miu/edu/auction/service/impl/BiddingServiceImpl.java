@@ -195,7 +195,6 @@ public class BiddingServiceImpl implements BiddingService {
     public Boolean paySeller(Integer bidding_id) {
         try {
             Bidding bidding = biddingRepository.findById(bidding_id).get();
-            System.out.println("In paySeller, status of Bidding: "+ bidding.getStatus());
             if (bidding.getStatus() == 3 || bidding.getStatus() == 4) {//pay to seller after ship 30 days or delivered
                 Payment payment = paymentService.findPaymentByBidding(bidding_id).stream()
                         .filter(p -> p.getUser_payment().getUser_id() == bidding.getWinner().getUser_id())
