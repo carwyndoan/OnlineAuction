@@ -6,5 +6,11 @@
 </head>
 <body>
 
+<tr th:each="prod : ${product}">
+    <td th:text="${product.form.name}">Onions</td>
+    <td th:text="${product.form.description}">2.41</td>
+    <!__<td th:text="${prod.inStock}? #{true} : #{false}">yes</td>
+</tr>
+
 </body>
 </html>

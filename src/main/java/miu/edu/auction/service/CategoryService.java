@@ -4,7 +4,7 @@ import miu.edu.auction.domain.Category;
 
 import java.util.List;
 
-public interface ProductCategoryService {
+public interface CategoryService {
 
     Category addCategory(Category category);
     List<Category> getAllCategories();

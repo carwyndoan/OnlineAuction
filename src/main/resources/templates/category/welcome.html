@@ -15,8 +15,31 @@ This WelcomePage!
  <div class="jumbotron">
     <h1 th:text="${wel}"/> </h1>
      <h1 th:text="${come}"/></p>
-     <img src="images/corolla.jpg"/>
-     <img src="images/corolla.jpg"/>
+<!--     <img src="images/corolla.jpg"/>-->
+<!--     <img src="images/corolla.jpg"/>-->
+     <h3>upload multiple files</h3>
+     <form id="uploadFiles" name="uploadFiles" method="post" th:action=@{/uploadFiles} encType="multipart/form-data">
+          <input type="file" name=" files" multiple required/>
+         <button type="submit">Submit</button>
+     </form>
+ </div>
+<div>
+    <h3>Lists</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Download link</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+        <tr th:each="doc:${docs}">
+            <td th:text="${doc.Id}"/>
+            <td><a th:href="@{'</downloadFile/'+${doc.id}}">Download</a></td>
+        </tr></tbody>
+    </table>
+    </table>
 
 
  </div>
