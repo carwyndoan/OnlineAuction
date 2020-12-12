@@ -2,6 +2,7 @@ package miu.edu.auction.controller;
 
 import miu.edu.auction.domain.User;
 import miu.edu.auction.service.UserService;
+import miu.edu.auction.service.VerificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -21,6 +23,8 @@ public class UserController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    VerificationService verificationService;
 
     @GetMapping(value = {"/userform"})
     public String loadUserForm(@ModelAttribute("user") User user) {
@@ -28,16 +32,39 @@ public class UserController {
     }
 
     @PostMapping(value = {"/saveuser"})
-    public String saveUser(@Valid User user, BindingResult bindingResult) {
+    public String saveUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "/registration/UserForm";
 
 //        String[] errors = bindingResult.getSuppressedFields();
 
         User savedUser = userService.saveUserWithVerificationKey(user);
-        return "redirect:/login";
-    }
+        System.out.println("saved user after registration"+ savedUser.getEmail());
 
+        return "redirect:/registration/confirm_email/" + savedUser.getEmail();
+
+    }
+  @GetMapping("/confirm_email/{email}")
+  public String confirmEmail(@PathVariable("email")String email, Model model){
+        model.addAttribute("email",email);
+
+        return "security/confirm_user_verification";
+
+  }
+    @PostMapping("/confirm_email")
+    public String verifyEmail(@RequestParam("email") String userEmail,
+                              @RequestParam("code") String verificationcode,
+                              RedirectAttributes redirectAttributes){
+         try{
+            verificationService.resetPassword(userEmail, verificationcode);
+            redirectAttributes.addFlashAttribute("success", "You have successfully reset your password");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return  "redirect:/verification_code/" + userEmail ;
+        }
+        return "redirect:/login";
+
+    }
     @GetMapping("/edituser/{id}")
     public String edit(@PathVariable int id, Model model) {
         userService.findById(id).ifPresent(u -> model.addAttribute("user", u));

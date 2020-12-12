@@ -27,6 +27,14 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
+    public Payment makePayment(Payment payment) {
+        //call Paypal service here
+
+        //
+        return savePayment(payment);
+    }
+
+    @Override
     public Payment findPaymentByBiddingIDAndUser(Integer biddingID, Integer userID) {
         return paymentRepository.findPaymentByBiddingIDAndUser(biddingID, userID);
     }

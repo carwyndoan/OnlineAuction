@@ -25,16 +25,10 @@ public class LoginController {
         if (logout != null) {
             errorMessge = "You have been successfully logged out !!";
         }
-        model.addAttribute("errorMessge", errorMessge);
+        model.addAttribute("error", errorMessge);
         return "security/login";
     }
 
-
-//    @RequestMapping("/login")
-//    public String login() {
-//        System.out.println("Login.....");
-//        return "login";
-//    }
 
     @RequestMapping("/login-error")
     public String loginError(Model model) {

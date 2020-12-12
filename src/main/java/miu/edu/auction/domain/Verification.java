@@ -21,17 +21,17 @@ public class Verification {
 
     private LocalDateTime generated_time;
 
-    @NotNull
+  //  @NotNull
     private int type; //0: generated uniqueID, 1: User verification
 
     private LocalDateTime verifying_time;
 
-    @NotNull
+ //   @NotNull
     @Column(columnDefinition = "integer default 0")
     private int status;
 
     private String description;
-
+     int trial;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

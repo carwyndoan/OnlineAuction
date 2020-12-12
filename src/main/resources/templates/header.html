@@ -1,32 +1,4 @@
-<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <title>Auction</title>
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-
-    <link rel="stylesheet" th:href="@{/css/main.css}"/>
-    <link rel="stylesheet" th:href="@{/css/style.css}"/>
-
-    <script th:src="'/js/scripts.js'"></script>
-
-    <script>
-        $('.carousel').carousel()
-    </script>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-</head>
-<body>
-
 <div class="navbar navbar-expand-md navbar-dark bg-dark mb-4" role="navigation">
     <a class="navbar-brand" href="#">Auction</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
@@ -100,95 +72,10 @@
                 </ul>
             </li>
         </ul>
-
         <form th:action="@{/logout}" method="get" class="form-inline mt-2 mt-md-0">
             <button class="btn btn-light" name="registration" type="Submit">Logout
             </button>
         </form>
     </div>
 </div>
-
-
-<div class="container">
-
-    <section class="main-section">
-        <div class="row">
-            <div class="col-md-8">
-                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-
-                    <div class="carousel-inner">
-                        <!--
-                                                <div class="row">
-                                                    <div class="col-lg-3" th:each="photo : ${photos}">
-                                                        <div class="card" style="width: 18rem;">
-                                                            <img th:src="'/images/'+${photo.getImage_path()}" alt="User name">
-
-                                                            <div class="card-body">
-                                                                <h5 class="card-title" th:utext="${photo.getDescription()}"></h5>
-                                                                <p class="card-text" th:utext="${photo.getDescription()}"></p>&lt;!&ndash;
-                                                <button type="button" class="btn btn-dark" th:href="@{/detail.html}">More...</button>&ndash;&gt;
-                                                                <a class="btn btn-light" th:href="${'/detail?id'+photo.getProduct_id()}">More...</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>-->
-
-                        <div class="carousel-item active"><!--
-                            <img th:src="'/images/'+${photo.getUrl()}" alt="User name">-->
-                            <img class="d-block w-100" th:src="'/images/'+${product.getImage_path()}" alt="User name">
-                        </div>
-
-                        <div class="carousel-item" th:each="photo:${photoList}">
-                            <img class="d-block w-100" th:src="'/images/'+${photo.getImageUrl()}">
-                        </div>
-
-                    </div>
-
-
-                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-
-                <div th:each="photo:${photoList}">
-                    <p th:utext="${photo.getImageUrl()}"></p>
-                </div>
-
-
-                <h3 class="my-3" th:utext="${product.getCaption()}"></h3>
-                <p th:utext="${product.getDescription()}"></p>
-                <h3 class="my-3">Product Details</h3>
-                <ul>
-                    <b>Price</b>
-                    <li th:utext="${product.getPrice()}"></li>
-                    <b>Mile</b>
-                    <li th:utext="${product.getMile()}"></li>
-                </ul>
-            </div>
-        </div>
-    </section>
-</div>
-
-
-<!-- Footer -->
-<footer class="page-footer font-small special-color-dark pt-4">
-
-    <!-- Copyright -->
-    <div class="footer-copyright text-center py-3">© 2020 Copyright:
-        <a href="https://miu.edu/"> miu.edu</a>
-    </div>
-    <!-- Copyright -->
-
-</footer>
-<!-- Footer -->
-
-</body>
 </html>
