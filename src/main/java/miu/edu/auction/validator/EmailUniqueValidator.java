@@ -28,5 +28,4 @@ public class EmailUniqueValidator implements ConstraintValidator<EmailUnique, St
         }
         return user == null ? true : false;
     }
-
 }
