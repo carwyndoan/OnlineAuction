@@ -41,10 +41,13 @@ public class CustomerController {
 
     @GetMapping("/home")
     public String main(Model model, @RequestParam("pageSize") Optional<Integer> pageSize,
-                       @RequestParam("page") Optional<Integer> page, @RequestParam(required = false, name = "sortVal") Integer sortVal) {
+                       @RequestParam("page") Optional<Integer> page, @RequestParam(required = false, name = "sortVal") Integer sortVal,
+                       @RequestParam(required = false, defaultValue = "0", name = "categoryId") Integer categoryId) {
 
         //List<Product> products = productRepository.findAll();
         List<Category> categories = categoryRepository.findAll();
+
+
         Optional<Integer> optSort = Optional.ofNullable(sortVal);
 
         int evalPageSize = pageSize.orElse(INITIAL_PAGE_SIZE);
@@ -69,14 +72,30 @@ public class CustomerController {
             }
         }
 
-        Page<Product> products = productRepository.findAll(PageRequest.of(evalPage, evalPageSize, sort));
+        System.out.println("categoryId = " + categoryId);
 
-        PagerModel pager = new PagerModel(products.getTotalPages(), products.getNumber(), BUTTONS_TO_SHOW);
 
-        model.addAttribute("photos", products);
+        if (categoryId == 0) {
+            System.out.println(" if ");
+
+            Page<Product> products = productRepository.findAll(PageRequest.of(evalPage, evalPageSize, sort));
+            PagerModel pager = new PagerModel(products.getTotalPages(), products.getNumber(), BUTTONS_TO_SHOW);
+            model.addAttribute("photos", products);
+            model.addAttribute("pager", pager);
+
+        } else {
+
+            System.out.println(" else ");
+
+            Page<Product> productByCategory = productRepository.findByCategory(categoryId, PageRequest.of(evalPage, evalPageSize));
+            PagerModel pager = new PagerModel(productByCategory.getTotalPages(), productByCategory.getNumber(), BUTTONS_TO_SHOW);
+            model.addAttribute("photos", productByCategory);
+            model.addAttribute("pager", pager);
+
+        }
+
         model.addAttribute("selectedPageSize", evalPageSize);
         model.addAttribute("pageSizes", PAGE_SIZES);
-        model.addAttribute("pager", pager);
 
         model.addAttribute("categories", categories);
 
