@@ -157,12 +157,6 @@
             </div>
 
             <div class="col-md-4">
-
-                <div th:each="photo:${photoList}">
-                    <p th:utext="${photo.getImageUrl()}"></p>
-                </div>
-
-
                 <h3 class="my-3" th:utext="${product.getCaption()}"></h3>
                 <p th:utext="${product.getDescription()}"></p>
                 <h3 class="my-3">Product Details</h3>

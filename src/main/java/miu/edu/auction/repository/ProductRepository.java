@@ -1,8 +1,8 @@
 package miu.edu.auction.repository;
 
-import miu.edu.auction.domain.Bidding;
 import miu.edu.auction.domain.Product;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
@@ -15,5 +15,10 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
 
     @Query("Select p from Product p where p.description like %:str%")
     List<Product> findByNameLike(String str);
+
+    @Query("Select p from Product p JOIN p.categories c where c.category_id=:categoryId")
+    Page<Product> findByCategory(Integer categoryId, Pageable pageable);
+
+
   //  boolean findByBiddingContainsAndStatus();
 }
