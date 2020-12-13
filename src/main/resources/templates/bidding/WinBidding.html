@@ -14,7 +14,7 @@
     <script type="text/javascript" th:src="@{/js/cart.js}"></script>
 </head>
 <body>
-
+<!--<div th:replace="fragments/header :: header"/>-->
 <section>
     <div class="jumbotron">
         <div class="container">
@@ -61,6 +61,6 @@
         </table>
     </div>
 </section>
-<th:block th:insert="/footer :: footer"></th:block>
+<!--<th:block th:insert="fragments/footer :: footer"></th:block>-->
 </body>
 </html>

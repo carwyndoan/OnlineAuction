@@ -31,6 +31,7 @@
                 <div aria-labelledby="headingTwo" data-parent="#sidenavAccordion"
                      id="collapsePages" sec:authorize="hasAuthority('ROLE_USER')">
                     <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                        <a class="nav-link" th:href="${'/bid'}">Do Bidding</a>
                         <a class="nav-link" th:href="${'/bidding/biddings'}">All Bidding</a>
                         <a class="nav-link" th:href="${'/bidding/winbiddings'}">Make Payment</a>
                         <a class="nav-link" th:href="${'/bidding/biddings'}">Bidding Status</a>

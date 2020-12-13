@@ -44,7 +44,8 @@ public class BiddingController {
 //        }
         model.addAttribute("bids", bids);
 
-        return "bidding/index";
+//        return "bidding/index";
+        return "bidding/index1";
     }
 
     @GetMapping(value = "/item/{id}")
@@ -65,6 +66,9 @@ public class BiddingController {
         model.addAttribute("bid_activity", biddingActivityRestDTO);
         model.addAttribute("bidding_id", bid.getBidding_id());
         model.addAttribute("user_id", user.getUser_id());
-        return "bidding/item";
+//        return "bidding/item";
+        return "bidding/item1";
+
     }
+
 }
