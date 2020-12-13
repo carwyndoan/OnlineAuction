@@ -171,7 +171,7 @@ public class BiddingPaymentController {
         int startYear = LocalDate.now().getYear();
         List<Integer> years = new ArrayList<>();
         int i = startYear - 5;
-        while (i <= startYear + 5) {
+        while (i <= startYear) {
             years.add(i);
             i++;
         }

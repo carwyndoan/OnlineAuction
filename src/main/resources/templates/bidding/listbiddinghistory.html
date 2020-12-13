@@ -8,10 +8,8 @@
     <div id="layoutSidenav_content">
         <main>
             <section>
-                <div class="jumbotron">
-                    <div class="container">
-                        <h1><span th:text="#{bidding.activities.form}">The Bidding History</span></h1>
-                    </div>
+                <div class="breadcrumb mb-4">
+                    <h1><span th:text="#{bidding.activities.form}">The Bidding History</span></h1>
                 </div>
             </section>
 
@@ -48,8 +46,8 @@
                             <td th:text="${item.id}"></td>
                             <td th:text="${item.productName}"></td>
                             <td th:text="${item.userName}"></td>
-                            <td th:text="${item.startPrice}"></td>
-                            <td th:text="${item.biddingPrice}"></td>
+                            <td th:text="${#numbers.formatCurrency(item.startPrice)}"></td>
+                            <td th:text="${#numbers.formatCurrency(item.biddingPrice)}"></td>
                             <td th:text="${item.biddingDate}"></td>
                             <td th:text="${item.biddingStartDate}"></td>
                             <td th:text="${item.biddingDueDate}"></td>
