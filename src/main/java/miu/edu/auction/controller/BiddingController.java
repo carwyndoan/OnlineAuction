@@ -2,6 +2,7 @@ package miu.edu.auction.controller;
 
 import miu.edu.auction.domain.Bidding;
 import miu.edu.auction.domain.Bidding_Activities;
+import miu.edu.auction.domain.PayPalData;
 import miu.edu.auction.domain.User;
 import miu.edu.auction.dto.BiddingActivityDTO;
 import miu.edu.auction.dto.BiddingActivityRestDTO;
@@ -16,10 +17,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
