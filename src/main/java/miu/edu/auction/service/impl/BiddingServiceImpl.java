@@ -2,10 +2,7 @@ package miu.edu.auction.service.impl;
 
 import miu.edu.auction.domain.*;
 import miu.edu.auction.dto.BiddingActivityDTO;
-import miu.edu.auction.repository.BiddingActivitiesRepository;
-import miu.edu.auction.repository.BiddingRepository;
-import miu.edu.auction.repository.PaymentRepository;
-import miu.edu.auction.repository.UserRepository;
+import miu.edu.auction.repository.*;
 import miu.edu.auction.service.BiddingService;
 import miu.edu.auction.service.EmailService;
 import miu.edu.auction.service.PaymentService;

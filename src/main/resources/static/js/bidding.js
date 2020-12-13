@@ -8,7 +8,35 @@ $(document).ready(function() {
         }
         placeBid(JSON.stringify(data));
     });
+
+    $("#btnDeposit").click(function() {
+        let data = {
+            "bidding_id": $("#bidding_id").val(),
+            "user_id": $("#user_id").val()
+        }
+        deposit(JSON.stringify(data));
+    });
 });
+
+function deposit(data) {
+    const url = "http://localhost:8080/bid/deposit";
+    $.ajax({
+        url: url,
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        dataType: "json",
+        success: paypalDeposit,
+        error: showErrors
+    });
+}
+
+function paypalDeposit(result) {
+    console.log(result);
+    // $("#lnkPaypal").attr("href").empty().append(result.approval_link);
+    // make_visible("lnkPaypal");
+    window.location.href = result.approval_link;
+}
 
 function placeBid(data) {
     const url = "http://localhost:8080/bid/placebid";

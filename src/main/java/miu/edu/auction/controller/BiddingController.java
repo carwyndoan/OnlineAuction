@@ -1,11 +1,11 @@
 package miu.edu.auction.controller;
 
-import miu.edu.auction.domain.Bidding;
-import miu.edu.auction.domain.Bidding_Activities;
-import miu.edu.auction.domain.User;
-import miu.edu.auction.dto.BiddingActivityDTO;
+import miu.edu.auction.domain.*;
 import miu.edu.auction.dto.BiddingActivityRestDTO;
+import miu.edu.auction.repository.PaymentRepository;
+import miu.edu.auction.repository.PaypalDataRepository;
 import miu.edu.auction.service.BiddingService;
+import miu.edu.auction.service.PaypalService;
 import miu.edu.auction.service.UserService;
 import miu.edu.auction.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +13,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -31,6 +27,15 @@ public class BiddingController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    PaypalService paypalService;
+
+    @Autowired
+    PaypalDataRepository paypalDataRepository;
+
+    @Autowired
+    PaymentRepository paymentRepository;
 
     @GetMapping(value = "")
     public String loadBidding(@AuthenticationPrincipal UserDetails userDetails, Model model) {
@@ -52,6 +57,7 @@ public class BiddingController {
         String userEmail = userDetails.getUsername();
         User user = userService.findUserByEmail(userEmail);
         Bidding bid = biddingService.findByID(id);
+        boolean checkDeposit = paypalDataRepository.findPayPalDataByBiddingId(id).size() > 0;
         Double maxBid = bid.getBidding_activities().stream().mapToDouble(Bidding_Activities::getAmount).max().orElse(bid.getStart_price());
         Double yourBid = bid.getBidding_activities().stream()
                 .filter(ba -> ba.getBidding_user().getUser_id() == user.getUser_id())
@@ -65,6 +71,32 @@ public class BiddingController {
         model.addAttribute("bid_activity", biddingActivityRestDTO);
         model.addAttribute("bidding_id", bid.getBidding_id());
         model.addAttribute("user_id", user.getUser_id());
+        model.addAttribute("check_deposit", checkDeposit);
         return "bidding/item";
+    }
+
+    @GetMapping(value = "/paypal")
+    public String depositItem(@AuthenticationPrincipal UserDetails userDetails, @RequestParam String token, @RequestParam String PayerID, Model model) throws IOException {
+        paypalService.authorizeOrder(token, PayerID);
+
+        String userEmail = userDetails.getUsername();
+        User user = userService.findUserByEmail(userEmail);
+        Bidding bid = biddingService.findByID(paypalDataRepository.findPayPalDataByOrderId(token).getBidding_id());
+        Double maxBid = bid.getBidding_activities().stream().mapToDouble(Bidding_Activities::getAmount).max().orElse(bid.getStart_price());
+        Double yourBid = bid.getBidding_activities().stream()
+                .filter(ba -> ba.getBidding_user().getUser_id() == user.getUser_id())
+                .mapToDouble(Bidding_Activities::getAmount)
+                .max().orElse(0D);
+        BiddingActivityRestDTO biddingActivityRestDTO = new BiddingActivityRestDTO();
+        biddingActivityRestDTO.setCurrent_bid(maxBid);
+        biddingActivityRestDTO.setBid_amount(yourBid);
+        biddingActivityRestDTO.setCounterDueDate(CommonUtils.explainDuration(bid.getDuedate()));
+        model.addAttribute("bid", bid);
+        model.addAttribute("bid_activity", biddingActivityRestDTO);
+        model.addAttribute("bidding_id", bid.getBidding_id());
+        model.addAttribute("user_id", user.getUser_id());
+        model.addAttribute("check_deposit", true);
+        PayPalData payPalData = paypalDataRepository.findPayPalDataByOrderId(token);
+        return "redirect:/" + payPalData.getLocal_confirm_url(); //"bidding/item";
     }
 }

@@ -50,13 +50,15 @@
                 <span>Your bid:</span>
                 <h6>$<span th:text="${#numbers.formatDecimal(bid_activity.bid_amount, 3, 2)}" id="bid_amount">0.00</span></h6>
                 <p>
-                <div class="input-group mb-1">
+                <div th:if="${check_deposit}" class="input-group mb-1">
                     <span class="input-group-text">$</span>
                     <input type="text" placeholder="Amount (larger than current bid)" id="bid_value"/>
                     <button type="button" class="btn btn-primary" id="btnBid">Place bid</button>
-                    <input th:value="${bidding_id}" type="hidden" id="bidding_id"/>
-                    <input th:value="${user_id}" type="hidden" id="user_id"/>
                 </div>
+                <button th:if="${check_deposit} == false" type="button" class="btn btn-primary" id="btnDeposit">Deposit First</button>
+                <a th:if="${check_deposit} == false" href="" id="lnkPaypal" style="display:none"></a>
+                <input th:value="${bidding_id}" type="hidden" id="bidding_id"/>
+                <input th:value="${user_id}" type="hidden" id="user_id"/>
                 </p>
                 <!-- Success - or Validation errors -->
                 <div id="errors" style="display:none">
