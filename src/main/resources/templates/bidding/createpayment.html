@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:insert="fragments/head_crud"></th:block>
+<body class="sb-nav-fixed">
+<th:block th:insert="fragments/navbar :: navbar"></th:block>
+<div id="layoutSidenav">
+    <th:block th:insert="fragments/sidenav :: sidenav"></th:block>
+    <div id="layoutSidenav_content">
+        <main>
+            <div id="global">
+                <form action="#" th:action="@{/bidding/payment}" th:object="${payment}"
+                      method="post">
+                    <fieldset>
+                        <legend><span th:text="#{new.payment}">Make Payment</span></legend>
+                        <ul th:if="${#fields.hasErrors('*')}">
+                            <li th:each="err : ${#fields.errors('*')}" th:text="${err}"> Incorrect Data
+                            </li>
+                        </ul>
+                        <p>
+                            <input id="payment_id" th:field="*{payment_id}" type="hidden">
+                            <input id="user_id" th:field="*{user_payment.user_id}" type="hidden">
+                            <input id="bidding_id" th:field="*{biddingPayment.bidding_id}" type="hidden">
+                            <input id="paymentDate" th:field="*{paymentDate}" type="hidden">
+                            <label for="deposit"><span data-th-text="#{payment.deposit}">Deposit:</span></label>
+                            <input type="text" id="deposit" th:field="*{deposit}" tabindex="1" readonly/>
+                        <p th:if="${#fields.hasErrors('deposit')}" th:errors="*{deposit}" th:errorclass="fieldError">Incorrect Data</p>
+                        </p>
+                        <p>
+                            <label for="remainingAmount"><span data-th-text="#{payment.remainingamount}">Remaining Amount:</span></label>
+                            <input type="text" id="remainingAmount" th:field = "*{remainingAmount}" tabindex="2" readonly/>
+                        <p th:if="${#fields.hasErrors('remainingAmount')}" th:errors="*{remainingAmount}" th:errorclass="fieldError">Incorrect Data</p>
+                        </p>
+
+                        <p>
+                            <label for="receiverName"><span data-th-text="#{payment.receiverName}">Receiver:</span></label>
+                            <input type="text" id="receiverName" th:field="*{receiverName}" tabindex="3"/>
+                        <p th:if="${#fields.hasErrors('receiverName')}" th:errors="*{receiverName}" th:errorclass="fieldError"></p>
+                        </p>
+
+                        <p>
+                            <label for="street"><span data-th-text="#{payment.street}">Street:</span></label>
+                            <input type="text" id="street" th:field="*{street}" tabindex="3"/>
+                        <p th:if="${#fields.hasErrors('street')}" th:errors="*{street}" th:errorclass="fieldError"></p>
+                        </p>
+                        <p>
+                            <label for="city"><span data-th-text="#{payment.city}">City:</span></label>
+                            <input type="text" id="city" th:field="*{city}" tabindex="3"/>
+                        <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}" th:errorclass="fieldError"></p>
+                        </p>
+                        <p>
+                            <label for="state"><span data-th-text="#{payment.state}">City:</span></label>
+                            <input type="text" id="state" th:field="*{state}" tabindex="3"/>
+                        <p th:if="${#fields.hasErrors('state')}" th:errors="*{state}" th:errorclass="fieldError"></p>
+                        </p>
+                        <p>
+                            <label for="zipcode"><span data-th-text="#{payment.zipcode}">City:</span></label>
+                            <input type="text" id="zipcode" th:field="*{zipcode}" tabindex="3"/>
+                        <p th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}" th:errorclass="fieldError"></p>
+                        </p>
+
+                        <p id="buttons">
+                            <input id="reset" type="reset" th:value="#{user.new.button.reset}" value="Reset" tabindex="4"> <input
+                                id="submit" type="submit" tabindex="5" th:value="#{user.new.button.save}" value="Save">
+                        </p>
+                    </fieldset>
+                </form>
+            </div>
+        <th:block th:insert="fragments/footer :: footer"></th:block>
+    </div>
+</div>
+<th:block th:insert="fragments/scripts"></th:block>
+</body>
+</html>
