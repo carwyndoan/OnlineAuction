@@ -30,7 +30,7 @@ public class UserController {
     @GetMapping(value = {"/userform"})
     public String loadUserForm(@ModelAttribute("user") User user) {
 //        return "/registration/UserForm";
-        return "/registration/createuser";
+        return "registration/createuser";
     }
 
     /*
@@ -39,7 +39,7 @@ public class UserController {
     @PostMapping(value = {"/saveuser"})
     public String saveUser(@Valid User user, BindingResult bindingResult, HttpServletRequest request) {
         if (bindingResult.hasErrors())
-            return "/registration/createuser";
+            return "registration/createuser";
 //            return "/registration/UserForm";
 
         String baseUrl = String.format("%s://%s:%d/login/",request.getScheme(),  request.getServerName(), request.getServerPort());
