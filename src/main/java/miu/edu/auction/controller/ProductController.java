@@ -1,38 +1,29 @@
-package miu.edu.auction.controller;//package miu.edu.auction.controller;//package miu.edu.auction.controller;
+package miu.edu.auction.controller;
 
  import miu.edu.auction.domain.Product;
-  import miu.edu.auction.service.BiddingService;
+ import miu.edu.auction.service.BiddingService;
  import miu.edu.auction.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
- import org.springframework.core.io.ByteArrayResource;
- import org.springframework.http.HttpHeaders;
- import org.springframework.http.MediaType;
- import org.springframework.http.ResponseEntity;
- import org.springframework.security.core.Authentication;
- import org.springframework.security.core.context.SecurityContextHolder;
  import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+ import org.springframework.ui.Model;
  import org.springframework.util.StringUtils;
  import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+ import org.springframework.web.bind.annotation.*;
  import org.springframework.web.multipart.MultipartFile;
  import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.validation.Valid;
- import java.awt.*;
- import java.io.IOException;
+ import javax.validation.Valid;
+  import java.io.IOException;
  import java.nio.file.Files;
  import java.nio.file.Paths;
  import java.nio.file.StandardCopyOption;
- import java.security.Principal;
- import java.util.List;
+  import java.util.List;
 
 @Controller
 public class ProductController {
 
     @Autowired
     ProductService productService;
-
+    @Autowired
     BiddingService biddingService;
 
     @GetMapping("/addproduct")
@@ -41,18 +32,18 @@ public class ProductController {
 
     }
 
-    @PostMapping("/addproduct")
-    public String addProduct(@Valid @ModelAttribute("product") Product product, BindingResult result, Model model, RedirectAttributes redirect) {
-        if (result.hasErrors()) {
-            model.addAttribute("errors", result.getAllErrors());
-            return "Product/add-product";
-        }
-        productService.addProduct(product);
-        model.addAttribute("product", product);
-        redirect.addFlashAttribute(product);
-        return  "redirect:/Productadded";
-
-    }
+//    @PostMapping("/addproduct")
+//    public String addProduct(@Valid @ModelAttribute("product") Product product, BindingResult result, Model model, RedirectAttributes redirect) {
+//        if (result.hasErrors()) {
+//            model.addAttribute("errors", result.getAllErrors());
+//            return "Product/add-product";
+//        }
+//        productService.addProduct(product);
+//        model.addAttribute("product", product);
+//        redirect.addFlashAttribute(product);
+//        return  "redirect:/Productadded";
+//
+//    }
     @GetMapping("/Productadded")
     public String productAdded() {
         return "Product/productDetail";
