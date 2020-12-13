@@ -2,7 +2,7 @@ package miu.edu.auction.controller;
 
 import miu.edu.auction.domain.Category;
 import miu.edu.auction.domain.Product;
-import miu.edu.auction.service.ProductCategoryService;
+import miu.edu.auction.service.CategoryService;
 import miu.edu.auction.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,7 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
-    ProductCategoryService service;
+    CategoryService service;
 
     @Autowired
     ProductService productservice;

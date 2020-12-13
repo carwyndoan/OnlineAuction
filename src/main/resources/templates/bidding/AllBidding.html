@@ -11,10 +11,8 @@
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script type="text/javascript"
             src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script type="text/javascript" th:src="@{/js/cart.js}"></script>
 </head>
 <body>
-
 <section>
     <div class="jumbotron">
         <div class="container">
@@ -78,10 +76,23 @@
                        </a>&nbsp;
                     </span>&nbsp;&nbsp;&nbsp;
 
+                    <span th:if="${item.status == 2}">
+                       <a th:href="@{/bidding/ship/{id}(id=${item.bidding_id})}" class="label label-danger product-remove-btn">
+                            <span class="glyphicon glyphicon-remove" ></span> Shipped
+                       </a>&nbsp;
+                    </span>
+
+                    <span th:if="${item.status == 3}">
+                       <a th:href="@{/bidding/delivery/{id}(id=${item.bidding_id})}" class="label label-danger product-remove-btn">
+                            <span class="glyphicon glyphicon-remove" ></span> Delivered
+                       </a>&nbsp;
+                    </span>
+
                 </td>
             </tr>
         </table>
     </div>
 </section>
+<th:block th:insert="/footer :: footer"></th:block>
 </body>
 </html>

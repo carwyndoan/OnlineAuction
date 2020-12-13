@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.springframework.org/schema/security">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,6 +22,7 @@
         $(document).ready(function () {
             changePageAndSize();
             sortP();
+            changeInputCategory();
         });
 
         function changePageAndSize() {
@@ -32,9 +33,16 @@
 
         function sortP() {
             $('#inputSort').change(function (evt) {
-                window.location.replace("/home?pageSize=" + 8 + "&page=1" +"&sortVal=" + this.value);
+                window.location.replace("/home?pageSize=" + 8 + "&page=1" + "&sortVal=" + this.value);
             });
         }
+
+        function changeInputCategory() {
+            $('#inputCategory').change(function (evt) {
+                window.location.replace("/home?pageSize=5&page=1" + "&categoryId=" + this.value);
+            });
+        }
+
 
         $(document).ready(function () {
 
@@ -135,95 +143,16 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
-<div class="navbar navbar-expand-md navbar-dark bg-dark mb-4" role="navigation">
-    <a class="navbar-brand" href="#">Auction</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="dropdown1" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false">Dropdown1</a>
-                <ul class="dropdown-menu" aria-labelledby="dropdown1">
-                    <li class="dropdown-item" href="#"><a>Action 1</a></li>
-                    <li class="dropdown-item dropdown">
-                        <a class="dropdown-toggle" id="dropdown1-1" data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">Dropdown1.1</a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdown1-1">
-                            <li class="dropdown-item" href="#"><a>Action 1.1</a></li>
-                            <li class="dropdown-item dropdown">
-                                <a class="dropdown-toggle" id="dropdown1-1-1" data-toggle="dropdown"
-                                   aria-haspopup="true" aria-expanded="false">Dropdown1.1.1</a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown1-1-1">
-                                    <li class="dropdown-item" href="#"><a>Action 1.1.1</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="dropdown2" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false">Dropdown2</a>
-                <ul class="dropdown-menu" aria-labelledby="dropdown2">
-                    <li class="dropdown-item" href="#"><a>Action 2 A</a></li>
-                    <li class="dropdown-item" href="#"><a>Action 2 B</a></li>
-                    <li class="dropdown-item" href="#"><a>Action 2 C</a></li>
-                    <li class="dropdown-item dropdown">
-                        <a class="dropdown-toggle" id="dropdown2-1" data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">Dropdown2.1</a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdown2-1">
-                            <li class="dropdown-item" href="#"><a>Action 2.1 A</a></li>
-                            <li class="dropdown-item" href="#"><a>Action 2.1 B</a></li>
-                            <li class="dropdown-item" href="#"><a>Action 2.1 C</a></li>
-                            <li class="dropdown-item dropdown">
-                                <a class="dropdown-toggle" id="dropdown2-1-1" data-toggle="dropdown"
-                                   aria-haspopup="true" aria-expanded="false">Dropdown2.1.1</a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown2-1-1">
-                                    <li class="dropdown-item" href="#"><a>Action 2.1.1 A</a></li>
-                                    <li class="dropdown-item" href="#"><a>Action 2.1.1 B</a></li>
-                                    <li class="dropdown-item" href="#"><a>Action 2.1.1 C</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown-item dropdown">
-                                <a class="dropdown-toggle" id="dropdown2-1-2" data-toggle="dropdown"
-                                   aria-haspopup="true" aria-expanded="false">Dropdown2.1.2</a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown2-1-2">
-                                    <li class="dropdown-item" href="#"><a>Action 2.1.2 A</a></li>
-                                    <li class="dropdown-item" href="#"><a>Action 2.1.2 B</a></li>
-                                    <li class="dropdown-item" href="#"><a>Action 2.1.2 C</a></li>
-                                </ul>
-                            </li>
 
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-        </ul>
+<div th:replace="fragments/header :: header"/>
 
-        <p class="text-light bg-dark" th:utext="${userName}"></p>
-
-        <form th:action="@{/logout}" method="get" class="form-inline mt-2 mt-md-0">
-            <button class="btn btn-light" name="registration" type="Submit">Logout
-            </button>
-        </form>
-    </div>
-</div>
 
 <div class="container-fluid bg-light ">
     <div class="row align-items-center justify-content-center">
 
         <div class="col-md-2 pt-3">
             <div class="form-group ">
-                <select id="inputBrand" class="form-control">
+                <select id="inputCategory" class="form-control">
                     <option selected>Category</option>
                     <option th:each="category : ${categories}" th:value="${category.getCategory_id()}"
                             th:text="${category.getName()}"></option>
@@ -341,16 +270,7 @@
 
 
 </div>
-<!-- Footer -->
-<footer class="page-footer font-small special-color-dark pt-4">
-
-    <!-- Copyright -->
-    <div class="footer-copyright text-center py-3">© 2020 Copyright:
-        <a href="https://miu.edu/"> miu.edu</a>
-    </div>
-    <!-- Copyright -->
-
-</footer>
+<div th:replace="fragments/footer :: footer"/>
 <!-- Footer -->
 </body>
 </html>

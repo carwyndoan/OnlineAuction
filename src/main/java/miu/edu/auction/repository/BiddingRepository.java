@@ -1,6 +1,7 @@
 package miu.edu.auction.repository;
 
 import miu.edu.auction.domain.Bidding;
+import miu.edu.auction.domain.Payment;
 import miu.edu.auction.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -44,4 +45,7 @@ public interface BiddingRepository extends JpaRepository<Bidding, Integer> {
             + "left join fetch bid.winner win "
             + "where bid.bidding_id = :integer")
     Optional<Bidding> findById(Integer integer);
+
+    @Query("select distinct b from Bidding b inner join fetch b.payments p where p.paymentDate is null and b.payment_duedate < :dueDate")
+    List<Bidding> findBiddingOverduePayment(LocalDateTime dueDate);
 }

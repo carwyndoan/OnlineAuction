@@ -166,7 +166,8 @@ public class BiddingServiceImpl implements BiddingService {
             bidding.setFinalprice(maxBid);
 
             //Return deposit
-            for (Payment payment : bidding.getPayments()) {
+//            for (Payment payment : bidding.getPayments()) { //fixing due to not fetching Payment in Bidding
+            for (Payment payment : paymentService.findPaymentByBidding(bidding_id)) {
                 if (payment.getUser_payment().getUser_id() != bidding_activities.getBidding_user().getUser_id()) {
                     paymentService.returnDeposit(payment);
                 } else {
@@ -192,8 +193,8 @@ public class BiddingServiceImpl implements BiddingService {
     public Boolean paySeller(Integer bidding_id) {
         try {
             Bidding bidding = biddingRepository.findById(bidding_id).get();
-            if(bidding.getStatus() == 3 || bidding.getStatus() == 4) {//pay to seller after ship 30 days or delivered
-                Payment payment = bidding.getPayments().stream()
+            if (bidding.getStatus() == 3 || bidding.getStatus() == 4) {//pay to seller after ship 30 days or delivered
+                Payment payment = paymentService.findPaymentByBidding(bidding_id).stream()
                         .filter(p -> p.getUser_payment().getUser_id() == bidding.getWinner().getUser_id())
                         .findFirst().get();
                 paymentService.payToSeller(payment);
@@ -214,6 +215,19 @@ public class BiddingServiceImpl implements BiddingService {
             jobScheduler.schedule(() -> biddingService.closeBidding(bidding.getBidding_id()),
                     LocalDateTime.now().plusSeconds(CommonUtils.calculateDuration(bidding.getDuedate())));
         }
+        //Schedule if bidding status is Shipped
+        if (bidding.getStatus() == 3) {
+            //Start auto close bidding
+            Bidding oldBidding = biddingRepository.findById(bidding.getBidding_id()).orElse(null);
+            //REQ: 30 days
+//            jobScheduler.schedule(() -> biddingService.paySeller(bidding.getBidding_id()),
+//                    LocalDateTime.now().plusSeconds(CommonUtils.calculateDuration(LocalDateTime.now().plusDays(30))));
+            //TESTING: 1 minute
+            jobScheduler.schedule(() -> biddingService.paySeller(bidding.getBidding_id()),
+                    LocalDateTime.now().plusSeconds(CommonUtils.calculateDuration(LocalDateTime.now().plusMinutes(1))));
+        }
+
+
         return biddingRepository.save(bidding);
     }
 
@@ -221,8 +235,9 @@ public class BiddingServiceImpl implements BiddingService {
     public void paySellerDeposit(Integer bidding_id) {
         try {
             Bidding bidding = biddingRepository.findById(bidding_id).get();
-            if(bidding.getStatus() == 1) {//Bidder has not pay full yet
-                Payment payment = bidding.getPayments().stream()
+            if (bidding.getStatus() == 1) {//Bidder has not pay full yet
+//                Payment payment = bidding.getPayments().stream()
+                Payment payment = paymentService.findPaymentByBidding(bidding_id).stream()
                         .filter(p -> p.getUser_payment().getUser_id() == bidding.getWinner().getUser_id())
                         .findFirst().get();
                 paymentService.paySellerDeposit(payment);
@@ -238,11 +253,12 @@ public class BiddingServiceImpl implements BiddingService {
     public void returnBidderDeposit(Integer bidding_id) {
         try {
             Bidding bidding = biddingRepository.findById(bidding_id).get();
-            if(bidding.getStatus() == 2) {//Seller has not ship yet
-                Payment payment = bidding.getPayments().stream()
+            if (bidding.getStatus() == 2) {//Seller has not ship yet
+//                Payment payment = bidding.getPayments().stream()
+                Payment payment = paymentService.findPaymentByBidding(bidding_id).stream()
                         .filter(p -> p.getUser_payment().getUser_id() == bidding.getWinner().getUser_id())
                         .findFirst().get();
-                paymentService.payBidderFull(payment);
+                paymentService.payBidderFull(payment); //return payment to Bidder in case not ship
                 bidding.setStatus(6);//seller cancel
                 biddingRepository.save(bidding);
             }
@@ -250,4 +266,5 @@ public class BiddingServiceImpl implements BiddingService {
             System.out.println(ex);
         }
     }
+
 }

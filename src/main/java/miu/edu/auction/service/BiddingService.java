@@ -33,4 +33,6 @@ public interface BiddingService {
     void paySellerDeposit(Integer bidding_id);//pay deposit to seller in case winner cancel pay full
 
     void returnBidderDeposit(Integer bidding_id);//return deposit to bidder in case seller cancel shipping
+
+//    void updateBiddingOverPaymentDuedate(LocalDateTime dueDate);
 }

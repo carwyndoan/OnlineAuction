@@ -24,7 +24,7 @@ public class Product {
     @NotNull
     private String name;
 
-    @NotNull
+   // @NotNull
     private int active;
 
     @NotNull
@@ -40,11 +40,13 @@ public class Product {
 
     private String description;
 
+
+
     @ManyToOne
-    @JoinColumn(name = "seller_id", nullable = false)
+    @JoinColumn(name = "seller_id", nullable = true)
     private User user;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "product")
+   @OneToOne(cascade = CascadeType.ALL, mappedBy = "product")
     private Bidding bidding;
 
     @ManyToMany
@@ -55,4 +57,5 @@ public class Product {
     List<Category> categories;
 
 
-}
+           }
+

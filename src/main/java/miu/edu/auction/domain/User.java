@@ -1,9 +1,9 @@
 package miu.edu.auction.domain;
 
 import lombok.*;
+import miu.edu.auction.validator.EmailUnique;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -16,41 +16,39 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-
-@Transactional
-
 public class User {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int user_id;
 
-   // @NotBlank
+    @NotBlank
     @Email
+    @EmailUnique
     private String email;
 
-  //  @NotBlank
+    @NotBlank
     private String password;
 
     @NotNull
     @Column(columnDefinition = "integer default 0")
     private int enable;
 
-  //  @NotBlank
+    @NotBlank
     @Size(min = 4, max = 20, message = "{Size.name.validation}")
     private String name;
 
- //   @NotBlank
+    @NotBlank
     private String street;
 
-  //  @NotBlank
+    @NotBlank
     private String city;
 
- //   @NotBlank
+    @NotBlank
     @Size(min = 2, max = 2, message = "{Size.state.validation}")
     private String state;
 
-  //  @NotBlank
+    @NotBlank
     private String zipcode;
 
     @Column(columnDefinition = "integer default 0")
@@ -59,7 +57,7 @@ public class User {
     @Column(columnDefinition = "integer default 0")
     private int profile_verified;
 
-  //  @NotBlank
+    @NotBlank
     private String driver_license;
 
     @Column(columnDefinition = "integer default 0")

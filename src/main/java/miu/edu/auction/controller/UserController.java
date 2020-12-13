@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 
@@ -28,22 +29,25 @@ public class UserController {
 
     @GetMapping(value = {"/userform"})
     public String loadUserForm(@ModelAttribute("user") User user) {
-        return "/registration/UserForm";
+//        return "/registration/UserForm";
+        return "registration/createuser";
     }
 
+    /*
+    This is to save User when creating a new User - Thai Nguyen
+     */
     @PostMapping(value = {"/saveuser"})
-    public String saveUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
+    public String saveUser(@Valid User user, BindingResult bindingResult, HttpServletRequest request) {
         if (bindingResult.hasErrors())
-            return "/registration/UserForm";
+            return "registration/createuser";
+//            return "/registration/UserForm";
 
-//        String[] errors = bindingResult.getSuppressedFields();
-
-        User savedUser = userService.saveUserWithVerificationKey(user);
-        System.out.println("saved user after registration"+ savedUser.getEmail());
-
-        return "redirect:/registration/confirm_email/" + savedUser.getEmail();
-
+        String baseUrl = String.format("%s://%s:%d/login/",request.getScheme(),  request.getServerName(), request.getServerPort());
+        User savedUser = userService.saveUserWithVerificationKey(user, baseUrl);
+        return "redirect:/login";
     }
+
+
   @GetMapping("/confirm_email/{email}")
   public String confirmEmail(@PathVariable("email")String email, Model model){
         model.addAttribute("email",email);

@@ -1,6 +1,9 @@
 package miu.edu.auction.controller;
 
-import miu.edu.auction.domain.*;
+import miu.edu.auction.domain.Bidding;
+import miu.edu.auction.domain.Bidding_Activities;
+import miu.edu.auction.domain.User;
+import miu.edu.auction.dto.BiddingActivityDTO;
 import miu.edu.auction.dto.BiddingActivityRestDTO;
 import miu.edu.auction.repository.PaymentRepository;
 import miu.edu.auction.repository.PaypalDataRepository;
@@ -13,7 +16,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.List;
@@ -49,7 +55,8 @@ public class BiddingController {
 //        }
         model.addAttribute("bids", bids);
 
-        return "bidding/index";
+//        return "bidding/index";
+        return "bidding/index1";
     }
 
     @GetMapping(value = "/item/{id}")
@@ -72,7 +79,9 @@ public class BiddingController {
         model.addAttribute("bidding_id", bid.getBidding_id());
         model.addAttribute("user_id", user.getUser_id());
         model.addAttribute("check_deposit", checkDeposit);
-        return "bidding/item";
+//        return "bidding/item";
+        return "bidding/item1";
+
     }
 
     @GetMapping(value = "/paypal")

@@ -43,12 +43,16 @@ public class Payment {
 
     private String invoiceNumber;
 
+    @NotBlank
     private String receiverName;
 
+    @NotBlank
     private String street;
 
+    @NotBlank
     private String city;
 
+    @NotBlank
     @Size(min = 2, max = 2, message = "{Size.state.validation}")
     private String state;
 
