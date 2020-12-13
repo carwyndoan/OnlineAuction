@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  import org.springframework.http.HttpHeaders;
  import org.springframework.http.MediaType;
  import org.springframework.http.ResponseEntity;
+ import org.springframework.security.core.Authentication;
+ import org.springframework.security.core.context.SecurityContextHolder;
  import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
  import org.springframework.util.StringUtils;
@@ -39,12 +41,11 @@ public class ProductController {
 
     }
 
-
-//    @PostMapping("/addproduct")
+    @PostMapping("/addproduct")
     public String addProduct(@Valid @ModelAttribute("product") Product product, BindingResult result, Model model, RedirectAttributes redirect) {
         if (result.hasErrors()) {
             model.addAttribute("errors", result.getAllErrors());
-            return "product/add-product";
+            return "Product/add-product";
         }
         productService.addProduct(product);
         model.addAttribute("product", product);
@@ -52,10 +53,8 @@ public class ProductController {
         return  "redirect:/Productadded";
 
     }
-
     @GetMapping("/Productadded")
     public String productAdded() {
-
         return "Product/productDetail";
     }
 
@@ -68,12 +67,29 @@ public class ProductController {
         return "Product/productDetail";
     }
 
-    @GetMapping("/products")
-    public String findAll(Product product, Model model) {
-        List<Product> productList = productService.getAllProduct();
+//    @GetMapping("/products")
+//    public String findAll(Product product, Model model,Principal principal ) {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        String role= auth.getAuthorities().toString();
+//
+////        List<Product> productList = productService.getAllProduct();
+//        List<Product> productList = productService.getAllProductWithRole(role);
+//        model.addAttribute("products", productList);
+//        return "product/productList";
+//    }
+      @GetMapping("/productsCustomer")
+      public String customerfindAll(Product product, Model model  ) {
+        List<Product> productList = productService.getAllProductCustomer();
+         model.addAttribute("products", productList);
+        return "product/productList";
+    }
+    @GetMapping("/productsSeller")
+    public String productfindAll(Product product, Model model  ) {
+        List<Product> productList = productService.getAllProductSeller();
         model.addAttribute("products", productList);
         return "product/productList";
     }
+
 
     @GetMapping("/product")
     public String getProductById(@RequestParam("id") int productId, Model model) {
@@ -84,15 +100,9 @@ public class ProductController {
     @GetMapping("/product{Id}")
     public void deleteProduct(@PathVariable("id") int id) {
         productService.deleteProduct(id);
+    }
 
-}
 
-//    @GetMapping("/getfile")
-//   public String get(Model model){
-//    List<Product> docs=productService.getFiles();
-//    model.addAttribute("docs" , docs);
-//    return "doc";
-//    }
 @PostMapping("/addproduct")
 public String addProductImage(@Valid @ModelAttribute("product") Product product,
                               BindingResult result, Model model, RedirectAttributes redirect,
@@ -118,21 +128,4 @@ public String addProductImage(@Valid @ModelAttribute("product") Product product,
     return  "redirect:/Productadded";
 
 }
-    @PostMapping("/getfile")
-    public String uploadMultipleFiles(@RequestParam("files")MultipartFile[] files){
-    for(MultipartFile file:files) {
-        productService.saveFile(file);
-    }
-    return "redirect:/";
-}
-//    @GetMapping("/downloadFile/{fileId}")
-//public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable Integer fileId){
-//    Product doc=productService.getFile(fileId).get();
-//    return ResponseEntity.ok()
-//            .contentType(MediaType.parseMediaType(doc.getDocType()))
-//            //.headers(HttpHeaders.CONTENT_DISPOSITION,"attachment:filename=" + doc.getDocName())
-//            .header(HttpHeaders.CONTENT_DISPOSITION,"attachement:filename=\""+doc.getDocName()+"\"")
-//            .body(new ByteArrayResource(doc.getData()));
-//
-//}
-}
+ }
