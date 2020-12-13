@@ -9,7 +9,6 @@ import miu.edu.auction.service.BiddingService;
 import miu.edu.auction.service.PaymentService;
 import miu.edu.auction.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -19,13 +18,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.text.html.Option;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/bidding")
@@ -47,7 +44,8 @@ public class BiddingPaymentController {
         String userEmail = userDetails.getUsername();
         List<Bidding> list = biddingService.findByWinner(userEmail, LocalDateTime.now());
         model.addAttribute("winbiddings", list);
-        return "bidding/WinBidding";
+//        return "bidding/WinBidding";
+        return "bidding/listwinbidding";
     }
 
     @GetMapping(value = {"/biddings"})
@@ -60,7 +58,8 @@ public class BiddingPaymentController {
         List<Bidding> list = biddingService.findByUserBidding(userEmail, month, year);
         model.addAttribute("allbiddings", list);
         String baseUrl = String.format("%s://%s:%d/login/", request.getScheme(), request.getServerName(), request.getServerPort());
-        return "bidding/AllBidding";
+//        return "bidding/AllBidding";
+        return "bidding/listbidding";
     }
 
     @GetMapping(value = {"/paymentform/{id}"})
@@ -82,7 +81,8 @@ public class BiddingPaymentController {
                 payment.setPaymentDate(LocalDateTime.now());
             }
             model.addAttribute("payment", payment);
-            return "bidding/Payment";
+//            return "bidding/Payment";
+            return "bidding/createpayment";
         }
         return "bidding/error";
     }
@@ -90,7 +90,8 @@ public class BiddingPaymentController {
     @PostMapping(value = {"/payment"})
     public String savePayment(@AuthenticationPrincipal UserDetails userDetails, @Valid Payment payment, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            return "bidding/Payment";
+            return "bidding/createpayment";
+//            return "bidding/Payment";
         Payment payment1 = paymentService.makePayment(payment);
         Bidding bidding = payment1.getBiddingPayment();
         bidding.setStatus(2);
@@ -141,7 +142,8 @@ public class BiddingPaymentController {
         List<BiddingActivityDTO> listDTO = biddingService.findBidingHistoriesByMonthAndYear(bidding_id, year, month);
         model.addAttribute("activities", listDTO);
         model.addAttribute("biddingid", bidding_id);
-        return "bidding/BiddingHistories";
+//        return "bidding/BiddingHistories";
+        return "bidding/listbiddinghistory";
     }
 
     @GetMapping(value = {"/invoice/{id}"})
@@ -174,10 +176,5 @@ public class BiddingPaymentController {
             i++;
         }
         return years;
-    }
-
-    @GetMapping(value = {"/ui"})
-    public String testUI(){
-        return "bidding/view";
     }
 }
