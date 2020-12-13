@@ -38,10 +38,12 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public Payment makePayment(Payment payment) {
         //TODO: call Paypal service here
-        //start job check winner cancel
+        //After 3 days, if Bidding status is still 2 -> return full payement for Winner
         Bidding bidding = payment.getBiddingPayment();
         jobScheduler.schedule(() -> biddingService.returnBidderDeposit(bidding.getBidding_id()),
                 LocalDateTime.now().plusSeconds(CommonUtils.calculateDuration(payment.getPaymentDate().plusDays(3))));//Return full to bidder after 3 days
+//        jobScheduler.schedule(() -> biddingService.returnBidderDeposit(bidding.getBidding_id()),
+//                LocalDateTime.now().plusSeconds(CommonUtils.calculateDuration(payment.getPaymentDate().plusMinutes(1))));//1 minutes for testing purpose
         return savePayment(payment);
     }
 
@@ -139,9 +141,8 @@ public class PaymentServiceImpl implements PaymentService {
         //TODO: payment with paypal
         //Update system
         payment.setReturnDepositDate(LocalDateTime.now());
+        payment.setReturnDeposit(payment.getDeposit() + payment.getRemainingAmount());
         paymentRepository.save(payment);
         return true;
     }
-
-
 }
