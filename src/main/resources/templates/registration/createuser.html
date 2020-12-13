@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:insert="fragments/head_crud"></th:block>
+<body class="sb-nav-fixed">
+<th:block th:insert="fragments/navbar :: navbar"></th:block>
+<div id="layoutSidenav">
+    <th:block th:insert="fragments/sidenav :: sidenav"></th:block>
+    <div id="layoutSidenav_content">
+        <main>
+            <div id="global">
+                <form action="#" th:action="@{/registration/saveuser}" th:object="${user}"
+                      method="post">
+                    <fieldset>
+                        <legend><span th:text="#{user.new}">Add a new User</span></legend>
+                        <ul th:if="${#fields.hasErrors('*')}">
+                            <li th:each="err : ${#fields.errors('*')}" th:text="${err}"> Incorrect Data
+                            </li>
+                        </ul>
+<!--                        <p>-->
+                            <input id="id" th:field="*{user_id}" type="hidden">
+                            <label for="email"><span data-th-text="#{user.new.email}">Email:</span></label> <br/>
+                            <input  class="form-control"  type="text" id="email" th:field="*{email}" tabindex="1"/> <br/>
+                            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:errorclass="fieldError">Incorrect Data</p>
+<!--                            </p>-->
+<!--                        <p>-->
+                            <label for="password"><span data-th-text="#{user.new.password}">Password:</span></label> <br/>
+                            <input  class="form-control"  type="password" id="password" th:field = "*{password}" tabindex="2"/> <br/>
+                            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" th:errorclass="fieldError">Incorrect Data</p>
+<!--                        </p>-->
+<!--                        <p>-->
+                            <label for="name"><span data-th-text="#{user.new.name}">Full Name:</span></label> <br/>
+                            <input  class="form-control"  type="text" id="name" th:field="*{name}" tabindex="3"/> <br/>
+                            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorclass="fieldError"></p>
+<!--                        </p>-->
+
+<!--                        <p>-->
+                            <label for="street"><span data-th-text="#{user.new.street}">Street:</span></label> <br/>
+                            <input  class="form-control"  type="text" id="street" th:field="*{street}" tabindex="3"/> <br/>
+                            <p th:if="${#fields.hasErrors('street')}" th:errors="*{street}" th:errorclass="fieldError"></p>
+<!--                        </p>-->
+<!--                        <p>-->
+                            <label for="city"><span data-th-text="#{user.new.city}">City:</span></label> <br/>
+                            <input  class="form-control"  type="text" id="city" th:field="*{city}" tabindex="3"/> <br/>
+                            <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}" th:errorclass="fieldError"></p>
+<!--                        </p>-->
+<!--                        <p>-->
+                            <label for="state"><span data-th-text="#{user.new.state}">City:</span></label> <br/>
+                            <input  class="form-control"  type="text" id="state" th:field="*{state}" tabindex="3"/> <br/>
+                            <p th:if="${#fields.hasErrors('state')}" th:errors="*{state}" th:errorclass="fieldError"></p>
+<!--                        </p>-->
+<!--                        <p>-->
+                            <label for="zipcode"><span data-th-text="#{user.new.zipcode}">City:</span></label> <br/>
+                            <input  class="form-control"  type="text" id="zipcode" th:field="*{zipcode}" tabindex="3"/> <br/>
+                            <p th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}" th:errorclass="fieldError"></p>
+<!--                        </p>-->
+
+<!--                        <p>-->
+                            <label for="driverlicense"><span data-th-text="#{user.new.driverlicense}"></span></label> <br/>
+                            <input  class="form-control"  id="driverlicense" th:field="*{driver_license}"  tabindex="4"/> <br/>
+                            <p th:if="${#fields.hasErrors('driver_license')}" th:errors="*{driver_license}" th:errorclass="fieldError"></p>
+<!--                        </p>-->
+<!--                        <p>-->
+                            <label for="type"><span data-th-text="#{user.new.usertype}"> User Type:</span></label> <br/>
+                            <select  class="form-control"  id = "type" th:field="*{user_type}"  tabindex="5">
+                                <option th:value="0" th:text="#{user.new.usertype.user}"></option>
+                                <option th:value="1" th:text="#{user.new.usertype.admin}"></option>
+                                <option th:value="2" th:text="#{user.new.usertype.customer}"></option>
+                                <option th:value="3" th:text="#{user.new.usertype.seller}"></option>
+                            </select> <br/>
+<!--                        </p>-->
+                            <p id="buttons">
+                                <input class="btn btn-success" id="reset" type="reset" th:value="#{user.new.button.reset}" value="Reset" tabindex="4">
+                                <input class="btn btn-success" id="submit" type="submit" tabindex="5" th:value="#{user.new.button.add}" value="Add Employee">
+                            </p>
+                    </fieldset>
+                </form>
+            </div>
+        </main>
+        <th:block th:insert="fragments/footer :: footer"></th:block>
+    </div>
+</div>
+<th:block th:insert="fragments/scripts"></th:block>
+</body>
+</html>

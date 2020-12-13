@@ -29,7 +29,8 @@ public class UserController {
 
     @GetMapping(value = {"/userform"})
     public String loadUserForm(@ModelAttribute("user") User user) {
-        return "/registration/UserForm";
+//        return "/registration/UserForm";
+        return "/registration/createuser";
     }
 
     /*
@@ -38,9 +39,9 @@ public class UserController {
     @PostMapping(value = {"/saveuser"})
     public String saveUser(@Valid User user, BindingResult bindingResult, HttpServletRequest request) {
         if (bindingResult.hasErrors())
-            return "/registration/UserForm";
+            return "/registration/createuser";
+//            return "/registration/UserForm";
 
-//        String[] errors = bindingResult.getSuppressedFields();
         String baseUrl = String.format("%s://%s:%d/login/",request.getScheme(),  request.getServerName(), request.getServerPort());
         User savedUser = userService.saveUserWithVerificationKey(user, baseUrl);
         return "redirect:/login";

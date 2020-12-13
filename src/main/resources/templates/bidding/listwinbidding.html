@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:insert="fragments/head_crud"></th:block>
+<body class="sb-nav-fixed">
+<th:block th:insert="fragments/navbar :: navbar"></th:block>
+<div id="layoutSidenav">
+    <th:block th:insert="fragments/sidenav :: sidenav"></th:block>
+    <div id="layoutSidenav_content">
+        <main>
+            <section>
+
+                <div class="breadcrumb mb-4">
+                    <h1><span th:text="#{winbidding.list.title}"> List of Bidding</span></h1>
+                </div>
+            </section>
+
+
+            <section class="container">
+                <div>
+                    <table class="table table-hover">
+                        <tr>
+                            <th style="text-align:left"><span th:text="#{winbidding.list.id}">ID</span></th>
+                            <th style="text-align:left"><span th:text="#{winbidding.list.product}">Product</span></th>
+                            <th style="text-align:left"><span th:text="#{winbidding.list.startprice}">Start Price</span></th>
+                            <th style="text-align:left"><span th:text="#{winbidding.list.finalprice}">Final Price</span></th>
+                            <th style="text-align:left"><span th:text="#{winbidding.list.deposit}">Deposit</span></th>
+                            <th style="text-align:left"><span th:text="#{winbidding.list.startdate}">Closed Date</span></th>
+                            <th style="text-align:left"><span th:text="#{winbidding.list.closeddate}">Closed Date</span></th>
+                            <th style="text-align:left"><span th:text="#{winbidding.list.paymentduedate}">Payment Due Date</span></th>
+                            <th style="text-align:left"><span th:text="#{winbidding.list.action}"></span></th>
+                        </tr>
+                    </table>
+                    <table id="cart_table" class="table table-hover">
+                        <tr th:each="item: ${winbiddings}">
+                            <td th:text="${item.bidding_id}"></td>
+                            <td th:text="${item.product.name}"></td>
+                            <td th:text="${#numbers.formatCurrency(item.start_price)}"></td>
+                            <td th:text="${#numbers.formatCurrency(item.finalprice)}" ></td>
+                            <td th:text="${#numbers.formatCurrency(item.deposit)}"></td>
+                            <td th:text="${item.startdate}"></td>
+                            <td th:text="${item.duedate}"></td>
+                            <td th:text="${item.payment_duedate}"></td>
+                            <td>
+                                <a th:href="@{/bidding/activities/{id}(id=${item.bidding_id})}" class="label label-danger product-remove-btn">
+                                    <span class="glyphicon glyphicon-remove" ></span> Details
+                                </a> &nbsp;&nbsp;&nbsp;
+                                <span th:if="${(item.winner != null) && (item.status <= 1)}">
+                       <a th:href="@{/bidding/paymentform/{id}(id=${item.bidding_id})}" class="label label-danger product-remove-btn">
+                            <span class="glyphicon glyphicon-remove" ></span> Payment
+                       </a>&nbsp;
+                    </span>&nbsp;&nbsp;&nbsp;
+                                <span th:if="${item.status >= 2}">
+                       <a th:href="@{/bidding/invoice/{id}(id=${item.bidding_id})}" class="label label-danger product-remove-btn">
+                            <span class="glyphicon glyphicon-remove" ></span> Invoice
+                       </a>&nbsp;
+                    </span>&nbsp;&nbsp;&nbsp;
+
+                                <span th:if="${item.status == 2}">
+                       <a th:href="@{/bidding/ship/{id}(id=${item.bidding_id})}" class="label label-danger product-remove-btn">
+                            <span class="glyphicon glyphicon-remove" ></span> Shipped
+                       </a>&nbsp;
+                    </span>
+
+                                <span th:if="${item.status == 3}">
+                       <a th:href="@{/bidding/delivery/{id}(id=${item.bidding_id})}" class="label label-danger product-remove-btn">
+                            <span class="glyphicon glyphicon-remove" ></span> Delivered
+                       </a>&nbsp;
+                    </span>
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+        </main>
+        <th:block th:insert="fragments/footer :: footer"></th:block>
+    </div>
+</div>
+<th:block th:insert="fragments/scripts"></th:block>
+</body>
+</html>
