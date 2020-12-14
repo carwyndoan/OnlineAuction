@@ -57,9 +57,6 @@ public class RefundOrder extends PayPalClient {
             System.out.println("Full response body:");
             System.out.println(new JSONObject(new Json().serialize(response.result())).toString(4));
         }
-        PayPalData payPalData = paypalDataRepository.findPayPalDataByConfirmId(captureId);
-        payPalData.setRefund_id(response.result().id());
-        paypalDataRepository.save(payPalData);
         return response;
     }
 
