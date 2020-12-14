@@ -16,4 +16,15 @@ public interface UserService {
     public User saveUserWithVerificationKey(User user);
 
     public Page<User> findUserListPaging(Pageable pageable);
+
+
+
+
+    //User findUserByEmail(String email);
+   // Optional<User> findById(int id);
+    //User saveUser(User user);
+    //public User saveUserWithVerificationKey(User user);
+   // public Page<User> findUserListPaging(Pageable pageable);
+    int deleteByDriverLicense(String drivingLiscence);
+    int updateByDrivingLiscence(String driverLiscence);
 }

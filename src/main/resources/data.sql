@@ -3,7 +3,23 @@ INSERT INTO ROLE(role_id, role) VALUES (2, 'ROLE_ADMIN');
 INSERT INTO ROLE(role_id, role) VALUES (3, 'ROLE_USER');
 INSERT INTO ROLE(role_id, role) VALUES (4, 'ROLE_USER');
 
-INSERT into USER(user_id, email, password, name, enable, profile_verified, registration_verified, user_type, street, city, state, zipcode) values (1, 'user@miu.edu', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'User', 1, 1, 1, 0, 'Golden Dome Way', 'Fairfield', 'IA', '52556');
+INSERT into USER(user_id, email, password, name, enable, profile_verified, registration_verified, user_type, street, city, state, zipcode, driver_license)
+ values (1, 'user@miu.edu', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'User', 1, 1, 1, 0, 'Golden Dome Way', 'Fairfield', 'IA', '52556','0000');
+
+
+ INSERT into USER(user_id, email, password, name, enable, profile_verified, registration_verified, user_type, street, city, state, zipcode, driver_license)
+ values (6, 'user1@miu.edu', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'User1', 1, 1, 0, 0, 'Golden Dome Way', 'Fairfield', 'IA', '52556','1111');
+
+
+ INSERT into USER(user_id, email, password, name, enable, profile_verified, registration_verified, user_type, street, city, state, zipcode, driver_license)
+ values (7, 'user2@miu.edu', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'User2', 1, 1, 0, 0, 'Golden Dome Way', 'Fairfield', 'IA', '52556','2222');
+
+
+INSERT into USER(user_id, email, password, name, enable, profile_verified, registration_verified, user_type, street, city, state, zipcode, driver_license)
+ values (8, 'user3@miu.edu', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'User3', 1, 1, 0, 0, 'Golden Dome Way', 'Fairfield', 'IA', '52556','3333');
+
+
+
 INSERT into USER(user_id, email, password, name, enable, profile_verified, registration_verified, user_type) values (2, 'admin@miu.edu', '$2a$12$Pdn2Mxp1c7loJguhLtfzp.RRSHREL8Sp.bsasHnQzCLt8TSJzqiE6', 'Admin', 1, 1, 1, 1);
 INSERT into USER(user_id, email, password, name, enable, profile_verified, registration_verified, user_type) values (3, 'seller@miu.edu', '$2a$12$Pdn2Mxp1c7loJguhLtfzp.RRSHREL8Sp.bsasHnQzCLt8TSJzqiE6', 'Seller', 1, 1, 1, 2);
 INSERT into USER(user_id, email, password, name, enable, profile_verified, registration_verified, user_type) values (4, 'customer1@miu.edu', '$2a$12$Pdn2Mxp1c7loJguhLtfzp.RRSHREL8Sp.bsasHnQzCLt8TSJzqiE6', 'Seller', 1, 1, 1, 3);
@@ -143,3 +159,10 @@ insert into bidding_activities(bidding_activities_id, amount, bidding_date, bidd
                               (28, 15000, '2020-12-07 09:09', 5, 2);
 insert into bidding_activities(bidding_activities_id, amount, bidding_date, bidding_id, user_bidding_id) values
                               (29, 20000, '2020-12-07 09:09', 5, 2);
+
+
+
+insert into dmv(id, name, license) values (1, 'user1','1111');
+insert into dmv(id, name, license) values (2, 'user2','2222');
+insert into dmv(id, name, license) values (3, 'user3','3339');
+insert into dmv(id, name, license) values (4, 'user1','9877');
