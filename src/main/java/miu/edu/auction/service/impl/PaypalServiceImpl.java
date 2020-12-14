@@ -35,17 +35,17 @@ public class PaypalServiceImpl implements PaypalService {
 
     @Override
     public Integer createOrder(String paypal_id, Double orderAmount, String description, String confirm_url) throws IOException {
-        return new CreateOrder().createOrder(paypal_id,"USD", orderAmount, description, confirm_url);
+        return new CreateOrder().createOrder(paypalDataRepository, paypal_id,"USD", orderAmount, description, confirm_url);
     }
 
     @Override
     public void authorizeOrder(String token, String payer_id) throws IOException {
-        new AuthorizeOrder().authorizeOrder(token, payer_id);
+        new AuthorizeOrder().authorizeOrder(paypalDataRepository, token, payer_id);
     }
 
     @Override
     public void refundOrder(String confirm_id) throws IOException {
-        new RefundOrder().refundOrder(confirm_id);
+        new RefundOrder().refundOrder(paypalDataRepository, confirm_id);
     }
 
     @Override

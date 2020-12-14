@@ -17,16 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class RefundOrder extends PayPalClient {
 
-    @Autowired
-    PaypalDataRepository paypalDataRepository;
-
     /**
      * Creating empty body for Refund request. This request body can be created with
      * correct values as per the need.
      *
      * @return OrderRequest request with empty body
      */
-    private RefundRequest buildRequestBody(String captureId) {
+    private RefundRequest buildRequestBody(PaypalDataRepository paypalDataRepository, String captureId) {
         RefundRequest refundRequest = new RefundRequest();
         PayPalData payPalData = paypalDataRepository.findPayPalDataByConfirmId(captureId);
         Money money = new Money();
@@ -44,10 +41,10 @@ public class RefundOrder extends PayPalClient {
      * @return HttpResponse<Capture> response received from API
      * @throws IOException Exceptions from API if any
      */
-    private HttpResponse<Refund> refundOrder(String captureId, boolean debug) throws IOException {
+    private HttpResponse<Refund> refundOrder(PaypalDataRepository paypalDataRepository, String captureId, boolean debug) throws IOException {
         CapturesRefundRequest request = new CapturesRefundRequest(captureId);
         request.prefer("return=representation");
-        request.requestBody(buildRequestBody(captureId));
+        request.requestBody(buildRequestBody(paypalDataRepository, captureId));
         HttpResponse<Refund> response = client().execute(request);
         if (debug) {
             System.out.println("Status Code: " + response.statusCode());
@@ -66,8 +63,8 @@ public class RefundOrder extends PayPalClient {
         return response;
     }
 
-    public void refundOrder(String captureId) throws IOException {
-        HttpResponse<Refund> response = refundOrder(captureId, true);
+    public void refundOrder(PaypalDataRepository paypalDataRepository, String captureId) throws IOException {
+        HttpResponse<Refund> response = refundOrder(paypalDataRepository, captureId, true);
         PayPalData payPalData = paypalDataRepository.findPayPalDataByConfirmId(captureId);
         payPalData.setRefund_id(response.result().id());
         paypalDataRepository.save(payPalData);

@@ -10,6 +10,8 @@ import miu.edu.auction.domain.PayPalData;
 import miu.edu.auction.repository.PaypalDataRepository;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,8 +24,6 @@ public class CreateOrder extends PayPalClient{
     String currency;
     String paypal_id = "KVMX66GCP7FL2";
 
-    @Autowired
-    PaypalDataRepository paypalDataRepository;
     /**
      * Method to create minimum required order body with <b>AUTHORIZE</b> intent
      *
@@ -85,7 +85,7 @@ public class CreateOrder extends PayPalClient{
      * @return HttpResponse<Order> response received from API
      * @throws IOException Exceptions from API if any
      */
-    public Integer createOrder(String paypal_id, String currency, Double amount, String description, String confirm_url) throws IOException {
+    public Integer createOrder(PaypalDataRepository paypalDataRepository, String paypal_id, String currency, Double amount, String description, String confirm_url) throws IOException {
         this.currency = currency;
         this.amount = amount;
         this.description = description;

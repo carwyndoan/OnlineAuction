@@ -16,8 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class CaptureOrder extends PayPalClient{
 
-    @Autowired
-    PaypalDataRepository paypalDataRepository;
     /**
      * Creating empty body for capture request
      *
@@ -53,7 +51,7 @@ public class CaptureOrder extends PayPalClient{
         return response;
     }
 
-    public void captureOrder(String authId) throws IOException {
+    public void captureOrder(PaypalDataRepository paypalDataRepository, String authId) throws IOException {
         HttpResponse<Capture> response = captureOrder(authId, true);
         PayPalData payPalData = paypalDataRepository.findPayPalDataByAuthorizationId(authId);
         payPalData.setConfirm_id(response.result().id());

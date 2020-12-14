@@ -16,6 +16,7 @@ import org.jobrunr.scheduling.JobScheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -63,7 +64,6 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Payment chargeDeposit(Payment payment) {
-        //TODO: payment with paypal
         payment.setDepositDate(LocalDateTime.now());
         paymentRepository.save(payment);
         PayPalData payPalData = paypalDataRepository.findPayPalDataByBiddingId(payment.getBiddingPayment().getBidding_id()).stream()
@@ -75,8 +75,11 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Payment returnDeposit(Payment payment) {
-        //TODO: payment with paypal
+    public Payment returnDeposit(Payment payment) throws IOException {
+        List<PayPalData> payPalDataList = paypalDataRepository.findPayPalDataByLocalPaymentId(payment.getPayment_id());
+        for (PayPalData payPalData:payPalDataList) {
+            paypalService.refundOrder(payPalData.getConfirm_id());
+        }
         //Update system
         payment.setReturnDeposit(payment.getDeposit());
         payment.setReturnDepositDate(LocalDateTime.now());
@@ -151,8 +154,11 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Boolean payBidderFull(Payment payment) {
-        //TODO: payment with paypal
+    public Boolean payBidderFull(Payment payment) throws IOException {
+        List<PayPalData> payPalDataList = paypalDataRepository.findPayPalDataByLocalPaymentId(payment.getPayment_id());
+        for (PayPalData payPalData:payPalDataList) {
+            paypalService.refundOrder(payPalData.getConfirm_id());
+        }
         //Update system
         payment.setReturnDepositDate(LocalDateTime.now());
         payment.setReturnDeposit(payment.getDeposit() + payment.getRemainingAmount());

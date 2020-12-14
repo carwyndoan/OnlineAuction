@@ -16,8 +16,6 @@ import java.io.IOException;
 
 public class AuthorizeOrder extends PayPalClient{
 
-    @Autowired
-    PaypalDataRepository paypalDataRepository;
     /**
      * Building empty request body. This can be updated with required fields as per
      * need.
@@ -54,7 +52,7 @@ public class AuthorizeOrder extends PayPalClient{
         return response;
     }
 
-    public void authorizeOrder(String orderId, String payer_id) throws IOException {
+    public void authorizeOrder(PaypalDataRepository paypalDataRepository, String orderId, String payer_id) throws IOException {
         HttpResponse<Order> response = authorizeOrder(orderId, true);
 
         PayPalData payPalData = paypalDataRepository.findPayPalDataByOrderId(orderId);
@@ -64,6 +62,6 @@ public class AuthorizeOrder extends PayPalClient{
         paypalDataRepository.save(payPalData);
 
         // Confirm order with paypal
-        new CaptureOrder().captureOrder(authId);
+        new CaptureOrder().captureOrder(paypalDataRepository, authId);
     }
 }
