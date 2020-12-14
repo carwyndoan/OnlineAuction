@@ -112,7 +112,7 @@ public class BiddingPaymentController {
         String url = "";
         try {
             Integer client_id = paypalService.createOrder(environment.getProperty("paypal.auction.buyer"), payment1.getRemainingAmount(), "deposit", "bidding/biddings");
-            PayPalData payPalData = paypalService.update(client_id, user.getUser_id(), bidding.getBidding_id());
+            PayPalData payPalData = paypalService.update(client_id, user.getUser_id(), bidding.getBidding_id(), payment1.getPayment_id());
             url = payPalData.getApproval_link();
         } catch (Exception e){
             e.printStackTrace();

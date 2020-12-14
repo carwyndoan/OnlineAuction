@@ -53,10 +53,10 @@ public class PaymentServiceImpl implements PaymentService {
     public Payment makePayment(Payment payment) {
         //After 3 days, if Bidding status is still 2 -> return full payement for Winner
         Bidding bidding = payment.getBiddingPayment();
-        jobScheduler.schedule(() -> biddingService.returnBidderDeposit(bidding.getBidding_id()),
-                LocalDateTime.now().plusSeconds(CommonUtils.calculateDuration(payment.getPaymentDate().plusDays(3))));//Return full to bidder after 3 days
 //        jobScheduler.schedule(() -> biddingService.returnBidderDeposit(bidding.getBidding_id()),
-//                LocalDateTime.now().plusSeconds(CommonUtils.calculateDuration(payment.getPaymentDate().plusMinutes(1))));//1 minutes for testing purpose
+//                LocalDateTime.now().plusSeconds(CommonUtils.calculateDuration(payment.getPaymentDate().plusDays(3))));//Return full to bidder after 3 days
+        jobScheduler.schedule(() -> biddingService.returnBidderDeposit(bidding.getBidding_id()),
+                LocalDateTime.now().plusSeconds(CommonUtils.calculateDuration(payment.getPaymentDate().plusMinutes(2))));//1 minutes for testing purpose
         return savePayment(payment);
     }
 
