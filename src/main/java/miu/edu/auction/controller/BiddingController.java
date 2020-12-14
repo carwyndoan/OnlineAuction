@@ -85,24 +85,6 @@ public class BiddingController {
     @GetMapping(value = "/paypal")
     public String depositItem(@AuthenticationPrincipal UserDetails userDetails, @RequestParam String token, @RequestParam String PayerID, Model model) throws IOException {
         paypalService.authorizeOrder(token, PayerID);
-
-        String userEmail = userDetails.getUsername();
-        User user = userService.findUserByEmail(userEmail);
-        Bidding bid = biddingService.findByID(paypalDataRepository.findPayPalDataByOrderId(token).getBidding_id());
-        Double maxBid = bid.getBidding_activities().stream().mapToDouble(Bidding_Activities::getAmount).max().orElse(bid.getStart_price());
-        Double yourBid = bid.getBidding_activities().stream()
-                .filter(ba -> ba.getBidding_user().getUser_id() == user.getUser_id())
-                .mapToDouble(Bidding_Activities::getAmount)
-                .max().orElse(0D);
-        BiddingActivityRestDTO biddingActivityRestDTO = new BiddingActivityRestDTO();
-        biddingActivityRestDTO.setCurrent_bid(maxBid);
-        biddingActivityRestDTO.setBid_amount(yourBid);
-        biddingActivityRestDTO.setCounterDueDate(CommonUtils.explainDuration(bid.getDuedate()));
-        model.addAttribute("bid", bid);
-        model.addAttribute("bid_activity", biddingActivityRestDTO);
-        model.addAttribute("bidding_id", bid.getBidding_id());
-        model.addAttribute("user_id", user.getUser_id());
-        model.addAttribute("check_deposit", true);
         PayPalData payPalData = paypalDataRepository.findPayPalDataByOrderId(token);
         return "redirect:/" + payPalData.getLocal_confirm_url(); //"bidding/item";
     }
