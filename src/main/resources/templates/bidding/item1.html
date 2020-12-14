@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:insert="fragments/head_crud"></th:block>
+<body class="sb-nav-fixed">
+<th:block th:insert="fragments/navbar :: navbar"></th:block>
+<div id="layoutSidenav">
+    <th:block th:insert="fragments/sidenav :: sidenav"></th:block>
+    <div id="layoutSidenav_content">
+        <main role="main" class="container">
+            <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded shadow-sm">
+                <img th:src="@{/images/bootstrap-outline.svg}" class="mr-3" src="../assets/brand/bootstrap-outline.svg" alt="" width="48" height="48">
+                <div class="lh-100">
+                    <h6 class="mb-0 text-white lh-100"></h6>
+                    <small></small>
+                </div>
+            </div>
+            <div class="my-3 p-3 bg-white rounded shadow-sm">
+                <div class="media text-muted pt-3">
+                    <img th:src="@{/images/macbookair.jpg}" src="../static/images/macbookair.jpg" alt="macbook air"
+                         class="img-thumbnail">
+                    <div class="media-body">
+                        <h6><strong class="d-block border-bottom"><span
+                                th:text="${bid.product.name} + ' by ' + ${bid.product.user.name}">Product by seller</span></strong>
+                        </h6>
+                        <p class="media-body pb-3 mb-0 small lh-125">
+                            Starting bid: <h5>$<span th:text="${#numbers.formatDecimal(bid.start_price, 3, 2)}">0.00</span></h5>
+                        [<span th:text="${bid.bidding_activities.size()} + ' bids'" id="total_bidder">0 bids</span>]
+                        <br>
+                        <span th:text="'Due date: ' + ${bid.duedate}" id="duedate">Due date</span>
+                        <br>
+                        <span th:text="${bid_activity.counterDueDate}" id="counter">Due date</span>
+                        <p class="border-top">
+                            Current bid: <h5>$<span th:text="${#numbers.formatDecimal(bid_activity.current_bid, 3, 2)}"
+                                                    id="current_bid">0.00</span>
+                    </h5>
+                        <span>Your bid:</span>
+                        <h6>$<span th:text="${#numbers.formatDecimal(bid_activity.bid_amount, 3, 2)}" id="bid_amount">0.00</span></h6>
+                        <p>
+                        <div class="input-group mb-1">
+                            <span class="input-group-text">$</span>
+                            <input type="text" placeholder="Amount (larger than current bid)" id="bid_value"/>
+                            <button type="button" class="btn btn-primary" id="btnBid">Place bid</button>
+                            <input th:value="${bidding_id}" type="hidden" id="bidding_id"/>
+                            <input th:value="${user_id}" type="hidden" id="user_id"/>
+                        </div>
+                        </p>
+                        <!-- Success - or Validation errors -->
+                        <div id="errors" style="display:none">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <th:block th:insert="fragments/footer :: footer"></th:block>
+    </div>
+</div>
+<th:block th:insert="fragments/scripts"></th:block>
+</body>
+</html>

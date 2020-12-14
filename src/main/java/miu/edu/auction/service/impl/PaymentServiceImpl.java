@@ -1,12 +1,15 @@
 package miu.edu.auction.service.impl;
 
 import miu.edu.auction.domain.Bidding;
+import miu.edu.auction.domain.PayPalData;
 import miu.edu.auction.domain.Payment;
 import miu.edu.auction.domain.User;
 import miu.edu.auction.dto.InvoiceDTO;
 import miu.edu.auction.repository.PaymentRepository;
+import miu.edu.auction.repository.PaypalDataRepository;
 import miu.edu.auction.service.BiddingService;
 import miu.edu.auction.service.PaymentService;
+import miu.edu.auction.service.PaypalService;
 import miu.edu.auction.utils.CommonUtils;
 import miu.edu.auction.utils.GenerationUnique;
 import org.jobrunr.scheduling.JobScheduler;
@@ -29,6 +32,12 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Autowired // or @Inject
     private BiddingService biddingService;
+
+    @Autowired
+    PaypalDataRepository paypalDataRepository;
+
+    @Autowired
+    PaypalService paypalService;
 
     @Override
     public Payment savePayment(Payment payment) {
@@ -57,6 +66,11 @@ public class PaymentServiceImpl implements PaymentService {
         //TODO: payment with paypal
         payment.setDepositDate(LocalDateTime.now());
         paymentRepository.save(payment);
+        PayPalData payPalData = paypalDataRepository.findPayPalDataByBiddingId(payment.getBiddingPayment().getBidding_id()).stream()
+                .filter(p -> p.getLocal_payment_id() == null)
+                .findFirst().get();
+        payPalData.setLocal_payment_id(payment.getPayment_id());
+        paypalDataRepository.save(payPalData);
         return  savePayment(payment);
     }
 
