@@ -60,4 +60,12 @@ public class PaypalServiceImpl implements PaypalService {
 
         paypalDataRepository.save(payPalData);
     }
+
+    @Override
+    public PayPalData update(Integer clientID, Integer userID, Integer biddingID) {
+        PayPalData paypalData = paypalDataRepository.findById(clientID).get();
+        paypalData.setBidding_id(biddingID);
+        paypalData.setUser_id(userID);
+        return paypalDataRepository.save(paypalData);
+    }
 }
