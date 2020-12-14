@@ -20,27 +20,21 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int product_id;
-
     @NotNull
     private String name;
-
-   // @NotNull
+    // @NotNull
     private int active;
-
-    @NotNull
+   // @NotNull
     private int status; //0: Save without release, 1: Save and Release
-
-    private String image_path;
-
+     private String image_path;
+    //@NotBlank(message="you have to insert a value")
     private Long price;
-
+    //@NotBlank(message="you have to insert mile")
     private Long mile;
-
+    //@NotBlank(message="you have to insert caption")
     private String caption;
-
+    //@NotBlank(message="you have to insert desription")
     private String description;
-
-
 
     @ManyToOne
     @JoinColumn(name = "seller_id", nullable = true)

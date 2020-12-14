@@ -62,7 +62,7 @@
                     <p><label for="description"><span th:text="#{product.form.description}">Description:</span></label> <input type="text" th:field="*{description}"/></p>
                     <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:errorclass="fieldError">Incorrect data</p>
 <!--                    <p><label for="image"><span th:href="#{product.form.image}">Image: </span></label></p><inpt type="img" th:field="*{image_path}"/></p>-->
-                    Images: <form id="uploadImage" name="uploadImage" method="post" th:action=@{/uploadFiles} encType="multipart/form-data">
+                    Images: <form id="uploadImage" name="uploadImage" method="post" th:action=@{/uploadFiles} encType="multipart/form-data" multiple="true">
                     <input type="file" name="files" multiple/>
                     <!--<img src="images/corolla.jpg"/>-->
                 </fieldset>
