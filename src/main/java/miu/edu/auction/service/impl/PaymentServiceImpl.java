@@ -9,6 +9,7 @@ import miu.edu.auction.repository.PaymentRepository;
 import miu.edu.auction.repository.PaypalDataRepository;
 import miu.edu.auction.service.BiddingService;
 import miu.edu.auction.service.PaymentService;
+import miu.edu.auction.service.PaypalService;
 import miu.edu.auction.utils.CommonUtils;
 import miu.edu.auction.utils.GenerationUnique;
 import org.jobrunr.scheduling.JobScheduler;
@@ -34,6 +35,9 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Autowired
     PaypalDataRepository paypalDataRepository;
+
+    @Autowired
+    PaypalService paypalService;
 
     @Override
     public Payment savePayment(Payment payment) {

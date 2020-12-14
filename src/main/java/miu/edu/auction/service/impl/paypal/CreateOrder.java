@@ -6,6 +6,8 @@ import com.paypal.orders.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import miu.edu.auction.domain.PayPalData;
+import miu.edu.auction.repository.PaypalDataRepository;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,6 +22,8 @@ public class CreateOrder extends PayPalClient{
     String currency;
     String paypal_id = "KVMX66GCP7FL2";
 
+    @Autowired
+    PaypalDataRepository paypalDataRepository;
     /**
      * Method to create minimum required order body with <b>AUTHORIZE</b> intent
      *
@@ -48,11 +52,7 @@ public class CreateOrder extends PayPalClient{
      * @return HttpResponse<Order> response received from API
      * @throws IOException Exceptions from API if any
      */
-    public HttpResponse<Order> createOrder(String paypal_id, String currency, Double amount, String description, boolean debug) throws IOException {
-        this.currency = currency;
-        this.amount = amount;
-        this.description = description;
-        this.paypal_id = paypal_id;
+    private HttpResponse<Order> createOrder(boolean debug) throws IOException {
         OrdersCreateRequest request = new OrdersCreateRequest();
         request.header("prefer","return=representation");
         request.requestBody(buildMinimumRequestBody());
@@ -74,6 +74,34 @@ public class CreateOrder extends PayPalClient{
                 System.out.println(new JSONObject(new Json().serialize(response.result())).toString(4));
             }
         }
+
         return response;
+    }
+
+    /**
+     * Method to create order with minimum required payload
+     *
+     * @param debug true = print response data
+     * @return HttpResponse<Order> response received from API
+     * @throws IOException Exceptions from API if any
+     */
+    public Integer createOrder(String paypal_id, String currency, Double amount, String description, String confirm_url) throws IOException {
+        this.currency = currency;
+        this.amount = amount;
+        this.description = description;
+        this.paypal_id = paypal_id;
+        HttpResponse<Order> response = createOrder(true);
+        PayPalData paypalData = paypalDataRepository.save(new PayPalData());
+        for (LinkDescription link : response.result().links()) {
+            if(link.rel().equals("approve"))
+                paypalData.setApproval_link(link.href());
+        }
+        paypalData.setOrder_id(response.result().id());
+        paypalData.setAmount(amount);
+        paypalData.setLocal_confirm_url(confirm_url);
+        paypalData.setCurrency(currency);
+        paypalDataRepository.save(paypalData);
+
+        return paypalData.getPaypal_data_id();
     }
 }

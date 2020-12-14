@@ -14,4 +14,12 @@ public interface PaypalDataRepository extends JpaRepository<PayPalData, Integer>
     @Query(value = "select p from PayPalData p " +
             "where p.bidding_id = :bidding_id")
     List<PayPalData> findPayPalDataByBiddingId(Integer bidding_id);
+
+    @Query(value = "select p from PayPalData p " +
+            "where p.confirm_id = :capture_id")
+    PayPalData findPayPalDataByConfirmId(String capture_id);
+
+    @Query(value = "select p from PayPalData p " +
+            "where p.authorization_id = :authorize_id")
+    PayPalData findPayPalDataByAuthorizationId(String authorize_id);
 }

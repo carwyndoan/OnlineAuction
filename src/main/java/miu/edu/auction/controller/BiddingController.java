@@ -53,8 +53,7 @@ public class BiddingController {
 //        }
         model.addAttribute("bids", bids);
 
-//        return "bidding/index";
-        return "bidding/index1";
+        return "bidding/index";
     }
 
     @GetMapping(value = "/item/{id}")
@@ -77,9 +76,7 @@ public class BiddingController {
         model.addAttribute("bidding_id", bid.getBidding_id());
         model.addAttribute("user_id", user.getUser_id());
         model.addAttribute("check_deposit", checkDeposit);
-//        return "bidding/item";
-        return "bidding/item1";
-
+        return "bidding/item";
     }
 
     @GetMapping(value = "/paypal")

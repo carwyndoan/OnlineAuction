@@ -23,7 +23,10 @@ public class PayPalData {
     String authorization_id;
     // Step 4: confirm with paypal and get confirm_id
     String confirm_id;
+    // Step 5: refund
+    String refund_id;
     String local_confirm_url;
+    String currency;
     Double amount;
     Integer local_payment_id;
     Integer user_id;
