@@ -9,13 +9,11 @@ INSERT into USER(user_id, email, password, name, enable, profile_verified, regis
 INSERT into USER(user_id, email, password, name, enable, profile_verified, registration_verified, user_type) values (4, 'customer1@miu.edu', '$2a$12$Pdn2Mxp1c7loJguhLtfzp.RRSHREL8Sp.bsasHnQzCLt8TSJzqiE6', 'Seller', 1, 1, 1, 3);
 INSERT into USER(user_id, email, password, name, enable, profile_verified, registration_verified, user_type) values (5, 'customer2@miu.edu', '$2a$12$Pdn2Mxp1c7loJguhLtfzp.RRSHREL8Sp.bsasHnQzCLt8TSJzqiE6', 'Seller', 1, 1, 1, 3);
 
-
 insert into user_roles(user_id, role_id) values (1, 1);
 insert into user_roles(user_id, role_id) values (2, 2);
 insert into user_roles(user_id, role_id) values (3, 3);
 insert into user_roles(user_id, role_id) values (4, 4);
 insert into user_roles(user_id, role_id) values (5, 4);
-
 
 insert into category(category_id, name, active) values (1, 'Car', 1);
 insert into category(category_id, name, active) values (2, 'Computer', 1);
@@ -35,13 +33,11 @@ insert into product(product_id, caption, active, description, image_path, name, 
 insert into product(product_id, caption, active, description, image_path, name, status, seller_id, price, upload_Date) values (11, 'Microwave oven', 1, 'Elegant design meets impressive performance with the newest lineup of LG microwave ovens. ','oven1.jpg', 'Seller_Product_1', 1, 3, 200, '2020-12-12');
 insert into product(product_id, caption, active, description, image_path, name, status, seller_id, price, upload_Date) values (12, 'Insigna 55 inch tv', 1, 'Insigna 55 inch tv is Best Buys signature house brand for televisions. Insignia Systems introduced The Like Machine to their lineup of in-store marketing solutions. The Like Machine allows consumers to express their opinions on ','tv.jpg', 'Seller_Product_2', 1, 3, 700, '2020-12-13');
 
-
 insert into category_product(product_id,category_id) values(1,1);
 insert into category_product(product_id,category_id) values(2,1);
 insert into category_product(product_id,category_id) values(3,1);
 insert into category_product(product_id,category_id) values(4,1);
 insert into category_product(product_id,category_id) values(5,1);
-
 
 insert into category_product(product_id,category_id) values(6,2);
 insert into category_product(product_id,category_id) values(7,2);
@@ -51,7 +47,6 @@ insert into category_product(product_id,category_id) values(9,3);
 insert into category_product(product_id,category_id) values(10,3);
 insert into category_product(product_id,category_id) values(11,3);
 insert into category_product(product_id,category_id) values(12,3);
-
 
 insert into photo(photo_id, image_url, product_id) values (1,'200_1.jpg', 1);
 insert into photo(photo_id, image_url, product_id) values (2,'200_2.jpg', 1);
@@ -125,7 +120,7 @@ insert into bidding(bidding_id, deposit, description, start_price, finalprice, s
 insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id) values
 				   (6, 10000, 'Dimond', 100000, 150000,'2020-11-25', '2020-12-25', '2020-12-30', 1, 10);
 insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id) values
-				   (7, 100000, 'The car owned by Elon Musk', 1000000, 1500000,'2020-10-25', '2020-12-25', '2020-12-30', 1, 13);
+				   (7, 100000, 'The car owned by Elon Musk', 1000000, 1500000,'2020-10-25', '2020-12-25', '2020-12-30', 1, 11);
 
 insert into payment(payment_id, deposit, deposit_date, bidding_id, user_payment_id) values (1, 200, '2020-12-07', 1, 1);
 insert into payment(payment_id, deposit, deposit_date, bidding_id, user_payment_id) values (2, 10000, '2020-12-07', 2, 1);
@@ -184,9 +179,6 @@ insert into bidding_activities(bidding_activities_id, amount, bidding_date, bidd
                               (20, 15000, '2020-12-07 09:09', 2, 2);
 insert into bidding_activities(bidding_activities_id, amount, bidding_date, bidding_id, user_bidding_id) values
                               (21, 20000, '2020-12-07 09:09', 2, 2);
-
-insert into bidding_activities(bidding_activities_id, amount, bidding_date, bidding_id, user_bidding_id) values
-                              (21, 10000, '2020-12-07 09:09', 3, 2);
 insert into bidding_activities(bidding_activities_id, amount, bidding_date, bidding_id, user_bidding_id) values
                               (22, 15000, '2020-12-07 09:09', 3, 2);
 insert into bidding_activities(bidding_activities_id, amount, bidding_date, bidding_id, user_bidding_id) values
