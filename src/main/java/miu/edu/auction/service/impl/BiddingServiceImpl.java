@@ -2,10 +2,7 @@ package miu.edu.auction.service.impl;
 
 import miu.edu.auction.domain.*;
 import miu.edu.auction.dto.BiddingActivityDTO;
-import miu.edu.auction.repository.BiddingActivitiesRepository;
-import miu.edu.auction.repository.BiddingRepository;
-import miu.edu.auction.repository.PaymentRepository;
-import miu.edu.auction.repository.UserRepository;
+import miu.edu.auction.repository.*;
 import miu.edu.auction.service.BiddingService;
 import miu.edu.auction.service.EmailService;
 import miu.edu.auction.service.PaymentService;
@@ -169,7 +166,8 @@ public class BiddingServiceImpl implements BiddingService {
             bidding.setFinalprice(maxBid);
 
             //Return deposit
-            for (Payment payment : bidding.getPayments()) {
+//            for (Payment payment : bidding.getPayments()) { //fixing due to not fetching Payment in Bidding
+            for (Payment payment : paymentService.findPaymentByBidding(bidding_id)) {
                 if (payment.getUser_payment().getUser_id() != bidding_activities.getBidding_user().getUser_id()) {
                     paymentService.returnDeposit(payment);
                 } else {
@@ -221,9 +219,10 @@ public class BiddingServiceImpl implements BiddingService {
         if (bidding.getStatus() == 3) {
             //Start auto close bidding
             Bidding oldBidding = biddingRepository.findById(bidding.getBidding_id()).orElse(null);
-            System.out.println("current status: " + oldBidding.getStatus());
+            //REQ: 30 days
 //            jobScheduler.schedule(() -> biddingService.paySeller(bidding.getBidding_id()),
 //                    LocalDateTime.now().plusSeconds(CommonUtils.calculateDuration(LocalDateTime.now().plusDays(30))));
+            //TESTING: 1 minute
             jobScheduler.schedule(() -> biddingService.paySeller(bidding.getBidding_id()),
                     LocalDateTime.now().plusSeconds(CommonUtils.calculateDuration(LocalDateTime.now().plusMinutes(1))));
         }
@@ -237,7 +236,8 @@ public class BiddingServiceImpl implements BiddingService {
         try {
             Bidding bidding = biddingRepository.findById(bidding_id).get();
             if (bidding.getStatus() == 1) {//Bidder has not pay full yet
-                Payment payment = bidding.getPayments().stream()
+//                Payment payment = bidding.getPayments().stream()
+                Payment payment = paymentService.findPaymentByBidding(bidding_id).stream()
                         .filter(p -> p.getUser_payment().getUser_id() == bidding.getWinner().getUser_id())
                         .findFirst().get();
                 paymentService.paySellerDeposit(payment);
@@ -254,7 +254,8 @@ public class BiddingServiceImpl implements BiddingService {
         try {
             Bidding bidding = biddingRepository.findById(bidding_id).get();
             if (bidding.getStatus() == 2) {//Seller has not ship yet
-                Payment payment = bidding.getPayments().stream()
+//                Payment payment = bidding.getPayments().stream()
+                Payment payment = paymentService.findPaymentByBidding(bidding_id).stream()
                         .filter(p -> p.getUser_payment().getUser_id() == bidding.getWinner().getUser_id())
                         .findFirst().get();
                 paymentService.payBidderFull(payment); //return payment to Bidder in case not ship

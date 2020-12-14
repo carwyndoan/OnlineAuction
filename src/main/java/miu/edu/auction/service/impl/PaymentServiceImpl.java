@@ -1,10 +1,12 @@
 package miu.edu.auction.service.impl;
 
 import miu.edu.auction.domain.Bidding;
+import miu.edu.auction.domain.PayPalData;
 import miu.edu.auction.domain.Payment;
 import miu.edu.auction.domain.User;
 import miu.edu.auction.dto.InvoiceDTO;
 import miu.edu.auction.repository.PaymentRepository;
+import miu.edu.auction.repository.PaypalDataRepository;
 import miu.edu.auction.service.BiddingService;
 import miu.edu.auction.service.PaymentService;
 import miu.edu.auction.utils.CommonUtils;
@@ -30,6 +32,9 @@ public class PaymentServiceImpl implements PaymentService {
     @Autowired // or @Inject
     private BiddingService biddingService;
 
+    @Autowired
+    PaypalDataRepository paypalDataRepository;
+
     @Override
     public Payment savePayment(Payment payment) {
         return paymentRepository.save(payment);
@@ -38,10 +43,12 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public Payment makePayment(Payment payment) {
         //TODO: call Paypal service here
-        //start job check winner cancel
+        //After 3 days, if Bidding status is still 2 -> return full payement for Winner
         Bidding bidding = payment.getBiddingPayment();
         jobScheduler.schedule(() -> biddingService.returnBidderDeposit(bidding.getBidding_id()),
                 LocalDateTime.now().plusSeconds(CommonUtils.calculateDuration(payment.getPaymentDate().plusDays(3))));//Return full to bidder after 3 days
+//        jobScheduler.schedule(() -> biddingService.returnBidderDeposit(bidding.getBidding_id()),
+//                LocalDateTime.now().plusSeconds(CommonUtils.calculateDuration(payment.getPaymentDate().plusMinutes(1))));//1 minutes for testing purpose
         return savePayment(payment);
     }
 
@@ -55,6 +62,11 @@ public class PaymentServiceImpl implements PaymentService {
         //TODO: payment with paypal
         payment.setDepositDate(LocalDateTime.now());
         paymentRepository.save(payment);
+        PayPalData payPalData = paypalDataRepository.findPayPalDataByBiddingId(payment.getBiddingPayment().getBidding_id()).stream()
+                .filter(p -> p.getLocal_payment_id() == null)
+                .findFirst().get();
+        payPalData.setLocal_payment_id(payment.getPayment_id());
+        paypalDataRepository.save(payPalData);
         return  savePayment(payment);
     }
 
@@ -139,9 +151,8 @@ public class PaymentServiceImpl implements PaymentService {
         //TODO: payment with paypal
         //Update system
         payment.setReturnDepositDate(LocalDateTime.now());
+        payment.setReturnDeposit(payment.getDeposit() + payment.getRemainingAmount());
         paymentRepository.save(payment);
         return true;
     }
-
-
 }
