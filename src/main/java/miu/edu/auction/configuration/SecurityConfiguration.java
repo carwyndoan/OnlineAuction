@@ -61,7 +61,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/login")
                 .permitAll()
                 .failureUrl("/login-error")
-                .defaultSuccessUrl("/index")
+                .defaultSuccessUrl("/index1")
                 .and()
                 .exceptionHandling().accessDeniedPage("/access-denied")
                 .and().logout().invalidateHttpSession(true)

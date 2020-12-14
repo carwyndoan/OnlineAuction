@@ -9,6 +9,15 @@ INSERT into USER(user_id, email, password, name, enable, profile_verified, regis
 INSERT into USER(user_id, email, password, name, enable, profile_verified, registration_verified, user_type) values (4, 'customer1@miu.edu', '$2a$12$Pdn2Mxp1c7loJguhLtfzp.RRSHREL8Sp.bsasHnQzCLt8TSJzqiE6', 'Seller', 1, 1, 1, 3);
 INSERT into USER(user_id, email, password, name, enable, profile_verified, registration_verified, user_type) values (5, 'customer2@miu.edu', '$2a$12$Pdn2Mxp1c7loJguhLtfzp.RRSHREL8Sp.bsasHnQzCLt8TSJzqiE6', 'Seller', 1, 1, 1, 3);
 
+
+
+INSERT into USER(user_id, email, password, name, enable, profile_verified, registration_verified, user_type) values (9001, 'user900@miu.edu', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'User 1', 1, 1, 1, 0);
+INSERT into USER(user_id, email, password, name, enable, profile_verified, registration_verified, user_type) values (9003, 'seller900@miu.edu', '$2a$12$Pdn2Mxp1c7loJguhLtfzp.RRSHREL8Sp.bsasHnQzCLt8TSJzqiE6', 'Seller 3', 1, 1, 1, 2);
+INSERT into USER(user_id, email, password, name, enable, profile_verified, registration_verified, user_type) values (9004, 'customer900@miu.edu', '$2a$12$Pdn2Mxp1c7loJguhLtfzp.RRSHREL8Sp.bsasHnQzCLt8TSJzqiE6', 'Customer 4', 1, 1, 1, 3);
+INSERT into USER(user_id, email, password, name, enable, profile_verified, registration_verified, user_type) values (9005, 'customer900@miu.edu', '$2a$12$Pdn2Mxp1c7loJguhLtfzp.RRSHREL8Sp.bsasHnQzCLt8TSJzqiE6', 'Customer 5', 1, 1, 1, 3);
+
+
+
 insert into user_roles(user_id, role_id) values (1, 1);
 insert into user_roles(user_id, role_id) values (2, 2);
 insert into user_roles(user_id, role_id) values (3, 3);
@@ -197,3 +206,44 @@ insert into bidding_activities(bidding_activities_id, amount, bidding_date, bidd
                               (28, 15000, '2020-12-07 09:09', 5, 2);
 insert into bidding_activities(bidding_activities_id, amount, bidding_date, bidding_id, user_bidding_id) values
                               (29, 20000, '2020-12-07 09:09', 5, 2);
+
+
+insert into user_roles(user_id, role_id) values (9001, 1);
+insert into user_roles(user_id, role_id) values (9003, 1);
+insert into user_roles(user_id, role_id) values (9004, 1);
+insert into user_roles(user_id, role_id) values (9005, 1);
+
+insert into category(category_id, name, active) values (9001, 'Laptop', 1);
+insert into category(category_id, name, active) values (9002, 'Car', 1);
+insert into category(category_id, name, active) values (9003, 'House', 1);
+insert into category(category_id, name, active) values (9004, 'Electric device', 1);
+insert into category(category_id, name, active) values (9005, 'Vehicle', 1);
+
+insert into product(product_id, active, name, status, seller_id) values (9001, 1, 'Apple Macbook Pro', 1, 9001);
+insert into product(product_id, active, name, status, seller_id) values (9002, 1, 'Lenovo Thinkpad', 1, 9003);
+insert into product(product_id, active, name, status, seller_id) values (9003, 1, 'BMW X3', 1, 9004);
+insert into product(product_id, active, name, status, seller_id) values (9004, 1, 'Mercedes GLS5', 1, 9005);
+insert into product(product_id, active, name, status, seller_id) values (9005, 1, 'The White house', 1, 9005);
+
+insert into category_product(product_id, category_id) values(9001, 9001);
+insert into category_product(product_id, category_id) values(9002, 9001);
+insert into category_product(product_id, category_id) values(9003, 9002);
+insert into category_product(product_id, category_id) values(9004, 9002);
+insert into category_product(product_id, category_id) values(9005, 9003);
+
+insert into category_product(product_id, category_id) values(9001, 9004);
+insert into category_product(product_id, category_id) values(9002, 9004);
+insert into category_product(product_id, category_id) values(9003, 9005);
+insert into category_product(product_id, category_id) values(9004, 9005);
+
+insert into bidding(bidding_id, deposit, description, start_price, finalprice, duedate, payment_duedate, status, product_id) values
+(9001, 200, 'Macbook Pro 2020', 1000, 0, '2020-12-27', '2020-12-30', 1, 9001);
+insert into bidding(bidding_id, deposit, description, start_price, finalprice, duedate, payment_duedate, status, product_id) values
+(9002, 50, 'Thinkpad T400', 100, 0, '2020-12-27', '2020-12-30', 1, 9002);
+
+insert into bidding_activities(bidding_activities_id, amount, bidding_date, bidding_id, user_bidding_id) values
+(9001, 1001, '2019-12-07 09:09', 9001, 9003);
+insert into bidding_activities(bidding_activities_id, amount, bidding_date, bidding_id, user_bidding_id) values
+(9002, 1002, '2020-12-07 09:09', 9001, 9004);
+insert into bidding_activities(bidding_activities_id, amount, bidding_date, bidding_id, user_bidding_id) values
+(9003, 1003, '2020-07-07 09:09', 9001, 9005);

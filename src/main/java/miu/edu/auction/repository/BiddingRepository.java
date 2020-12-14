@@ -3,6 +3,7 @@ package miu.edu.auction.repository;
 import miu.edu.auction.domain.Bidding;
 import miu.edu.auction.domain.Payment;
 import miu.edu.auction.domain.User;
+import miu.edu.auction.dto.BiddingDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -48,4 +49,21 @@ public interface BiddingRepository extends JpaRepository<Bidding, Integer> {
 
     @Query("select distinct b from Bidding b inner join fetch b.payments p where p.paymentDate is null and b.payment_duedate < :dueDate")
     List<Bidding> findBiddingOverduePayment(LocalDateTime dueDate);
+
+    @Query(value = "select bid from Bidding bid "
+            + "inner join fetch bid.product p "
+            + "inner join fetch p.user seller "
+            + "inner join p.categories cat "
+            //+ "left join fetch bid.bidding_activities ba "
+            //+ "where seller.enable = 1 and seller.profile_verified = 1 and seller.registration_verified = 1 "
+            + "where seller.email <> :exclude_email "
+            + "and (:category_id = 0 or cat.category_id = :category_id) "
+            + "and bid.winner is null "
+    )
+    List<BiddingDTO> findActiveBiddingByCategory(Integer category_id, String exclude_email);
+
+    @Query(value = "select bid from Bidding bid "
+            + "inner join fetch bid.product pr "
+            + "where bid.bidding_id = :integer")
+    Optional<BiddingDTO> findBiddingById(Integer integer);
 }

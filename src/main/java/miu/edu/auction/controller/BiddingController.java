@@ -6,6 +6,7 @@ import miu.edu.auction.domain.PayPalData;
 import miu.edu.auction.domain.User;
 import miu.edu.auction.dto.BiddingActivityDTO;
 import miu.edu.auction.dto.BiddingActivityRestDTO;
+import miu.edu.auction.dto.BiddingDTO;
 import miu.edu.auction.repository.PaymentRepository;
 import miu.edu.auction.repository.PaypalDataRepository;
 import miu.edu.auction.service.BiddingService;
@@ -42,12 +43,13 @@ public class BiddingController {
     @Autowired
     PaymentRepository paymentRepository;
 
+
     @GetMapping(value = "")
     public String loadBidding(@AuthenticationPrincipal UserDetails userDetails, Model model) {
 
-        //System.out.println(userDetails);
         String userEmail = userDetails.getUsername();
-        List<Bidding> bids = biddingService.findBiddingByCategory(1, userEmail);
+        List<Bidding> bids = biddingService.findBiddingByCategory(9001, userEmail);
+        //List<BiddingDTO> bids = biddingService.findActiveBiddingByCategory(1, userEmail);
 //        for (Bidding bid:bids
 //             ) {
 //            System.out.println(bid.getProduct().getName() + " by " + bid.getProduct().getUser().getName());
@@ -62,6 +64,7 @@ public class BiddingController {
         String userEmail = userDetails.getUsername();
         User user = userService.findUserByEmail(userEmail);
         Bidding bid = biddingService.findByID(id);
+        //BiddingDTO bid = biddingService.findBiddingById(id);
         boolean checkDeposit = paypalDataRepository.findPayPalDataByBiddingId(id).size() > 0;
         Double maxBid = bid.getBidding_activities().stream().mapToDouble(Bidding_Activities::getAmount).max().orElse(bid.getStart_price());
         Double yourBid = bid.getBidding_activities().stream()

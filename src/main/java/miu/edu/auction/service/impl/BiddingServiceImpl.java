@@ -2,6 +2,7 @@ package miu.edu.auction.service.impl;
 
 import miu.edu.auction.domain.*;
 import miu.edu.auction.dto.BiddingActivityDTO;
+import miu.edu.auction.dto.BiddingDTO;
 import miu.edu.auction.repository.*;
 import miu.edu.auction.service.BiddingService;
 import miu.edu.auction.service.EmailService;
@@ -32,6 +33,12 @@ public class BiddingServiceImpl implements BiddingService {
     @Autowired
     PaymentService paymentService;
 
+    @Autowired
+    ProductRepository productRepository;
+
+    @Autowired
+    PhotoRepository photoRepository;
+
     @Autowired // or @Inject
     private JobScheduler jobScheduler;
 
@@ -46,6 +53,18 @@ public class BiddingServiceImpl implements BiddingService {
             bid.setBidding_activities(biddingActivitiesList);
         }
         return biddingList;
+    }
+
+    @Override
+    public List<BiddingDTO> findActiveBiddingByCategory(Integer category_id, String exclude_email) {
+        List<BiddingDTO> biddingDTOList = biddingRepository.findActiveBiddingByCategory(category_id, exclude_email);
+        for (BiddingDTO dto:biddingDTOList) {
+            Product product = productRepository.findById(dto.getProduct().getProduct_id()).get();
+            List<Photo> photoList = photoRepository.findProductId(product.getProduct_id());
+            if(photoList.size() > 0)
+                dto.setImage_url(photoList.get(0).getImageUrl());
+        }
+        return biddingDTOList;
     }
 
     /*
@@ -265,6 +284,21 @@ public class BiddingServiceImpl implements BiddingService {
         } catch (Exception ex) {
             System.out.println(ex);
         }
+    }
+
+    @Override
+    public BiddingDTO findBiddingById(Integer key) {
+        BiddingDTO bidding = biddingRepository.findBiddingById(key).orElse(null);
+        List<Bidding_Activities> biddingActivities = biddingActivitiesRepository.findBidding_ActivitiesByBidding(key);
+        List<Payment> paymentList = paymentService.findPaymentByBidding(key);
+        List<Photo> photoList = photoRepository.findProductId(bidding.getProduct().getProduct_id());
+        if(photoList.size() > 0)
+            bidding.setImage_url(photoList.get(0).getImageUrl());
+        if (bidding != null) {
+            bidding.setBidding_activities(biddingActivities);
+            bidding.setPayments(paymentList);
+        }
+        return bidding;
     }
 
 }
