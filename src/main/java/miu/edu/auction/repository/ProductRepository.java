@@ -14,7 +14,7 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
   //  List<Product> findAll();
 
     @Query("Select p from Product p where p.description like %:str%")
-    List<Product> findByNameLike(String str);
+    Page<Product> findByNameLike(String str,Pageable pageable);
 
     @Query("Select p from Product p JOIN p.categories c where c.category_id=:categoryId")
     Page<Product> findByCategory(Integer categoryId, Pageable pageable);

@@ -28,7 +28,7 @@
 <body>
 
 <div class="navbar navbar-expand-md navbar-dark bg-dark mb-4" role="navigation">
-    <a class="navbar-brand" href="#">Auction</a>
+    <a class="navbar-brand" href="/home">Auction</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
             aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -37,67 +37,6 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
                 <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="dropdown1" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false">Dropdown1</a>
-                <ul class="dropdown-menu" aria-labelledby="dropdown1">
-                    <li class="dropdown-item" href="#"><a>Action 1</a></li>
-                    <li class="dropdown-item dropdown">
-                        <a class="dropdown-toggle" id="dropdown1-1" data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">Dropdown1.1</a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdown1-1">
-                            <li class="dropdown-item" href="#"><a>Action 1.1</a></li>
-                            <li class="dropdown-item dropdown">
-                                <a class="dropdown-toggle" id="dropdown1-1-1" data-toggle="dropdown"
-                                   aria-haspopup="true" aria-expanded="false">Dropdown1.1.1</a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown1-1-1">
-                                    <li class="dropdown-item" href="#"><a>Action 1.1.1</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="dropdown2" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false">Dropdown2</a>
-                <ul class="dropdown-menu" aria-labelledby="dropdown2">
-                    <li class="dropdown-item" href="#"><a>Action 2 A</a></li>
-                    <li class="dropdown-item" href="#"><a>Action 2 B</a></li>
-                    <li class="dropdown-item" href="#"><a>Action 2 C</a></li>
-                    <li class="dropdown-item dropdown">
-                        <a class="dropdown-toggle" id="dropdown2-1" data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">Dropdown2.1</a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdown2-1">
-                            <li class="dropdown-item" href="#"><a>Action 2.1 A</a></li>
-                            <li class="dropdown-item" href="#"><a>Action 2.1 B</a></li>
-                            <li class="dropdown-item" href="#"><a>Action 2.1 C</a></li>
-                            <li class="dropdown-item dropdown">
-                                <a class="dropdown-toggle" id="dropdown2-1-1" data-toggle="dropdown"
-                                   aria-haspopup="true" aria-expanded="false">Dropdown2.1.1</a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown2-1-1">
-                                    <li class="dropdown-item" href="#"><a>Action 2.1.1 A</a></li>
-                                    <li class="dropdown-item" href="#"><a>Action 2.1.1 B</a></li>
-                                    <li class="dropdown-item" href="#"><a>Action 2.1.1 C</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown-item dropdown">
-                                <a class="dropdown-toggle" id="dropdown2-1-2" data-toggle="dropdown"
-                                   aria-haspopup="true" aria-expanded="false">Dropdown2.1.2</a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown2-1-2">
-                                    <li class="dropdown-item" href="#"><a>Action 2.1.2 A</a></li>
-                                    <li class="dropdown-item" href="#"><a>Action 2.1.2 B</a></li>
-                                    <li class="dropdown-item" href="#"><a>Action 2.1.2 C</a></li>
-                                </ul>
-                            </li>
-
-                        </ul>
-                    </li>
-                </ul>
             </li>
         </ul>
 
@@ -117,21 +56,6 @@
                 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 
                     <div class="carousel-inner">
-                        <!--
-                                                <div class="row">
-                                                    <div class="col-lg-3" th:each="photo : ${photos}">
-                                                        <div class="card" style="width: 18rem;">
-                                                            <img th:src="'/images/'+${photo.getImage_path()}" alt="User name">
-
-                                                            <div class="card-body">
-                                                                <h5 class="card-title" th:utext="${photo.getDescription()}"></h5>
-                                                                <p class="card-text" th:utext="${photo.getDescription()}"></p>&lt;!&ndash;
-                                                <button type="button" class="btn btn-dark" th:href="@{/detail.html}">More...</button>&ndash;&gt;
-                                                                <a class="btn btn-light" th:href="${'/detail?id'+photo.getProduct_id()}">More...</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>-->
 
                         <div class="carousel-item active"><!--
                             <img th:src="'/images/'+${photo.getUrl()}" alt="User name">-->
@@ -163,8 +87,6 @@
                 <ul>
                     <b>Price</b>
                     <li th:utext="${product.getPrice()}"></li>
-                    <b>Mile</b>
-                    <li th:utext="${product.getMile()}"></li>
                 </ul>
             </div>
         </div>

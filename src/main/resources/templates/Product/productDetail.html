@@ -17,7 +17,7 @@
     Description: <span th:text="${product.description}"></span><p/>
 <!--    <div th:with="path=${product.image_path}">-->
 <!--        <span th:text="${path}"></span><p/>-->
-        <img th:src="@{${'/images/'+ product.image_path}}" th:height="50px" th:width="30px">
+        <img th:src="@{${'/images/'+ product.image_path}}" th:height="50px" th:width="30px" multiple="true">
 
     </p>
 </div>

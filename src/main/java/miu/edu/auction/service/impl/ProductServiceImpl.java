@@ -39,23 +39,7 @@ public class ProductServiceImpl implements ProductService {
 
         return newProducts;
     }
-//    @Override
-//    public List<Product> getAllProductWithRole(String role) {
-//
-//        List<Product> newProducts=new ArrayList<>();
-//        List<Product> products = (List<Product>)repo.findAll();
-//
-//        for(Product product:products){
-//            if(product.getStatus()==0)
-//                newProducts.add(product);
-//        }
 
-//        if(role=="ROLE_USER")
-//            return newProducts;
-//        else
-//            return products;
-//       return products;
-//}
 
 
     @Override
