@@ -1,7 +1,7 @@
 INSERT INTO ROLE(role_id, role) VALUES (1, 'ROLE_USER');
 INSERT INTO ROLE(role_id, role) VALUES (2, 'ROLE_ADMIN');
-INSERT INTO ROLE(role_id, role) VALUES (3, 'ROLE_USER');
-INSERT INTO ROLE(role_id, role) VALUES (4, 'ROLE_USER');
+INSERT INTO ROLE(role_id, role) VALUES (3, 'ROLE_SELLER');
+INSERT INTO ROLE(role_id, role) VALUES (4, 'ROLE_CUSTOMER');
 
 INSERT into USER(user_id, email, password, name, enable, profile_verified, registration_verified, user_type, street, city, state, zipcode) values (1, 'user@miu.edu', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'User', 1, 1, 1, 0, 'Golden Dome Way', 'Fairfield', 'IA', '52556');
 INSERT into USER(user_id, email, password, name, enable, profile_verified, registration_verified, user_type) values (2, 'admin@miu.edu', '$2a$12$Pdn2Mxp1c7loJguhLtfzp.RRSHREL8Sp.bsasHnQzCLt8TSJzqiE6', 'Admin', 1, 1, 1, 1);
@@ -44,10 +44,6 @@ insert into product(product_id, caption, active, description, image_path, name, 
 insert into product(product_id, caption, active, description, image_path, name, status, seller_id) values (14, 'Toyota Alphard (3)', 1, 'The Toyota Alphard  is a luxury minivan produced by the Japanese automaker Toyota since 2002. It is available as a seven- or eight-seater with petrol and hybrid engine','alphard.jpg', 'Seller_Product_4', 1, 3);
 insert into product(product_id, caption, active, description, image_path, name, status, seller_id) values (15, 'Toyota Corolla (3)', 1, 'The Toyota Corolla is a line of subcompact and compact cars manufactured by Toyota. Introduced in 1966, the Corolla was the best-selling car worldwide by','corolla.jpg', 'Seller_Product_5', 1, 3);
 
-insert into photo(photo_id, image_url, product_id) values (1,'200_1.jpg', 1);
-insert into photo(photo_id, image_url, product_id) values (2,'200_2.jpg', 1);
-insert into photo(photo_id, image_url, product_id) values (3,'200_3.jpg', 1);
-insert into photo(photo_id, image_url, product_id) values (4,'200_3.jpg', 1);
 
 
 insert into bidding(bidding_id, deposit, description, start_price, finalprice, startdate, duedate, payment_duedate, status, product_id, winner_id) values

@@ -19,7 +19,7 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int user_id;
 
     @NotBlank
@@ -27,24 +27,24 @@ public class User {
     @EmailUnique
     private String email;
 
-   @NotBlank
+    @NotBlank
     private String password;
 
     @NotNull
     @Column(columnDefinition = "integer default 0")
     private int enable;
 
-   @NotBlank
+    @NotBlank
     @Size(min = 4, max = 20, message = "{Size.name.validation}")
     private String name;
 
-   @NotBlank
+    @NotBlank
     private String street;
 
-   @NotBlank
+    @NotBlank
     private String city;
 
-   @NotBlank
+    @NotBlank
     @Size(min = 2, max = 2, message = "{Size.state.validation}")
     private String state;
 
@@ -57,7 +57,7 @@ public class User {
     @Column(columnDefinition = "integer default 0")
     private int profile_verified;
 
-//   @NotBlank
+    @NotBlank
     private String driverLicense;
 
     @Column(columnDefinition = "integer default 0")

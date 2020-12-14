@@ -47,4 +47,12 @@ public class PaypalServiceImpl implements PaypalService {
     public void refundOrder(String confirm_id) throws IOException {
         new RefundOrder().refundOrder(confirm_id);
     }
+
+    @Override
+    public PayPalData update(Integer clientID, Integer userID, Integer biddingID) {
+        PayPalData paypalData = paypalDataRepository.findById(clientID).get();
+        paypalData.setBidding_id(biddingID);
+        paypalData.setUser_id(userID);
+        return paypalDataRepository.save(paypalData);
+    }
 }

@@ -1,20 +1,24 @@
 package miu.edu.auction.controller;
 
 import miu.edu.auction.domain.Bidding;
+import miu.edu.auction.domain.PayPalData;
 import miu.edu.auction.domain.Payment;
 import miu.edu.auction.domain.User;
 import miu.edu.auction.dto.BiddingActivityDTO;
 import miu.edu.auction.dto.InvoiceDTO;
 import miu.edu.auction.service.BiddingService;
 import miu.edu.auction.service.PaymentService;
+import miu.edu.auction.service.PaypalService;
 import miu.edu.auction.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +36,12 @@ public class BiddingPaymentController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    PaypalService paypalService;
+
+    @Autowired
+    Environment environment;
 
     @Autowired
     PaymentService paymentService;
@@ -96,7 +106,23 @@ public class BiddingPaymentController {
         Bidding bidding = payment1.getBiddingPayment();
         bidding.setStatus(2);
         biddingService.saveBidding(bidding);
-        return "redirect:/bidding/biddings";
+        //Call PayPal to do payment
+        //PayPal step 1: create order
+        User user = userService.findUserByEmail(userDetails.getUsername());
+        String url = "";
+        try {
+            Integer client_id = paypalService.createOrder(environment.getProperty("paypal.auction.buyer"), payment1.getRemainingAmount(), "deposit", "bidding/biddings");
+            PayPalData payPalData = paypalService.update(client_id, user.getUser_id(), bidding.getBidding_id());
+            url = payPalData.getApproval_link();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("The URL is: " + url);
+//        RedirectView redirectView = new RedirectView();
+//        redirectView.setUrl(url);
+//        return redirectView;
+        //end Call PayPal
+        return "redirect:"+ url;
     }
 
     @RequestMapping(value = {"/ship/{id}"})
