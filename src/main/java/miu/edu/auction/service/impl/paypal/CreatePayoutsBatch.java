@@ -49,20 +49,18 @@ public class CreatePayoutsBatch extends PayPalClient{
             batch_status = jsonObject.getJSONObject("batch_header").getString("batch_status");
         }
 
-        if(batch_status.equals("SUCCESS")) {
-            PayPalOutData payPalOutData = paypalOutDataRepository.save(new PayPalOutData());
-            payPalOutData.setLocal_payment_id(payment_id);
-            payPalOutData.setPaypal_id(paypal_id);
-            payPalOutData.setPayout_batch_id(jsonObject.getJSONObject("batch_header").getString("payout_batch_id"));
-            payPalOutData.setBatch_status(jsonObject.getJSONObject("batch_header").getString("batch_status"));
-            payPalOutData.setTime_created(jsonObject.getJSONObject("batch_header").getString("time_created"));
-            payPalOutData.setTime_completed(jsonObject.getJSONObject("batch_header").getString("time_completed"));
-            payPalOutData.setTime_closed(jsonObject.getJSONObject("batch_header").getString("time_closed"));
-            Payment payment = paymentRepository.findById(payment_id).get();
-            payPalOutData.setBidding_id(payment.getBiddingPayment().getBidding_id());
-            payPalOutData.setReceiver_id(payment.getSeller().getUser_id());
-            paypalOutDataRepository.save(payPalOutData);
-        }
+        PayPalOutData payPalOutData = paypalOutDataRepository.save(new PayPalOutData());
+        payPalOutData.setLocal_payment_id(payment_id);
+        payPalOutData.setPaypal_id(paypal_id);
+        payPalOutData.setPayout_batch_id(jsonObject.getJSONObject("batch_header").getString("payout_batch_id"));
+        payPalOutData.setBatch_status(jsonObject.getJSONObject("batch_header").getString("batch_status"));
+        payPalOutData.setTime_created(jsonObject.getJSONObject("batch_header").getString("time_created"));
+        payPalOutData.setTime_completed(jsonObject.getJSONObject("batch_header").getString("time_completed"));
+        payPalOutData.setTime_closed(jsonObject.getJSONObject("batch_header").getString("time_closed"));
+        Payment payment = paymentRepository.findById(payment_id).get();
+        payPalOutData.setBidding_id(payment.getBiddingPayment().getBidding_id());
+        payPalOutData.setReceiver_id(payment.getSeller().getUser_id());
+        paypalOutDataRepository.save(payPalOutData);
     }
 
     /**
