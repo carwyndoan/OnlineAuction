@@ -28,7 +28,7 @@ public class UserController {
     VerificationService verificationService;
 
     @GetMapping(value = {"/userform"})
-    public String loadUserForm(@ModelAttribute("user") User user) {
+    public String loadUserForm(User user) {
 //        return "/registration/UserForm";
         return "registration/createuser";
     }
