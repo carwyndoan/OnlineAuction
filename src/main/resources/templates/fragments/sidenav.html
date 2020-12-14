@@ -16,10 +16,14 @@
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link" th:href="${'/registration/userform'}">Create User</a>
                         <a class="nav-link" th:href="${'#'}">Profile Verification</a>
-                        <a class="nav-link" th:href="${'/home'}">Auction Product</a>
+                        <a class="nav-link" th:href="${'/addproduct'}">Auction Product</a>
+                        <a class="nav-link" th:href="${'/addCategory'}">Category</a>
                         <a class="nav-link" th:href="${'/login'}">Login</a>
                     </nav>
                 </div>
+
+
+
                 <a aria-controls="collapsePages" aria-expanded="false" class="nav-link collapsed"
                    data-target="#collapsePages"
                    data-toggle="collapse" href="#" sec:authorize="hasAuthority('ROLE_USER')">
@@ -35,8 +39,10 @@
                         <a class="nav-link" th:href="${'/bidding/biddings'}">All Bidding</a>
                         <a class="nav-link" th:href="${'/bidding/winbiddings'}">Make Payment</a>
                         <a class="nav-link" th:href="${'/bidding/biddings'}">Bidding Status</a>
+
                     </nav>
                 </div>
+
                 <a aria-controls="userPages" aria-expanded="false" class="nav-link collapsed" data-target="#userPages"
                    data-toggle="collapse"
                    href="#" sec:authorize="hasAuthority('ROLE_ADMIN')">
