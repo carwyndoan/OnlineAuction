@@ -20,7 +20,7 @@
 
                 <div th:each="bid : ${bids}" class="media text-muted pt-3">
                     <a th:href="@{/bid/item/{id}(id=${bid.bidding_id})}">
-                        <img th:src="@{bid.image_url}" src="images/thumbnail.svg" alt=""
+                        <img th:src="@{bid.product.image_url}" src="images/thumbnail.svg" alt=""
                              class="img-thumbnail" width="225" height="169">
                     </a>
                     <div class="media-body">
