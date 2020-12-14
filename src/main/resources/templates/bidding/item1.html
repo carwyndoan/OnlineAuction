@@ -8,7 +8,8 @@
     <div id="layoutSidenav_content">
         <main role="main" class="container">
             <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded shadow-sm">
-                <img th:src="@{/images/bootstrap-outline.svg}" class="mr-3" src="../assets/brand/bootstrap-outline.svg" alt="" width="48" height="48">
+                <img th:src="@{/images/bootstrap-outline.svg}" class="mr-3" src="../assets/brand/bootstrap-outline.svg"
+                     alt="" width="48" height="48">
                 <div class="lh-100">
                     <h6 class="mb-0 text-white lh-100"></h6>
                     <small></small>
@@ -23,7 +24,8 @@
                                 th:text="${bid.product.name} + ' by ' + ${bid.product.user.name}">Product by seller</span></strong>
                         </h6>
                         <p class="media-body pb-3 mb-0 small lh-125">
-                            Starting bid: <h5>$<span th:text="${#numbers.formatDecimal(bid.start_price, 3, 2)}">0.00</span></h5>
+                            Starting bid: <h5>$<span
+                            th:text="${#numbers.formatDecimal(bid.start_price, 3, 2)}">0.00</span></h5>
                         [<span th:text="${bid.bidding_activities.size()} + ' bids'" id="total_bidder">0 bids</span>]
                         <br>
                         <span th:text="'Due date: ' + ${bid.duedate}" id="duedate">Due date</span>
@@ -34,15 +36,20 @@
                                                     id="current_bid">0.00</span>
                     </h5>
                         <span>Your bid:</span>
-                        <h6>$<span th:text="${#numbers.formatDecimal(bid_activity.bid_amount, 3, 2)}" id="bid_amount">0.00</span></h6>
+                        <h6>$<span th:text="${#numbers.formatDecimal(bid_activity.bid_amount, 3, 2)}" id="bid_amount">0.00</span>
+                        </h6>
                         <p>
-                        <div class="input-group mb-1">
+                        <div th:if="${check_deposit}" class="input-group mb-1">
                             <span class="input-group-text">$</span>
                             <input type="text" placeholder="Amount (larger than current bid)" id="bid_value"/>
                             <button type="button" class="btn btn-primary" id="btnBid">Place bid</button>
-                            <input th:value="${bidding_id}" type="hidden" id="bidding_id"/>
-                            <input th:value="${user_id}" type="hidden" id="user_id"/>
                         </div>
+                        <button th:if="${check_deposit} == false" type="button" class="btn btn-primary" id="btnDeposit">
+                            Deposit First
+                        </button>
+                        <a th:if="${check_deposit} == false" href="" id="lnkPaypal" style="display:none"></a>
+                        <input th:value="${bidding_id}" type="hidden" id="bidding_id"/>
+                        <input th:value="${user_id}" type="hidden" id="user_id"/>
                         </p>
                         <!-- Success - or Validation errors -->
                         <div id="errors" style="display:none">
