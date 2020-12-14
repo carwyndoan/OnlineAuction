@@ -14,6 +14,7 @@ import miu.edu.auction.utils.CommonUtils;
 import miu.edu.auction.utils.GenerationUnique;
 import org.jobrunr.scheduling.JobScheduler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -40,6 +41,9 @@ public class PaymentServiceImpl implements PaymentService {
     @Autowired
     PaypalService paypalService;
 
+    @Autowired
+    Environment environment;
+
     @Override
     public Payment savePayment(Payment payment) {
         return paymentRepository.save(payment);
@@ -47,7 +51,6 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Payment makePayment(Payment payment) {
-        //TODO: call Paypal service here
         //After 3 days, if Bidding status is still 2 -> return full payement for Winner
         Bidding bidding = payment.getBiddingPayment();
         jobScheduler.schedule(() -> biddingService.returnBidderDeposit(bidding.getBidding_id()),
@@ -88,8 +91,9 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Payment payToSeller(Payment payment) {
-        //TODO: payment with paypal
+    public Payment payToSeller(Payment payment) throws IOException{
+        String description = String.format("Payment for item %s.", payment.getBiddingPayment().getProduct().getName());
+        paypalService.payoutOrder(payment.getPayment_id(), environment.getProperty("paypal.auction.seller"), "USD", payment.getDeposit() + payment.getRemainingAmount(), description);
         //Update system
         payment.setPaySellerDate(LocalDateTime.now());
         paymentRepository.save(payment);
@@ -145,8 +149,9 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Boolean paySellerDeposit(Payment payment) {
-        //TODO: payment with paypal
+    public Boolean paySellerDeposit(Payment payment) throws IOException {
+        String description = String.format("Deposit for item %s.", payment.getBiddingPayment().getProduct().getName());
+        paypalService.payoutOrder(payment.getPayment_id(), environment.getProperty("paypal.auction.seller"), "USD", payment.getDeposit(), description);
         //Update system
         payment.setPaySellerDate(LocalDateTime.now());
         paymentRepository.save(payment);

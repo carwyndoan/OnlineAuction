@@ -9,6 +9,7 @@ import miu.edu.auction.dto.BiddingActivityRestDTO;
 import miu.edu.auction.repository.PaymentRepository;
 import miu.edu.auction.repository.PaypalDataRepository;
 import miu.edu.auction.service.BiddingService;
+import miu.edu.auction.service.PaymentService;
 import miu.edu.auction.service.PaypalService;
 import miu.edu.auction.service.UserService;
 import miu.edu.auction.utils.CommonUtils;
@@ -57,7 +58,7 @@ public class BiddingController {
     }
 
     @GetMapping(value = "/item/{id}")
-    public String loadItem(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer id, Model model) {
+    public String loadItem(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer id, Model model) throws IOException {
         String userEmail = userDetails.getUsername();
         User user = userService.findUserByEmail(userEmail);
         Bidding bid = biddingService.findByID(id);
@@ -76,6 +77,7 @@ public class BiddingController {
         model.addAttribute("bidding_id", bid.getBidding_id());
         model.addAttribute("user_id", user.getUser_id());
         model.addAttribute("check_deposit", checkDeposit);
+        //paypalService.payoutOrder(1, "LBAFK9H7G8YJS", "USD", 500D, "Test payout");
         return "bidding/item";
     }
 

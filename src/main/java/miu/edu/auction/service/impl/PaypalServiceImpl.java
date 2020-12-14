@@ -10,11 +10,9 @@ import com.paypal.payments.Capture;
 import miu.edu.auction.domain.PayPalData;
 import miu.edu.auction.repository.PaymentRepository;
 import miu.edu.auction.repository.PaypalDataRepository;
+import miu.edu.auction.repository.PaypalOutDataRepository;
 import miu.edu.auction.service.PaypalService;
-import miu.edu.auction.service.impl.paypal.AuthorizeOrder;
-import miu.edu.auction.service.impl.paypal.CaptureOrder;
-import miu.edu.auction.service.impl.paypal.CreateOrder;
-import miu.edu.auction.service.impl.paypal.RefundOrder;
+import miu.edu.auction.service.impl.paypal.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -33,6 +31,9 @@ public class PaypalServiceImpl implements PaypalService {
     @Autowired
     PaypalDataRepository paypalDataRepository;
 
+    @Autowired
+    PaypalOutDataRepository paypalOutDataRepository;
+
     @Override
     public Integer createOrder(String paypal_id, Double orderAmount, String description, String confirm_url) throws IOException {
         return new CreateOrder().createOrder(paypalDataRepository, paypal_id,"USD", orderAmount, description, confirm_url);
@@ -46,6 +47,11 @@ public class PaypalServiceImpl implements PaypalService {
     @Override
     public void refundOrder(String confirm_id) throws IOException {
         new RefundOrder().refundOrder(paypalDataRepository, confirm_id);
+    }
+
+    @Override
+    public void payoutOrder(Integer payment_id, String paypal_id, String currency, Double amount, String description) throws IOException {
+        new CreatePayoutsBatch().createPayout(paypalOutDataRepository, paymentRepository, payment_id, paypal_id, currency, amount, description);
     }
 
     @Override

@@ -20,13 +20,13 @@ public interface PaymentService {
 
     Payment returnDeposit(Payment payment) throws IOException;
 
-    Payment payToSeller(Payment payment);
+    Payment payToSeller(Payment payment) throws IOException;
 
     InvoiceDTO makeInvoice(Integer biddingID, Integer userID);
 
     List<Payment> findPaymentByBidding(Integer bidding_id);
 
-    Boolean paySellerDeposit(Payment payment);
+    Boolean paySellerDeposit(Payment payment) throws IOException;
 
     Boolean payBidderFull(Payment payment) throws IOException;
 }
