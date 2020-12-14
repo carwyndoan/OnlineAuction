@@ -187,8 +187,8 @@
                     <option selected>Sort</option>
                     <option value="1">Price asc</option>
                     <option value="2">Price desc</option>
-                    <option value="3">Mile asc</option>
-                    <option value="4">Mile desc</option>
+        <!--            <option value="3">upload_Date asc</option>
+                    <option value="4">upload_Date desc</option>-->
                 </select>
             </div>
         </div>
@@ -211,15 +211,13 @@
         <div class="row">
             <div class="col-lg-3" th:each="photo : ${photos}">
                 <div class="card" style="width: 18rem;">
-                    <img th:src="'/images/'+${photo.getImage_path()}" alt="User name">
+                    <a class="btn btn-light" th:href="${'/detail?id='+photo.getProduct_id()}"><img th:src="'/images/'+${photo.getImage_path()}" alt="User name" ></a>
 
-                    <div class="card-body">
+                    <div class="card-body" th:height="500px">
                         <h5 class="card-title" th:utext="${photo.getCaption()}"></h5>
                         <p class="card-text" th:utext="${photo.getDescription()}"></p>
-                        <p class="card-subtitle" th:utext="${photo.getPrice()}"></p>
-                        <p class="card-subtitle" th:utext="${photo.getMile()}"></p>
-                        <!--
-                        <button type="button" class="btn btn-dark" th:href="@{/detail.html}">More...</button>-->
+                        <strong>price</strong><p class="card-subtitle" th:utext="${photo.getPrice()}"></p>
+                        <strong>Date</strong><p class="card-subtitle" th:utext="${photo.getUpload_Date()}"></p>
                         <a class="btn btn-light" th:href="${'/detail?id='+photo.getProduct_id()}">More...</a>
                     </div>
                 </div>

@@ -52,7 +52,7 @@ public class CustomerController {
 
         int evalPageSize = pageSize.orElse(INITIAL_PAGE_SIZE);
         int evalPage = (page.orElse(0) < 1) ? INITIAL_PAGE : page.get() - 1;
-        Sort sort = Sort.by("price").descending();
+        Sort sort = Sort.by("price").ascending();
 
         if (optSort.isPresent()) {
             if (optSort.get() == 1) {
@@ -64,11 +64,13 @@ public class CustomerController {
             }
 
             if (optSort.get() == 3) {
-                sort = Sort.by("mile").ascending();
+                System.out.println(" sort = Sort.by(\"product_id\").ascending();");
+                sort = Sort.by("product_id").ascending();
             }
 
             if (optSort.get() == 4) {
-                sort = Sort.by("mile").descending();
+                System.out.println("sort = Sort.by(\"product_id\").descending();");
+                sort = Sort.by("product_id").descending();
             }
         }
 
@@ -105,10 +107,13 @@ public class CustomerController {
     }
 
     @GetMapping("/search")
-    public String search(Model model, @RequestParam("searchValue") String s) {
-
-        List<Product> products = productRepository.findByNameLike(s);
+    public String search(Model model, @RequestParam("searchValue") String s, @RequestParam("pageSize") Optional<Integer> pageSize,
+                         @RequestParam("page") Optional<Integer> page) {
+        int evalPageSize = pageSize.orElse(INITIAL_PAGE_SIZE);
+        int evalPage = (page.orElse(0) < 1) ? INITIAL_PAGE : page.get() - 1;
+        Page<Product> products = productRepository.findByNameLike(s, PageRequest.of(evalPage, evalPageSize));
         List<Category> categories = categoryRepository.findAll();
+//  Page<Product> productByCategory = productRepository.findByCategory(categoryId, PageRequest.of(evalPage, evalPageSize));
 
         model.addAttribute("photos", products);
         model.addAttribute("categories", categories);
