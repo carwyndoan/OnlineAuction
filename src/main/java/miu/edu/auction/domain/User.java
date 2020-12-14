@@ -19,7 +19,7 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int user_id;
 
     @NotBlank
@@ -52,13 +52,13 @@ public class User {
     private String zipcode;
 
     @Column(columnDefinition = "integer default 0")
-    private int registration_verified;
+    private int registrationVerified;
 
     @Column(columnDefinition = "integer default 0")
     private int profile_verified;
 
     @NotBlank
-    private String driver_license;
+    private String driverLicense;
 
     @Column(columnDefinition = "integer default 0")
     private int user_type;
